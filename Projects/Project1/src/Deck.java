@@ -92,4 +92,29 @@ public class Deck {
     public String toStringFancy() {
         return Hand.getStringFancy(cardDeck);
     }
+    public static class MultiDeck extends Deck{
+
+        //Initializes list for cards.
+        ArrayList<Card> multiDeck = new ArrayList<>();
+
+        public void addAll(ArrayList<Card> argList) {
+            multiDeck.addAll(argList);
+        }
+
+        public Card get(int index) {
+            return multiDeck.get(index);
+        }
+
+        public void add(Card card) {
+            multiDeck.add(multiDeck.size(), card);
+        }
+
+        public void add(int index, Card card) {
+            multiDeck.add(index, card);
+        }
+
+        public  void clear() {
+            multiDeck.clear();
+        }
+    }
 }

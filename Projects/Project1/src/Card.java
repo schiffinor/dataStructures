@@ -16,6 +16,8 @@ public class Card {
     String suit;
     //The value of the card.
     int value;
+    //Flag for card counting AI.
+    boolean counted = false;
     //Container for card identity.
     ArrayList<Object> cardIdentifier = new ArrayList<>();
 
@@ -84,6 +86,7 @@ public class Card {
 
     /**
      * Returns the unique identifier of the card.
+     *
      * @return the unique identifier of the card
      */
     public ArrayList<Object> getCard() {

@@ -5,27 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4ed48254-50dc-431b-803f-7204de112a29" name="Changes" comment="Built the whole program for lab 1.">
-      <change afterPath="$PROJECT_DIR$/../Project1/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Project1/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Project1/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Project1/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Project1/Project1.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Project1/src/Blackjack.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Project1/src/BlackjackTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Project1/src/Card.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Project1/src/Card.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Project1/src/CardTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Project1/src/Deck.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Project1/src/Deck.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Project1/src/DeckTests.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Project1/src/DeckTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Project1/src/Game.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Project1/src/Hand.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Project1/src/Hand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Project1/src/HandTests.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Project1/src/HandTests.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Project1/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Lecture/Lecture1/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Lecture/Lecture1/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Project1/src/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Project1/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Project1/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Project1/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Project1/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Project1/src/Blackjack.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Project1/src/Blackjack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Project1/src/Card.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Project1/src/Card.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Project1/src/Card.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Project1/src/Deck.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Project1/src/Deck.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Project1/src/Deck.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Project1/src/DeckTests.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Project1/src/Game.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Project1/src/Hand.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Project1/src/Hand.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Project1/src/Hand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Project1/src/HandTests.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,9 +33,9 @@
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 4
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
   <component name="ProjectId" id="2V7oWklOsRSBsERIqvEgSElaMpO" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -58,7 +53,7 @@
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/schif/Documents/Coding/dataStructures/Projects/Project1",
+    "last_opened_file_path": "C:/Users/schif/Documents/Coding/dataStructures/Projects/Lab1",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -75,6 +70,7 @@
       <option name="presentableId" value="Default" />
       <updated>1694196517318</updated>
       <workItem from="1694196518447" duration="17398000" />
+      <workItem from="1694443014482" duration="643000" />
     </task>
     <task id="LOCAL-00001" summary="Built the whole program for lab 1.">
       <option name="closed" value="true" />

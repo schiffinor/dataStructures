@@ -11,12 +11,16 @@ public class Hand {
 
     //Again this is here for global access reasons.
     ArrayList<Card> handList;
+    ArrayList<Card> publicList;
+    ArrayList<Card> privateList;
 
     /**
      * Create empty hand via ArrayList.
      */
     public Hand(){
         handList = new ArrayList<>();
+        publicList = new ArrayList<>();
+        privateList = new ArrayList<>();
     }
 
     /**
@@ -31,7 +35,49 @@ public class Hand {
      * @param card the card to be added to the hand
      */
     public void add(Card card){
+        //Adds card to public hand and base handList.
+        add(card, false);
+    }
+
+    /**
+     * Adds the specified card to the hand either public or private and base handList.
+     * @param card the card to be added to the hand
+     * @param privateState determines whether the card is added to private or public hand.
+     */
+    public void add(Card card, boolean privateState){
         handList.add(card);
+        if (privateState) {
+            privateList.add(card);
+        }
+        else {
+            publicList.add(card);
+        }
+
+    }
+
+    /**
+     * Fetches public hand from specified.
+     * @param hand the hand to fetch from.
+     */
+    public ArrayList<Card> fetch(Hand hand) {
+        return fetch(hand,false);
+    }
+
+    /**
+     * Fetches public hand from specified.
+     * @param hand the hand to fetch from.
+     * @param privateState whether to fetch full hand or just public. Not standard use.
+     */
+    public ArrayList<Card> fetch(Hand hand, boolean privateState) {
+        ArrayList<Card> outList;
+        if (privateState) {
+            outList = new ArrayList<>(handList);
+        }
+        else {
+            outList = new ArrayList<>(publicList);
+
+        }
+        return outList;
     }
 
     /**
@@ -139,7 +185,34 @@ public class Hand {
         return getString(handList) + " : " + getTotalValue();
     }
 
+    //HighLow version of above.
     public String toString(boolean highLow){
         return getString(handList) + " : " + getTotalValue(highLow);
+    }
+
+    /**
+     * Returns a fancy string representation of the hand.
+     * @return a fancy string representation of the hand
+     */
+    public String toStringFancy(){
+        return getStringFancy(handList) + " : " + getTotalValue();
+    }
+
+    //HighLow version of above.
+    public String toStringFancy(boolean highLow){
+        return getStringFancy(handList) + " : " + getTotalValue(highLow);
+    }
+
+    /**
+     * Returns a fancy string representation of the public hand.
+     * @return a fancy string representation of the public hand
+     */
+    public String publicToStringFancy(){
+        return getStringFancy(publicList);
+    }
+
+    //HighLow version of above.
+    public String publicToStringFancy(boolean highLow){
+        return getStringFancy(publicList);
     }
 }
