@@ -27,6 +27,7 @@ public class Card {
      * Overloaded method to patch to allow test file to work.
      */
     public Card(int ident) {
+        identity = ident;
         cardIdentifier.add(ident);
         value = switch ((int) cardIdentifier.get(0)) {
             case 1 -> 11;
@@ -51,6 +52,7 @@ public class Card {
      * This is necessary because cardTests won't work otherwise.
      */
     public Card(int ident, String suit) {
+        identity = ident;
         cardIdentifier.add(ident);
         cardIdentifier.add(suit);
         value = switch ((int) cardIdentifier.get(0)) {

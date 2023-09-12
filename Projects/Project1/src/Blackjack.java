@@ -27,7 +27,7 @@ public class Blackjack {
     boolean interactiveState;
     boolean npcAIState;
     boolean advancedAIState;
-    ArrayList<Boolean> decisionMatrix;
+    ArrayList<Boolean> decisionMatrix = new ArrayList<Boolean>();
 
     /**
      * Initializes most basic version of Blackjack with all default parameters.
@@ -79,9 +79,9 @@ public class Blackjack {
         //Create hands and handMap.
         Hand dealerHand = new Hand();
         //Store decisions.
-        ArrayList<Boolean> decisionMatrix = new ArrayList<>();
+        decisionMatrix.add(true);
         handMap.put("dealerHand",dealerHand);
-        for (int i=1; i < playerCount; i++) {
+        for (int i=1; i <= playerCount; i++) {
             decisionMatrix.add(true);
             String handName = "hand" + i;
             Hand tempHand = new Hand();
@@ -94,27 +94,114 @@ public class Blackjack {
         //Deals first secret card.
         for (Hand hand : dealList) {
             hand.add(multiDeck.deal(),true);
-            //Testing
-            System.out.println(hand.toStringFancy());
-            System.out.println(hand.publicToStringFancy());
         }
         //Deals first public card.
         do {
             for (Hand hand : dealList) {
-                hand.add(multiDeck.deal(), false);
-                //Testing
-                System.out.println(hand.toStringFancy());
-                System.out.println(hand.publicToStringFancy());
+                if (decisionMatrix.get(dealList.indexOf(hand))) {
+                    hand.add(multiDeck.deal(), false);
+                }
             }
-            if (interactiveState) {
-                System.out.println("Do you want another card?");
+            System.out.println("Your Hand: "+handMap.get("hand1").toStringFancy(highLowState));
+            for (int i=2; i <= playerCount; i++) {
+                String playerName = "player" + i + " Hand: ";
+                String handName = "hand" + i;
+                System.out.println(playerName + handMap.get(handName).publicToStringFancy(highLowState));
+            }
+            System.out.println("Dealer Hand: "+handMap.get("dealerHand").publicToStringFancy(highLowState));
+            if (interactiveState && !npcAIState) {
+                Scanner inputListener = new Scanner(System.in);
+                String decisionTxt = "";
+                boolean done = false;
+                for (Hand hand : dealList) {
+                    boolean testValue = hand.equals(handMap.get("dealerHand"));
+                    if (!testValue) {
+                        getCardDecision(inputListener, decisionTxt, hand,done);
+                    }
+                    else {
+                        decisionMatrix.set(playerCount,dealerAI(hand));
+                    }
+                }
+            }
+            else if (interactiveState && npcAIState) {
+                Scanner inputListener = new Scanner(System.in);
+                String decisionTxt = "";
+                boolean done = false;
+                for (Hand hand : dealList) {
+                    boolean testValue = (hand.equals(handMap.get("dealerHand")) || hand.equals(handMap.get("hand1")));
+                    if (!testValue) {
+                        decisionMatrix.set(dealList.indexOf(hand),decisionMaker(hand));
+                    }
+                    else if (hand.equals(dealList.get(playerCount))) {
+                        decisionMatrix.set(playerCount,dealerAI(hand));
+                    }
+                    else {
+                        getCardDecision(inputListener, decisionTxt, hand, done);
+                    }
+                }
             }
             else {
-
+                boolean done = false;
+                for (Hand hand : dealList) {
+                    boolean testValue = (hand.equals(dealList.get(playerCount)));
+                    if (!testValue) {
+                        decisionMatrix.set(dealList.indexOf(hand),decisionMaker(hand));
+                    }
+                    else {
+                        decisionMatrix.set(playerCount,dealerAI(hand));
+                    }
+                }
             }
         }
-        while (!(decisionMatrix.contains(true)));
+        while (decisionMatrix.contains(true));
 
+        System.out.println("Your Hand: "+handMap.get("hand1").toStringFancy(highLowState));
+        for (int i=2; i <= playerCount; i++) {
+            String playerName = "player" + i + " Hand: ";
+            String handName = "hand" + i;
+            System.out.println(playerName + handMap.get(handName).toStringFancy(highLowState));
+        }
+        System.out.println("Dealer Hand: " + handMap.get("dealerHand").toStringFancy(highLowState));
+        TreeMap<Integer,ArrayList<Hand>> scoreMap = new TreeMap<>();
+        for (Hand hand : dealList) {
+            if (!scoreMap.containsKey(hand.getTotalValue(highLowState))) {
+                ArrayList<Hand> equalPointArray = new ArrayList<>();
+                scoreMap.put(hand.getTotalValue(highLowState),equalPointArray);
+            }
+            scoreMap.get(hand.getTotalValue(highLowState)).add(hand);
+        }
+        int topScore = scoreMap.lastKey();
+        ArrayList<Hand> winners = new ArrayList<Hand>(scoreMap.get(topScore));
+        if (winners.size() > 1) {
+            String outVar = "Tie! ";
+            for (Hand hand : winners) {
+                dealList.indexOf(hand);
+            }
+            System.out.println(outVar);
+        }
+        else {
+
+        }
+    }
+
+    public void getCardDecision(Scanner scanner, String decision, Hand hand, boolean doneFlag) {
+        do {
+            System.out.println("Do you want another card? (Y/N)");
+            try {
+                decision = scanner.nextLine();
+            } catch (Exception IllegalArgumentException) {
+                System.out.println("Please Type \"Y\" or \"N\"");
+            }
+            if (Objects.equals(decision, "Y")) {
+                decisionMatrix.set(dealList.indexOf(hand), true);
+                doneFlag = true;
+            } else if (Objects.equals(decision, "N")) {
+                decisionMatrix.set(dealList.indexOf(hand), false);
+                doneFlag = true;
+            } else {
+                System.out.println("Input only \"Y\" or \"N\".");
+            }
+        } while (!doneFlag);
     }
 
     public ArrayList<Card> fetchAll() {
@@ -159,11 +246,12 @@ public class Blackjack {
         for (Card h : hand.handList) {
             valList.add(h.identity);
         }
-        if (highLowState & (valList.contains(1))) {
+        if (highLowState && (valList.contains(1))) {
             if (hand.getTotalValue(highLowState) < 17) {
                 decision = true;
             }
-        } else {
+        }
+        else {
             if (hand.getTotalValue(highLowState) < 15) {
                 decision = true;
             }
@@ -171,9 +259,20 @@ public class Blackjack {
         return decision;
     }
 
+    public boolean dealerAI(Hand hand) {
+        boolean decision = false;
+        ArrayList<Integer> valList = new ArrayList<>();
+        for (Card h : hand.handList) {
+            valList.add(h.identity);
+        }
+        if (hand.getTotalValue(highLowState) < 17) {
+            decision = true;
+        }
+        return decision;
+    }
 
     public boolean advancedAI(Hand hand) {
-        boolean decision = false;
+        boolean decision;
         ArrayList<Card> countedCards = new ArrayList<>();
         ArrayList<Integer> countedCardVals = new ArrayList<>();
         ArrayList<Card> visibleList = new ArrayList<>(visible(hand));
@@ -188,9 +287,9 @@ public class Blackjack {
             runningCount += switch ((int) val) {
                 case 4,5,6 -> 2;
                 case 2,3,7 -> 1;
-                case 8,11 -> 0;
+                case 8,1 -> 0;
                 case 9 -> -1;
-                case 10 -> -2;
+                case 10,11,12,13 -> -2;
                 default -> throw new IllegalStateException("Unexpected value: " + (int) val);
             };
         }
@@ -198,6 +297,7 @@ public class Blackjack {
         double decksRemaining = cardsRemaining / 52;
         double trueCount = runningCount / decksRemaining;
         double betModifier = 1 - (trueCount * (0.04 )) - ((hand.getTotalValue(highLowState)-10) * (0.1));
+        decision = betModifier > 0.5;
         return decision;
     }
 
@@ -320,7 +420,8 @@ public class Blackjack {
             }
         } while(!done);
 
-        Blackjack gameInitialization = new Blackjack(5, playerCount, deckCount, highLowState, interactState, AIState, enableGoodAI);
+        Blackjack gameInitialization = new Blackjack(5, playerCount, deckCount, highLowState,
+                interactState, AIState, enableGoodAI);
     }
 
 

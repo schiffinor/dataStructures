@@ -129,15 +129,17 @@ public class Hand {
             for (Card card : noAceList) {
                 sumValue += card.getValue();
             }
-            if (sumValue > 10) {
-                for (Card card : aceList) {
-                    sumValue += (card.getValue() - 10);
+            if (!aceList.isEmpty()) {
+                if (sumValue > 10) {
+                    for (Card card : aceList) {
+                        sumValue += (card.getValue() - 10);
+                    }
+                } else {
+                    for (Card card : aceList) {
+                        sumValue += (card.getValue() - 10);
+                    }
+                    sumValue += 10;
                 }
-            } else {
-                for (Card card : aceList) {
-                    sumValue += (card.getValue() - 10);
-                }
-                sumValue += 10;
             }
         }
         return sumValue;
