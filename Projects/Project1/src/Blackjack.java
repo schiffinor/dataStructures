@@ -238,7 +238,7 @@ public class Blackjack {
                 outVar.append("Victory! You have won.");
             }
             else {
-                outVar.append("Loss! Player ").append(dealList.indexOf(winners.get(0))).append(" has won.");
+                outVar.append("Loss! Player ").append(dealList.indexOf(winners.get(0))+1).append(" has won.");
             }
         }
         outStr.append(outVar).append("\n");
