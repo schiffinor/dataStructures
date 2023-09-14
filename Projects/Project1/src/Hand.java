@@ -102,11 +102,7 @@ public class Hand {
      * @return the summed value over all cards in the hand
      */
     public int getTotalValue(){
-        int sumValue = 0;
-        for (Card card : handList) {
-            sumValue += card.getValue();
-        }
-        return sumValue;
+        return getTotalValue(false);
     }
 
     /**
@@ -140,6 +136,11 @@ public class Hand {
                     }
                     sumValue += 10;
                 }
+            }
+        }
+        else {
+            for (Card card : handList) {
+                sumValue += card.getValue();
             }
         }
         return sumValue;

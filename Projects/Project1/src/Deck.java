@@ -109,12 +109,36 @@ public class Deck {
             multiDeck.add(multiDeck.size(), card);
         }
 
+        public int size() {
+            return multiDeck.size();
+        }
+
+        public Card deal() {
+            Card currentCard = multiDeck.get(0);
+            multiDeck.remove(0);
+            return currentCard;
+        }
         public void add(int index, Card card) {
             multiDeck.add(index, card);
         }
 
         public  void clear() {
             multiDeck.clear();
+        }
+
+        /**
+         * Shuffles the cards currently in the deck.
+         */
+        public void shuffle() {
+            ArrayList<Card> tempList = new ArrayList<>(multiDeck);
+            ArrayList<Card> outList = new ArrayList<>();
+            for(int i=tempList.size();i>0;i--) {
+                Random ran = new Random();
+                int index = ran.nextInt(0,i);
+                outList.add(tempList.get(index));
+                tempList.remove(index);
+            }
+            multiDeck = outList;
         }
     }
 }

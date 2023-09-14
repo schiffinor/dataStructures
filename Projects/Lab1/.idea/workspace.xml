@@ -8,7 +8,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Project1/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Project1/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Project1/src/Blackjack.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Project1/src/Blackjack.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Project1/src/Card.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Project1/src/Card.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Project1/src/Deck.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Project1/src/Deck.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Project1/src/Hand.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Project1/src/Hand.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
