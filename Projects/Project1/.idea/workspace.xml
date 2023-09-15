@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="80c0bf2d-e1ab-48a3-8684-0e7bf6bab628" name="Changes" comment="finishing and cleaning methods up&#10;also bug fixes">
+      <change afterPath="$PROJECT_DIR$/src/Simulation.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Blackjack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Blackjack.java" afterDir="false" />
     </list>
@@ -125,6 +126,9 @@
       <workItem from="1694390037364" duration="26166000" />
       <workItem from="1694440782928" duration="19723000" />
       <workItem from="1694678208940" duration="1273000" />
+      <workItem from="1694700454435" duration="1110000" />
+      <workItem from="1694786489272" duration="1407000" />
+      <workItem from="1694788412853" duration="5416000" />
     </task>
     <task id="LOCAL-00001" summary="finishing and cleaningmethods up">
       <option name="closed" value="true" />

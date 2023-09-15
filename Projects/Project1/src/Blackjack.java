@@ -29,6 +29,7 @@ public class Blackjack {
     boolean advancedAIState;
     boolean debugInfoState;
     ArrayList<Boolean> decisionMatrix = new ArrayList<>();
+    HashMap<String,Object> outputData = new HashMap<>();
 
     /**
      * Initializes most basic version of Blackjack with all default parameters.
@@ -55,6 +56,7 @@ public class Blackjack {
      * @param players the amount of players.
      * @param decks the amount of decks to play with.
      * @param highLow optional high-low ace setting.
+     * @param
      */
     public Blackjack(int reshuffleCut, int players, int decks, boolean highLow, boolean interactive, boolean npcAI,
                      boolean advancedAI, boolean debugger) {
@@ -89,7 +91,7 @@ public class Blackjack {
 
         boolean anotherGame = true;
         do {
-            singleGame();
+            outputData = singleGame();
             reset();
             Scanner input = new Scanner(System.in);
             String answer;
@@ -121,7 +123,7 @@ public class Blackjack {
         multiDeck.shuffle();
     }
 
-    public void singleGame() {
+    public HashMap<String,Object> singleGame() {
         //Deals first secret card.
         for (Hand hand : dealList) {
             hand.add(multiDeck.deal(),true);
@@ -185,23 +187,28 @@ public class Blackjack {
         }
         while (decisionMatrix.contains(true));
 
-        //This prints out the game state after dealing.
-        String gameState = getGameState();
-        System.out.println(gameState);
+        //This prints out the game state after dealing as well as extracting and repackaging game data.
+        ArrayList<Object> gameState = getGameState();
+        HashMap<String,Object> gameDataMap = (HashMap<String,Object>) gameState.get(1);
+        String gameStateString = gameState.get(0).toString();
+        System.out.println(gameStateString);
+        return gameDataMap;
     }
 
-    private String getGameState() {
+    private ArrayList<Object> getGameState() {
+        ArrayList<Object> outList = new ArrayList<>();
+        HashMap<String, Object> outMap = new HashMap<>();
         StringBuilder outStr = new StringBuilder();
         outStr.append("Your Hand: ").append(handMap.get("hand1").toStringFancy(enableHighLow)).append("\n");
-        for (int i=2; i <= playerCount; i++) {
+        for (int i = 2; i <= playerCount; i++) {
             String playerName = "player" + i + " Hand: ";
             String handName = "hand" + i;
             outStr.append(playerName).append(handMap.get(handName).toStringFancy(enableHighLow)).append("\n");
         }
         outStr.append("Dealer Hand: ").append(handMap.get("dealerHand").toStringFancy(enableHighLow)).append("\n");
-        TreeMap<Integer,ArrayList<Hand>> scoreMap = new TreeMap<>();
+        TreeMap<Integer, ArrayList<Hand>> scoreMap = new TreeMap<>();
         for (Hand hand : dealList) {
-            if (hand.getTotalValue(enableHighLow)<=21) {
+            if (hand.getTotalValue(enableHighLow) <= 21) {
                 if (!scoreMap.containsKey(hand.getTotalValue(enableHighLow))) {
                     ArrayList<Hand> equalPointArray = new ArrayList<>();
                     scoreMap.put(hand.getTotalValue(enableHighLow), equalPointArray);
@@ -210,39 +217,45 @@ public class Blackjack {
             }
 
         }
-        int topScore = scoreMap.lastKey();
-        ArrayList<Hand> winners = new ArrayList<>(scoreMap.get(topScore));
         StringBuilder outVar = new StringBuilder();
-        if (winners.size() > 1) {
-            for (Hand hand : winners) {
-                if (winners.indexOf(hand) == 0 && dealList.indexOf(hand)==0) {
-                    outVar.append("Tie! You, ");
+        try {
+            int topScore = scoreMap.lastKey();
+            ArrayList<Hand> winners = new ArrayList<>(scoreMap.get(topScore));
+            int winState;
+            if (winners.size() > 1) {
+                for (Hand hand : winners) {
+                    if (winners.indexOf(hand) == 0 && dealList.indexOf(hand) == 0) {
+                        outVar.append("Tie! You, ");
+                        winState = 0;
+                    } else if (winners.indexOf(hand) == 0) {
+                        outVar.append("Loss! Player ").append(dealList.indexOf(hand) + 1).append(", ");
+                        winState = 1;
+                    } else if (!(winners.indexOf(hand) == (winners.size() - 1))) {
+                        outVar.append("player ").append(dealList.indexOf(hand) + 1).append(", ");
+                    } else if (dealList.indexOf(hand) != (dealList.size() - 1)) {
+                        outVar.append("and player ").append(dealList.indexOf(hand) + 1).append(" ");
+                    } else {
+                        outVar.append("and the dealer ");
+                    }
                 }
-                else if (winners.indexOf(hand) == 0) {
-                    outVar.append("Loss! Player ").append(dealList.indexOf(hand)+1).append(", ");
-                }
-                else if (!(winners.indexOf(hand) == (winners.size()-1))) {
-                    outVar.append("player ").append(dealList.indexOf(hand) + 1).append(", ");
-                }
-                else if (dealList.indexOf(hand) != (dealList.size()-1)) {
-                    outVar.append("and player ").append(dealList.indexOf(hand) + 1).append(" ");
-                }
-                else {
-                    outVar.append("and the dealer ");
+                outVar.append("have won.");
+            } else {
+                if (dealList.indexOf(winners.get(0)) == 0) {
+                    outVar.append("Victory! You have won.");
+                } else if (dealList.indexOf(winners.get(0)) != (dealList.size() - 1)) {
+                    outVar.append("Loss! Player ").append(dealList.indexOf(winners.get(0)) + 1).append(" has won.");
+                } else {
+                    outVar.append("Loss! Dealer has won.");
                 }
             }
-            outVar.append("have won.");
         }
-        else {
-            if (dealList.indexOf(winners.get(0))==0) {
-                outVar.append("Victory! You have won.");
-            }
-            else {
-                outVar.append("Loss! Player ").append(dealList.indexOf(winners.get(0))+1).append(" has won.");
-            }
+        catch (Exception NoSuchElementException) {
+            outVar.append("Loss! All Players and Dealer have lost.");
         }
         outStr.append(outVar).append("\n");
-        return outStr.toString();
+        outList.add(outStr.toString());
+        outList.add(outMap);
+        return outList;
     }
 
     public void getCardDecision(Scanner scanner, String decision, Hand hand, boolean doneFlag) {
@@ -512,10 +525,10 @@ public class Blackjack {
                 interactState, AIState, enableGoodAI, debugStateSetter);
     }
 
-    /**
-     * Not going to lie, pretty much everything from here on I implemented because it was in the expectations for the
-     * project. I had a vision of how to implement this, so I just freely wrote.
-     * Never really used much of it. But, nevertheless it was coded and it is here.
+    /*
+      Not going to lie, pretty much everything from here on I implemented because it was in the expectations for the
+      project. I had a vision of how to implement this, so I just freely wrote.
+      Never really used much of it. But, nevertheless it was coded and it is here.
      */
 
     /**
@@ -603,6 +616,6 @@ public class Blackjack {
      * @return returns a String that has represents the state of the game.
      */
     public String toString() {
-        return getGameState();
+        return getGameState().get(0).toString();
     }
 }
