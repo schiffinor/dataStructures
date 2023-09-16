@@ -6,6 +6,7 @@ last modified:
 Different representations than standard but at the end of the day just slight mod of standard language.
 */
 
+import javax.swing.plaf.synth.SynthLookAndFeel;
 import java.util.*;
 
 public class Blackjack {
@@ -37,7 +38,7 @@ public class Blackjack {
     public Blackjack() {
 
         //Basic version 3 players.
-        new Blackjack(5);
+        new Blackjack(15);
     }
 
     /**
@@ -124,7 +125,8 @@ public class Blackjack {
     }
 
     public HashMap<String,Object> singleGame() {
-        //Deals first secret card.
+        reset();
+        //Deals first secret card.10
         for (Hand hand : dealList) {
             hand.add(multiDeck.deal(),true);
         }
@@ -521,7 +523,8 @@ public class Blackjack {
             }
         } while(!done);
 
-         new Blackjack(5, playerCount, deckCount, highLowState,
+        int fairReshuffle = (playerCount+1)*6;
+        new Blackjack(5, playerCount, deckCount, highLowState,
                 interactState, AIState, enableGoodAI, debugStateSetter);
     }
 
@@ -541,7 +544,9 @@ public class Blackjack {
         for (Hand hand : dealList) {
             hand.reset();
         }
-
+        if (multiDeck.size()<reshuffleCutOff) {
+            deckCreator();
+        }
     }
 
     /**

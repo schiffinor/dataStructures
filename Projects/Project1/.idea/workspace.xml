@@ -4,8 +4,59 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="80c0bf2d-e1ab-48a3-8684-0e7bf6bab628" name="Changes" comment="finishing and cleaning methods up&#10;also bug fixes">
-      <change afterPath="$PROJECT_DIR$/src/Simulation.java" afterDir="false" />
+    <list default="true" id="80c0bf2d-e1ab-48a3-8684-0e7bf6bab628" name="Changes" comment="- Bug fixing&#10;- adjusting methods to support data export for ML&#10;- Began Simulation Class for training and Data Collection">
+      <change afterPath="$PROJECT_DIR$/JavaDoc/Blackjack.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/JavaDoc/BlackjackTests.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/JavaDoc/Card.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/JavaDoc/CardTests.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/JavaDoc/Deck.MultiDeck.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/JavaDoc/Deck.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/JavaDoc/DeckTests.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/JavaDoc/Hand.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/JavaDoc/HandTests.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/JavaDoc/Simulation.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/JavaDoc/allclasses-index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/JavaDoc/allpackages-index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/JavaDoc/copy.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/JavaDoc/element-list" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/JavaDoc/help-doc.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/JavaDoc/index-files/index-1.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/JavaDoc/index-files/index-10.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/JavaDoc/index-files/index-11.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/JavaDoc/index-files/index-12.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/JavaDoc/index-files/index-13.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/JavaDoc/index-files/index-2.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/JavaDoc/index-files/index-3.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/JavaDoc/index-files/index-4.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/JavaDoc/index-files/index-5.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/JavaDoc/index-files/index-6.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/JavaDoc/index-files/index-7.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/JavaDoc/index-files/index-8.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/JavaDoc/index-files/index-9.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/JavaDoc/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/JavaDoc/legal/COPYRIGHT" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/JavaDoc/legal/LICENSE" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/JavaDoc/legal/jquery.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/JavaDoc/legal/jqueryUI.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/JavaDoc/member-search-index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/JavaDoc/module-search-index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/JavaDoc/overview-tree.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/JavaDoc/package-search-index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/JavaDoc/package-summary.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/JavaDoc/package-tree.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/JavaDoc/resources/glass.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/JavaDoc/resources/x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/JavaDoc/script-dir/jquery-3.6.1.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/JavaDoc/script-dir/jquery-ui.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/JavaDoc/script-dir/jquery-ui.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/JavaDoc/script.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/JavaDoc/search-page.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/JavaDoc/search.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/JavaDoc/search.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/JavaDoc/stylesheet.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/JavaDoc/tag-search-index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/JavaDoc/type-search-index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Blackjack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Blackjack.java" afterDir="false" />
     </list>
@@ -37,6 +88,9 @@
         <option name="url" value="https://github.com/schiffinor/dataStructures.git" />
       </UrlAndAccount>
     </option>
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/Blackjack.java" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
@@ -128,7 +182,8 @@
       <workItem from="1694678208940" duration="1273000" />
       <workItem from="1694700454435" duration="1110000" />
       <workItem from="1694786489272" duration="1407000" />
-      <workItem from="1694788412853" duration="5416000" />
+      <workItem from="1694788412853" duration="6147000" />
+      <workItem from="1694796004252" duration="6972000" />
     </task>
     <task id="LOCAL-00001" summary="finishing and cleaningmethods up">
       <option name="closed" value="true" />
@@ -146,7 +201,15 @@
       <option name="project" value="LOCAL" />
       <updated>1694678118330</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="- Bug fixing&#10;- adjusting methods to support data export for ML&#10;- Began Simulation Class for training and Data Collection">
+      <option name="closed" value="true" />
+      <created>1694793989708</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1694793989708</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -167,11 +230,12 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="finishing and cleaningmethods up" />
     <MESSAGE value="finishing and cleaning methods up&#10;also bug fixes" />
-    <option name="LAST_COMMIT_MESSAGE" value="finishing and cleaning methods up&#10;also bug fixes" />
+    <MESSAGE value="- Bug fixing&#10;- adjusting methods to support data export for ML&#10;- Began Simulation Class for training and Data Collection" />
+    <option name="LAST_COMMIT_MESSAGE" value="- Bug fixing&#10;- adjusting methods to support data export for ML&#10;- Began Simulation Class for training and Data Collection" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>
-      <inline-watch fileUrl="file://$PROJECT_DIR$/src/Blackjack.java" line="18">
+      <inline-watch fileUrl="file://$PROJECT_DIR$/src/Blackjack.java" line="19">
         <watch expression="CSS.Value" language="JAVA" custom="com.sun.tools.example.debug.expr.LValue,javax.swing.text.html.CSS" />
       </inline-watch>
     </watches-manager>
