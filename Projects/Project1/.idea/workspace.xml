@@ -4,51 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="80c0bf2d-e1ab-48a3-8684-0e7bf6bab628" name="Changes" comment="- Bug fixing&#10;- adjusting methods to support data export for ML&#10;- Began Simulation Class for training and Data Collection">
-      <change afterPath="$PROJECT_DIR$/../Lab2/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Lab2/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Lab2/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Lab2/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Lab2/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Lab2/Lab2.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Lab2/src/Grid.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/JavaDoc/MachineLearningAI.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/JavaDoc/index-files/index-14.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc/Blackjack.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/Blackjack.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc/BlackjackTests.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/BlackjackTests.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc/Card.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/Card.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc/CardTests.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/CardTests.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc/Deck.MultiDeck.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/Deck.MultiDeck.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc/Deck.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/Deck.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc/DeckTests.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/DeckTests.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc/Hand.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/Hand.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc/HandTests.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/HandTests.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc/Simulation.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/Simulation.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc/allclasses-index.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/allclasses-index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc/allpackages-index.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/allpackages-index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc/help-doc.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/help-doc.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc/index-files/index-1.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/index-files/index-1.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc/index-files/index-10.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/index-files/index-10.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc/index-files/index-11.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/index-files/index-11.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc/index-files/index-12.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/index-files/index-12.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc/index-files/index-13.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/index-files/index-13.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc/index-files/index-2.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/index-files/index-2.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc/index-files/index-3.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/index-files/index-3.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc/index-files/index-4.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/index-files/index-4.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc/index-files/index-5.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/index-files/index-5.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc/index-files/index-6.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/index-files/index-6.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc/index-files/index-7.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/index-files/index-7.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc/index-files/index-8.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/index-files/index-8.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc/index-files/index-9.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/index-files/index-9.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc/member-search-index.js" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/member-search-index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc/overview-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/overview-tree.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc/package-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/package-summary.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc/package-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/package-tree.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc/search.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/search.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc/type-search-index.js" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/type-search-index.js" afterDir="false" />
-    </list>
+    <list default="true" id="80c0bf2d-e1ab-48a3-8684-0e7bf6bab628" name="Changes" comment="- Bug fixing&#10;- adjusting methods to support data export for ML&#10;- Began Simulation Class for training and Data Collection" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -205,7 +161,23 @@
       <option name="project" value="LOCAL" />
       <updated>1695056801148</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="- Bug fixing&#10;- adjusting methods to support data export for ML&#10;- Began Simulation Class for training and Data Collection">
+      <option name="closed" value="true" />
+      <created>1695066892926</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1695066892926</updated>
+    </task>
+    <task id="LOCAL-00005" summary="- Bug fixing&#10;- adjusting methods to support data export for ML&#10;- Began Simulation Class for training and Data Collection">
+      <option name="closed" value="true" />
+      <created>1695066904054</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1695066904054</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
