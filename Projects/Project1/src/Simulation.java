@@ -18,7 +18,7 @@ public class Simulation {
      * depending on the game output. Finally, the loop finishes and the statistics are outputted.
      */
     public static void main(String[] args) {
-        Blackjack gameInstance = new Blackjack(12,1,1,true,false,true,true,false,true);
+        Blackjack gameInstance = new Blackjack(18,1,1,true,false,true,true,false,true);
         int wins = 0;
         int ties = 0;
         int losses = 0;
@@ -43,7 +43,7 @@ public class Simulation {
 
         }
         gameInstance.anotherGame = false;
-        String output = String.format("Wins: %s\nTies: %s\nLosses: %s\nWin Rate: %s%%\n",wins,ties,losses,(((double) wins)/runtimes*100));
+        String output = String.format("Wins: %s\nTies: %s\nLosses: %s\nWin Rate: %s%%\nLoss Rate: %s%%\nTie Rate: %s%%\nHouse Advantage: %s%%\n",wins,ties,losses,(((double) wins)/runtimes*100),(((double) losses)/runtimes*100),(((double) ties)/runtimes*100),(((double) losses-wins)/runtimes*100));
         System.out.println(output);
     }
 }

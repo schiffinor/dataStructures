@@ -505,6 +505,20 @@ public class Blackjack {
                 hand.countedCardVals.add(card.identity);
             }
         }
+        ArrayList<Integer> valList = new ArrayList<>();
+        for (Card h : hand.handList) {
+            valList.add(h.identity);
+        }
+        int thresholdMod;
+        double balanceMod;
+        if (enableHighLow && (valList.contains(1))) {
+            thresholdMod = 15;
+            balanceMod = 0.015;
+        }
+        else {
+            thresholdMod = 12;
+            balanceMod = 0.010;
+        }
         int runningCount = 0;
         for (int val : hand.countedCardVals) {
             runningCount += switch (val) {
@@ -522,7 +536,7 @@ public class Blackjack {
             decksRemaining = 1;
         }
         double trueCount = runningCount / decksRemaining;
-        double betModifier = 1 - (trueCount * (0.04)) - ((hand.getTotalValue(enableHighLow)-10) * (0.1));
+        double betModifier = 1 - (trueCount * (balanceMod)) - ((hand.getTotalValue(enableHighLow)-thresholdMod) * (0.195));
         decision = betModifier > 0.5;
         if (hand.getTotalValue(enableHighLow)>=20) {
             decision = false;
@@ -531,7 +545,7 @@ public class Blackjack {
             decision = true;
         }
         String debugInfo;
-        debugInfo = String.format("hand: %s\nTC: %s\nTCMod: %s\nBM: %s\nCC: %s\nCR: %s\n",hand,trueCount,(trueCount * (0.04 )),betModifier,hand.countedCardVals,cardsRemaining);
+        debugInfo = String.format("hand: %s\nTC: %s\nTCMod: %s\nBM: %s\nCC: %s\nCR: %s\n",hand,trueCount,(trueCount * (balanceMod )),betModifier,hand.countedCardVals,cardsRemaining);
         if (debugInfoState) {
             System.out.println(debugInfo);
         }
