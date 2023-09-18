@@ -8,6 +8,11 @@ I decided to give it some more values and stuff.
 
 import java.util.ArrayList;
 
+/**
+ * @author      Roman Schiffino <rjschi24@colby.edu>
+ * @version     1.1
+ * @since       1.1
+ */
 public class Card {
 
     //Identity of card
@@ -23,8 +28,10 @@ public class Card {
 
     /**
      * Constructs a card with the specified values.
-     * @param ident the identifier for the card.
+     * <p>
      * Overloaded method to patch to allow test file to work.
+     *
+     * @param ident the identifier for the card.
      */
     public Card(int ident) {
         identity = ident;
@@ -46,10 +53,12 @@ public class Card {
 
     /**
      *The same card but with the added suit information.
+     * <p>
+     * This is also the overloading section. with my added stuff. This is necessary because cardTests
+     * won't work otherwise.
+     *
      * @param ident the unique identifier for the card per suit.
      * @param suit the suit of the card.
-     * This is also the overloading section. with my added stuff.
-     * This is necessary because cardTests won't work otherwise.
      */
     public Card(int ident, String suit) {
         identity = ident;
@@ -72,6 +81,7 @@ public class Card {
 
     /**
      * Returns the value of the card.
+     *
      * @return the value of the card
      */
     public int getValue() {
@@ -80,6 +90,7 @@ public class Card {
 
     /**
      * Returns the suit of the card.
+     *
      * @return the suit of the card
      */
     public String getSuit() {
@@ -98,6 +109,7 @@ public class Card {
 
     /**
      * Returns a string representation of this card.
+     *
      * @return a string representation of this card
      */
     public String toString() {
@@ -121,6 +133,11 @@ public class Card {
         return getString(stringRep);
     }
 
+    /**
+     * Returns a fancy string representation of this card.
+     *
+     * @return a fancy string representation of this card
+     */
     public String toStringFancy() {
         // String representation of the card.
         String stringRep = switch ((int) cardIdentifier.get(0)) {
@@ -142,6 +159,11 @@ public class Card {
         return getString(stringRep);
     }
 
+    /**
+     * Constructs card string name from identifier.
+     *
+     * @return a string form of card identifier.
+     */
     public String getString(String stringRep) {
         if (cardIdentifier.size() == 2) {
             switch ((String) cardIdentifier.get(1)) {
