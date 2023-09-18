@@ -4,51 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e2d80e6e-1791-41bb-b47c-ce1097476c4f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lab2.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Grid.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Project1/JavaDoc/MachineLearningAI.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Project1/JavaDoc/index-files/index-14.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Project1/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Project1/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Project1/JavaDoc/Blackjack.html" beforeDir="false" afterPath="$PROJECT_DIR$/../Project1/JavaDoc/Blackjack.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Project1/JavaDoc/BlackjackTests.html" beforeDir="false" afterPath="$PROJECT_DIR$/../Project1/JavaDoc/BlackjackTests.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Project1/JavaDoc/Card.html" beforeDir="false" afterPath="$PROJECT_DIR$/../Project1/JavaDoc/Card.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Project1/JavaDoc/CardTests.html" beforeDir="false" afterPath="$PROJECT_DIR$/../Project1/JavaDoc/CardTests.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Project1/JavaDoc/Deck.MultiDeck.html" beforeDir="false" afterPath="$PROJECT_DIR$/../Project1/JavaDoc/Deck.MultiDeck.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Project1/JavaDoc/Deck.html" beforeDir="false" afterPath="$PROJECT_DIR$/../Project1/JavaDoc/Deck.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Project1/JavaDoc/DeckTests.html" beforeDir="false" afterPath="$PROJECT_DIR$/../Project1/JavaDoc/DeckTests.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Project1/JavaDoc/Hand.html" beforeDir="false" afterPath="$PROJECT_DIR$/../Project1/JavaDoc/Hand.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Project1/JavaDoc/HandTests.html" beforeDir="false" afterPath="$PROJECT_DIR$/../Project1/JavaDoc/HandTests.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Project1/JavaDoc/Simulation.html" beforeDir="false" afterPath="$PROJECT_DIR$/../Project1/JavaDoc/Simulation.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Project1/JavaDoc/allclasses-index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../Project1/JavaDoc/allclasses-index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Project1/JavaDoc/allpackages-index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../Project1/JavaDoc/allpackages-index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Project1/JavaDoc/help-doc.html" beforeDir="false" afterPath="$PROJECT_DIR$/../Project1/JavaDoc/help-doc.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Project1/JavaDoc/index-files/index-1.html" beforeDir="false" afterPath="$PROJECT_DIR$/../Project1/JavaDoc/index-files/index-1.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Project1/JavaDoc/index-files/index-10.html" beforeDir="false" afterPath="$PROJECT_DIR$/../Project1/JavaDoc/index-files/index-10.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Project1/JavaDoc/index-files/index-11.html" beforeDir="false" afterPath="$PROJECT_DIR$/../Project1/JavaDoc/index-files/index-11.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Project1/JavaDoc/index-files/index-12.html" beforeDir="false" afterPath="$PROJECT_DIR$/../Project1/JavaDoc/index-files/index-12.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Project1/JavaDoc/index-files/index-13.html" beforeDir="false" afterPath="$PROJECT_DIR$/../Project1/JavaDoc/index-files/index-13.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Project1/JavaDoc/index-files/index-2.html" beforeDir="false" afterPath="$PROJECT_DIR$/../Project1/JavaDoc/index-files/index-2.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Project1/JavaDoc/index-files/index-3.html" beforeDir="false" afterPath="$PROJECT_DIR$/../Project1/JavaDoc/index-files/index-3.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Project1/JavaDoc/index-files/index-4.html" beforeDir="false" afterPath="$PROJECT_DIR$/../Project1/JavaDoc/index-files/index-4.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Project1/JavaDoc/index-files/index-5.html" beforeDir="false" afterPath="$PROJECT_DIR$/../Project1/JavaDoc/index-files/index-5.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Project1/JavaDoc/index-files/index-6.html" beforeDir="false" afterPath="$PROJECT_DIR$/../Project1/JavaDoc/index-files/index-6.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Project1/JavaDoc/index-files/index-7.html" beforeDir="false" afterPath="$PROJECT_DIR$/../Project1/JavaDoc/index-files/index-7.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Project1/JavaDoc/index-files/index-8.html" beforeDir="false" afterPath="$PROJECT_DIR$/../Project1/JavaDoc/index-files/index-8.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Project1/JavaDoc/index-files/index-9.html" beforeDir="false" afterPath="$PROJECT_DIR$/../Project1/JavaDoc/index-files/index-9.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Project1/JavaDoc/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../Project1/JavaDoc/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Project1/JavaDoc/member-search-index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../Project1/JavaDoc/member-search-index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Project1/JavaDoc/overview-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/../Project1/JavaDoc/overview-tree.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Project1/JavaDoc/package-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/../Project1/JavaDoc/package-summary.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Project1/JavaDoc/package-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/../Project1/JavaDoc/package-tree.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Project1/JavaDoc/search.html" beforeDir="false" afterPath="$PROJECT_DIR$/../Project1/JavaDoc/search.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Project1/JavaDoc/type-search-index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../Project1/JavaDoc/type-search-index.js" afterDir="false" />
-    </list>
+    <list default="true" id="e2d80e6e-1791-41bb-b47c-ce1097476c4f" name="Changes" comment="created grid Class" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -95,11 +51,24 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1695057033605</updated>
-      <workItem from="1695057034644" duration="7226000" />
+      <workItem from="1695057034644" duration="7806000" />
     </task>
+    <task id="LOCAL-00001" summary="created grid Class">
+      <option name="closed" value="true" />
+      <created>1695066930536</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1695066930536</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="created grid Class" />
+    <option name="LAST_COMMIT_MESSAGE" value="created grid Class" />
   </component>
 </project>
