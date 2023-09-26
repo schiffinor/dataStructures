@@ -5,9 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="80c0bf2d-e1ab-48a3-8684-0e7bf6bab628" name="Changes" comment="finishing and cleaning methods up&#10;also bug fixes">
-      <change beforePath="$PROJECT_DIR$/../Project 2/src/Cell.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Project 2/src/Cell.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Project 2/src/Landscape.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Project 2/src/Landscape.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Lab2/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Lab2/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Lab2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Lab2/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Project2/src/Cell.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Project2/src/Cell.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Project2/src/Landscape.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Project2/src/Landscape.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Project2/src/LandscapeDisplay.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Project2/src/LandscapeDisplay.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Project2/src/LandscapeTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Project2/src/LandscapeTests.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -142,7 +146,7 @@
       <workItem from="1694678208940" duration="1273000" />
       <workItem from="1695102805737" duration="58000" />
       <workItem from="1695337507267" duration="466000" />
-      <workItem from="1695699572306" duration="4027000" />
+      <workItem from="1695699572306" duration="5357000" />
     </task>
     <task id="LOCAL-00001" summary="finishing and cleaningmethods up">
       <option name="closed" value="true" />

@@ -24,8 +24,7 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 /**
  * Displays a Landscape graphically using Swing. The Landscape
@@ -38,6 +37,7 @@ public class LandscapeDisplay {
     protected Landscape scape;
     private LandscapePanel canvas;
     private int gridScale; // width (and height) of each square in the grid
+    public boolean pauseState;
 
     /**
      * Initializes a display window for a Landscape.
@@ -49,6 +49,7 @@ public class LandscapeDisplay {
         // setup the window
         this.win = new JFrame("Game of Life");
         this.win.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.pauseState = false;
 
         this.scape = scape;
         this.gridScale = scale;
@@ -59,6 +60,7 @@ public class LandscapeDisplay {
                 (int) (this.scape.getRows() + 4) * this.gridScale);
 
         // add the panel to the window, layout, and display
+        createMenuBar();
         this.win.add(this.canvas, BorderLayout.CENTER);
         this.win.pack();
         this.win.setVisible(true);
@@ -131,16 +133,83 @@ public class LandscapeDisplay {
         this.win.repaint();
     }
 
+    private void createMenuBar() {
+        JMenuBar menuBar = new JMenuBar();
+
+        // Create a File menu
+        JMenu fileMenu = new JMenu("File");
+        // Create a Simulation menu
+        JMenu simMenu = new JMenu("Simulation");
+
+        // Create a "Save Image" menu item
+        JMenuItem saveMenuItem = new JMenuItem("Save Image");
+        saveMenuItem.addActionListener(e -> {
+            JFileChooser fileChooser = new JFileChooser();
+            int choice = fileChooser.showSaveDialog(null);
+            if (choice == JFileChooser.APPROVE_OPTION) {
+                String filename = fileChooser.getSelectedFile().getAbsolutePath();
+                saveImage(filename);
+            }
+        });
+
+        // Add menu items to the File menu
+        fileMenu.add(saveMenuItem);
+
+        // Create a "Play" menu item
+        JMenuItem playMenuItem = new JMenuItem("Play");
+        playMenuItem.addActionListener(e -> {
+            if (pauseState) {
+                pauseState = false;
+            }
+        });
+
+        // Create a "Pause" menu item
+        JMenuItem pauseMenuItem = new JMenuItem("Pause");
+        pauseMenuItem.addActionListener(e -> {
+            if (!pauseState) {
+                pauseState = true;
+            }
+        });
+
+        // Create a "Previous State" menu item
+        JMenuItem backMenuItem = new JMenuItem("<<");
+        playMenuItem.addActionListener(e -> {
+            scape.revert();
+            //display.repaint();
+        });
+
+        // Create a "Proceeding State" menu item
+        JMenuItem nextMenuItem = new JMenuItem(">>");
+        pauseMenuItem.addActionListener(e -> {
+            scape.advance();
+            //display.repaint();
+        });
+
+        // Add menu items to the File menu
+        simMenu.add(playMenuItem);
+        simMenu.add(pauseMenuItem);
+        simMenu.add(backMenuItem);
+        simMenu.add(nextMenuItem);
+
+        // Add the File menu to the menu bar
+        menuBar.add(fileMenu);
+        menuBar.add(simMenu);
+
+        // Set the menu bar for the JFrame
+        win.setJMenuBar(menuBar);
+    }
+
+
     public static void main(String[] args) throws InterruptedException {
-        Landscape scape = new Landscape(100, 100, .25);
+        Landscape scape = new Landscape(100, 100, 50);
 
         LandscapeDisplay display = new LandscapeDisplay(scape, 6);
 
         // Uncomment below when advance() has been finished
-        // while (true) {
-        // Thread.sleep(10);
-        // scape.advance();
-        // display.repaint();
-        // }
+        while (true) {
+            Thread.sleep(100);
+            scape.advance();
+            display.repaint();
+        }
     }
 }

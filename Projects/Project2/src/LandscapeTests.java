@@ -20,9 +20,9 @@ public class LandscapeTests {
             Landscape l2 = new Landscape(10, 10);
 
             // verify
-            System.out.println(l1);
-            System.out.println("\n");
-            System.out.println(l2);
+            //System.out.println(l1);
+            //System.out.println("\n");
+            //System.out.println(l2);
 
             // test
             assert l1 != null : "Error in Landscape::Landscape(int, int)";
@@ -92,12 +92,23 @@ public class LandscapeTests {
         // case 7: testing advance()
         {
             // set up
-
+            Landscape l1 = new Landscape(10, 10,0);
+            System.out.println(l1);
+            Landscape l2 = new Landscape(10, 10,50);
+            System.out.println(l2);
+            String l3 = l2.toString();
+            System.out.println(l3);
 
             // verify
-
+            System.out.println(l1);
+            System.out.println("\n");
+            System.out.println(l2);
+            l2.advance();
+            System.out.println(l3+"\n"+l2);
 
             // test
+            assert l1 != null : "Error in Landscape::Landscape(int, int)";
+            assert l2 != null : "Error in Landscape::Landscape(int, int)";
 
         }
 

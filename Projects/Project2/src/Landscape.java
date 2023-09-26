@@ -1,13 +1,18 @@
 import java.awt.Color;
 import java.awt.Graphics;
-import java.util.ArrayList;
+import java.util.*;
 
 public class Landscape {
 
     /**
      * The underlying grid of Cells for Conway's Game
      */
-    private Cell[][] landscape;
+    public Cell[][] landscape;
+    private Random rand;
+    public LinkedList<Cell[][]> stateList;
+    public HashMap<String,LinkedList<Cell[][]>> previousGame;
+
+    public HashMap<Cell,Integer[]> cellHashMap;
 
     /**
      * The original probability each individual Cell is alive
@@ -23,8 +28,7 @@ public class Landscape {
      * @param columns the number of columns in the Landscape
      */
     public Landscape(int rows, int columns) {
-        initialChance = 0;
-        new Landscape(rows, columns, initialChance);
+        new Landscape(rows, columns, 0);
     }
 
     /**
@@ -37,14 +41,36 @@ public class Landscape {
      * @param chance  the probability each individual Cell is initially alive
      */
     public Landscape(int rows, int columns, double chance) {
+        initialChance = chance;
+        rand = new Random();
         landscape = new Cell[rows][columns];
-        for
+        stateList = new LinkedList<>();
+        previousGame = new HashMap<>();
+        reset();
     }
 
     /**
      * Recreates the Landscape according to the specifications given in its initial construction.
      */
     public void reset() {
+        int curRow = 0;
+        cellHashMap = new HashMap<>();
+        for (Cell[] row : landscape) {
+            int curCol = 0;
+            for (Cell column: row) {
+                double choiceDouble = rand.nextDouble(0,100);
+                landscape[curRow][curCol] = new Cell(choiceDouble < initialChance);
+                Integer[] identifier = new Integer[2];
+                identifier[0] = curRow;
+                identifier[1] = curCol;
+                cellHashMap.put(landscape[curRow][curCol], identifier);
+                curCol++;
+            }
+            curRow++;
+        }
+        stateList.clear();
+        stateList.addFirst(landscape);
+        previousGame.put("previousGame",stateList);
     }
 
     /**
@@ -62,7 +88,7 @@ public class Landscape {
      * @return the number of columns in the Landscape
      */
     public int getCols() {
-        return 0;
+        return landscape[0].length;
     }
 
     /**
@@ -73,15 +99,35 @@ public class Landscape {
      * @return the Cell specified the given row and column
      */
     public Cell getCell(int row, int col) {
-        Cell cell = new Cell(true);
-        return cell;
+        return landscape[row][col];
     }
 
     /**
      * Returns a String representation of the Landscape.
      */
     public String toString() {
-        return "";
+        return arrayString(landscape);
+    }
+
+    public static String arrayString(Object[][] arr) {
+        StringBuilder outString = new StringBuilder();
+
+        for (Object[] row : arr) {
+            outString.append("[ ");
+            for (Object column: row) {
+                try {
+                    outString.append(column.toString()).append(" ");
+                } catch (Exception NullPointerException) {
+                    outString.append("null").append(" ");
+                }
+            }
+            outString.append("]\n");
+        }
+        return outString.toString();
+    }
+
+    public ArrayList<Cell> getNeighbors(Integer[] integers) {
+        return getNeighbors(integers[0],integers[1]);
     }
 
     /**
@@ -92,7 +138,23 @@ public class Landscape {
      * @return an ArrayList of the neighboring Cells to the specified location
      */
     public ArrayList<Cell> getNeighbors(int row, int col) {
+        Cell[][] landscapeSnapshot = landscape.clone();
         ArrayList<Cell> neighbors = new ArrayList<>();
+        boolean[] checkDirections = new boolean[4];
+        checkDirections[0] = (row > 0);
+        checkDirections[1] = (col > 0);
+        checkDirections[2] = (row < getRows()-1);
+        checkDirections[3] = (col < getCols()-1);
+        try {
+            Cell refCell = landscapeSnapshot[row][col];
+        } catch (Exception ArrayIndexOutOfBoundsException) {
+            System.out.println("Cell not within bounds of game. Neighbors DNE.");
+        }
+        for (int i = 0; i < 4; i++) {
+            if (checkDirections[i]) {
+                neighbors.add((landscapeSnapshot[row-((int) Math.cos((Math.PI / 2) * i))][col-((int) Math.sin((Math.PI / 2) * i))]).clone());
+            }
+        }
         return neighbors;
     }
 
@@ -100,7 +162,47 @@ public class Landscape {
      * Advances the current Landscape by one step. 
      */
     public void advance() {
+        ArrayList<Cell> livingCells = new ArrayList<>();
+        HashMap<Cell,ArrayList<Cell>> neighborMap = new HashMap<>();
+        for (Cell[] row : landscape) {
+            List<Cell> tempRow = Arrays.asList(row);
+            HashSet<Cell> rowSet = new HashSet<>(tempRow);
+            rowSet.removeIf(cell -> cell.equals(new Cell(false)));
+            livingCells.addAll(rowSet);
+        }
+        for (Cell cell : livingCells) {
+            neighborMap.put(cell, (ArrayList<Cell>) getNeighbors(cellHashMap.get(cell)).clone());
+        }
+        for (Cell cell : livingCells) {
+            cell.updateState(neighborMap.get(cell));
+        }
+        Cell[][] landscapeSnapshot = landscape.clone();
+        int curRow = 0;
+        for (Cell[] row : landscape) {
+            int curCol = 0;
+            for (Cell column: row) {
+                landscapeSnapshot[curRow][curCol] = (landscape[curRow][curCol]).clone();
+                curCol++;
+            }
+            curRow++;
+        }
+        stateList.addLast(landscapeSnapshot);
     }
+
+    public void revert() {
+        Cell[][] landscapeSnapshot = stateList.getLast();
+        stateList.removeLast();
+        int curRow = 0;
+        for (Cell[] row : landscapeSnapshot) {
+            int curCol = 0;
+            for (Cell column: row) {
+                landscape[curRow][curCol] = column.clone();
+                curCol++;
+            }
+            curRow++;
+        }
+    }
+
 
     /**
      * Draws the Cell to the given Graphics object at the specified scale.

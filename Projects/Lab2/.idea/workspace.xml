@@ -4,7 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e2d80e6e-1791-41bb-b47c-ce1097476c4f" name="Changes" comment="created grid Class" />
+    <list default="true" id="e2d80e6e-1791-41bb-b47c-ce1097476c4f" name="Changes" comment="created grid Class">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Project1/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Project1/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Project2/src/Cell.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Project2/src/Cell.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Project2/src/Landscape.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Project2/src/Landscape.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Project2/src/LandscapeDisplay.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Project2/src/LandscapeDisplay.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Project2/src/LandscapeTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Project2/src/LandscapeTests.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -20,9 +28,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 5
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
   <component name="ProjectId" id="2VZwhd0D7gkw9JvTQN7cIkN6n2s" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -36,6 +44,7 @@
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/Users/schif/Documents/Coding/dataStructures/Projects/Lab2",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -52,6 +61,7 @@
       <option name="presentableId" value="Default" />
       <updated>1695057033605</updated>
       <workItem from="1695057034644" duration="7806000" />
+      <workItem from="1695709402420" duration="1834000" />
     </task>
     <task id="LOCAL-00001" summary="created grid Class">
       <option name="closed" value="true" />

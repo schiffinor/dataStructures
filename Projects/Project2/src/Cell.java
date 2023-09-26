@@ -55,9 +55,9 @@ public class Cell {
      */
     public void updateState(ArrayList<Cell> neighbors) {
         AtomicInteger liveNeighbors = new AtomicInteger();
-        if (neighbors.contains(true)) {
+        if (neighbors.contains(new Cell(true))) {
             neighbors.forEach((Cell cell) -> {
-                if (cell.equals(true)) {
+                if (cell.equals(new Cell(true))) {
                     liveNeighbors.getAndIncrement();
                 };
             }
@@ -87,6 +87,7 @@ public class Cell {
      * @return 1 if this Cell is alive, otherwise 0.
      */
     public String toString() {
+        //"Cell"+ hashCode()+" : " +
         return ((Integer) Boolean.compare(getAlive(), false)).toString();
     }
 
@@ -96,12 +97,24 @@ public class Cell {
      * @return 1 if this Cell is alive, otherwise 0.
      */
     @Override
-    public boolean equals(Object cell){
-        if(cell instanceof Cell){
-            Cell checkCell = (Cell) cell;
+    public boolean equals(Object obj){
+        if(obj instanceof Cell){
+            Cell checkCell = (Cell) obj;
             return ((Boolean) this.getAlive()).equals(checkCell.getAlive());
+        } else if (obj instanceof Boolean) {
+            return ((Boolean) this.getAlive()).equals(obj);
         } else
             return false;
+    }
+
+    /**
+     * Overrides equals method to allow me to create more efficient methods.
+     *
+     * @return 1 if this Cell is alive, otherwise 0.
+     */
+    @Override
+    public Cell clone(){
+        return new Cell(getAlive());
     }
 
 }
