@@ -22,7 +22,7 @@ public class Simulation {
         int wins = 0;
         int ties = 0;
         int losses = 0;
-        int runtimes = 10000;
+        int runtimes = 10000000;
         for (int i = 0; i < runtimes; i++) {
             HashMap<String, Object> gameData = gameInstance.singleGame();
             gameInstance.reset();

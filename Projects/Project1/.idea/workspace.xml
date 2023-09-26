@@ -4,7 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="80c0bf2d-e1ab-48a3-8684-0e7bf6bab628" name="Changes" comment="- Bug fixing&#10;- adjusting methods to support data export for ML&#10;- Began Simulation Class for training and Data Collection" />
+    <list default="true" id="80c0bf2d-e1ab-48a3-8684-0e7bf6bab628" name="Changes" comment="finishing and cleaning methods up&#10;also bug fixes">
+      <change beforePath="$PROJECT_DIR$/../Lab1/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Lab1/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_9_17_2023_5_01_PM_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_9_17_2023_5_01_PM__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_9_18_2023_10_04_AM_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_9_18_2023_10_04_AM__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Simulation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Simulation.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -29,7 +38,7 @@
   <component name="GithubPullRequestsUISettings">
     <option name="selectedUrlAndAccountId">
       <UrlAndAccount>
-        <option name="accountId" value="95b20480-20dd-404b-b580-e5b24b179739" />
+        <option name="accountId" value="e4809a4d-1ffd-4639-994a-6d572060ec28" />
         <option name="url" value="https://github.com/schiffinor/dataStructures.git" />
       </UrlAndAccount>
     </option>
@@ -48,31 +57,31 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "extract.method.default.visibility": "private",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/schif/Documents/Coding/dataStructures/Projects/Lab1",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.2",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "io.unthrottled.amii.config.ui.PluginSettingsUI",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;extract.method.default.visibility&quot;: &quot;private&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/schif/Documents/Coding/dataStructures/Projects/Lab1&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
-  <component name="RunManager" selected="Application.Sim">
+}</component>
+  <component name="RunManager" selected="Application.Blackjack">
     <configuration name="Blackjack" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Blackjack" />
       <module name="Project1" />
@@ -136,6 +145,9 @@
       <workItem from="1694390037364" duration="26166000" />
       <workItem from="1694440782928" duration="19723000" />
       <workItem from="1694678208940" duration="1273000" />
+      <workItem from="1695102805737" duration="58000" />
+      <workItem from="1695337507267" duration="466000" />
+      <workItem from="1695699572306" duration="1549000" />
     </task>
     <task id="LOCAL-00001" summary="finishing and cleaningmethods up">
       <option name="closed" value="true" />
@@ -153,31 +165,7 @@
       <option name="project" value="LOCAL" />
       <updated>1694678118330</updated>
     </task>
-    <task id="LOCAL-00003" summary="- Bug fixing&#10;- adjusting methods to support data export for ML&#10;- Began Simulation Class for training and Data Collection">
-      <option name="closed" value="true" />
-      <created>1695056801148</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1695056801148</updated>
-    </task>
-    <task id="LOCAL-00004" summary="- Bug fixing&#10;- adjusting methods to support data export for ML&#10;- Began Simulation Class for training and Data Collection">
-      <option name="closed" value="true" />
-      <created>1695066892926</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1695066892926</updated>
-    </task>
-    <task id="LOCAL-00005" summary="- Bug fixing&#10;- adjusting methods to support data export for ML&#10;- Began Simulation Class for training and Data Collection">
-      <option name="closed" value="true" />
-      <created>1695066904054</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1695066904054</updated>
-    </task>
-    <option name="localTasksCounter" value="6" />
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -198,8 +186,7 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="finishing and cleaningmethods up" />
     <MESSAGE value="finishing and cleaning methods up&#10;also bug fixes" />
-    <MESSAGE value="- Bug fixing&#10;- adjusting methods to support data export for ML&#10;- Began Simulation Class for training and Data Collection" />
-    <option name="LAST_COMMIT_MESSAGE" value="- Bug fixing&#10;- adjusting methods to support data export for ML&#10;- Began Simulation Class for training and Data Collection" />
+    <option name="LAST_COMMIT_MESSAGE" value="finishing and cleaning methods up&#10;also bug fixes" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

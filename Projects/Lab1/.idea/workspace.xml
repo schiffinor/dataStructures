@@ -5,19 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4ed48254-50dc-431b-803f-7204de112a29" name="Changes" comment="Built the whole program for lab 1.">
-      <change afterPath="$PROJECT_DIR$/../Project1/.idea/shelf/Uncommitted_changes_before_Update_at_9_17_2023_5_01_PM_[Changes]/shelved.patch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Project1/.idea/shelf/Uncommitted_changes_before_Update_at_9_17_2023_5_01_PM__Changes_.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Project1/inputDataHighAce.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Project1/inputDataHighLowAceNoAce.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Project1/inputDataHighLowAceYesAce.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Project1/src/MachineLearningAI.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Project1/.idea/shelf/Uncommitted_changes_before_Update_at_9_18_2023_4_25_PM_[Changes]/shelved.patch" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Project1/.idea/shelf/Uncommitted_changes_before_Update_at_9_18_2023_4_25_PM__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Project1/.idea/shelf/Uncommitted_changes_before_Update_at_9_18_2023_10_04_AM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Project1/.idea/shelf/Uncommitted_changes_before_Update_at_9_18_2023_10_04_AM__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Project1/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Project1/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Project1/src/Blackjack.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Project1/src/Blackjack.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Project1/src/Card.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Project1/src/Card.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Project1/src/Deck.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Project1/src/Deck.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Project1/src/Hand.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Project1/src/Hand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Project1/src/Simulation.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Project1/src/Simulation.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,12 +19,12 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "schiffinor"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;schiffinor&quot;
   }
-}]]></component>
+}</component>
   <component name="GithubPullRequestsUISettings">
     <option name="selectedUrlAndAccountId">
       <UrlAndAccount>
@@ -84,6 +76,7 @@
       <workItem from="1694443014482" duration="643000" />
       <workItem from="1694678211288" duration="594000" />
       <workItem from="1694804204984" duration="1258000" />
+      <workItem from="1695102788455" duration="16000" />
     </task>
     <task id="LOCAL-00001" summary="Built the whole program for lab 1.">
       <option name="closed" value="true" />
