@@ -5,14 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="80c0bf2d-e1ab-48a3-8684-0e7bf6bab628" name="Changes" comment="finishing and cleaning methods up&#10;also bug fixes">
-      <change beforePath="$PROJECT_DIR$/../Lab1/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Lab1/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_9_17_2023_5_01_PM_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_9_17_2023_5_01_PM__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_9_18_2023_10_04_AM_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_9_18_2023_10_04_AM__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Project 2/src/Cell.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Project 2/src/Cell.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Project 2/src/Landscape.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Project 2/src/Landscape.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Simulation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Simulation.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -126,10 +121,10 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Blackjack" />
         <item itemvalue="Application.HandTests" />
         <item itemvalue="Application.Deck" />
         <item itemvalue="Application.CardTests" />
+        <item itemvalue="Application.Blackjack" />
       </list>
     </recent_temporary>
   </component>
@@ -147,7 +142,7 @@
       <workItem from="1694678208940" duration="1273000" />
       <workItem from="1695102805737" duration="58000" />
       <workItem from="1695337507267" duration="466000" />
-      <workItem from="1695699572306" duration="1549000" />
+      <workItem from="1695699572306" duration="4027000" />
     </task>
     <task id="LOCAL-00001" summary="finishing and cleaningmethods up">
       <option name="closed" value="true" />
