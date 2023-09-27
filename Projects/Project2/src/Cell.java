@@ -59,7 +59,7 @@ public class Cell {
             neighbors.forEach((Cell cell) -> {
                 if (cell.equals(new Cell(true))) {
                     liveNeighbors.getAndIncrement();
-                };
+                }
             }
             );
             if (alive) {
@@ -98,8 +98,7 @@ public class Cell {
      */
     @Override
     public boolean equals(Object obj){
-        if(obj instanceof Cell){
-            Cell checkCell = (Cell) obj;
+        if(obj instanceof Cell checkCell){
             return ((Boolean) this.getAlive()).equals(checkCell.getAlive());
         } else if (obj instanceof Boolean) {
             return ((Boolean) this.getAlive()).equals(obj);
@@ -108,7 +107,7 @@ public class Cell {
     }
 
     /**
-     * Overrides equals method to allow me to create more efficient methods.
+     * Overrides clone method to allow me to create more efficient methods.
      *
      * @return 1 if this Cell is alive, otherwise 0.
      */

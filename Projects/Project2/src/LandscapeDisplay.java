@@ -33,11 +33,10 @@ import javax.swing.*;
  * @author bseastwo
  */
 public class LandscapeDisplay {
-    JFrame win;
-    protected Landscape scape;
-    private LandscapePanel canvas;
-    private int gridScale; // width (and height) of each square in the grid
-    public boolean pauseState;
+    final JFrame win;
+    protected final Landscape scape;
+    private final LandscapePanel canvas;
+    private final int gridScale; // width (and height) of each square in the grid
 
     /**
      * Initializes a display window for a Landscape.
@@ -46,10 +45,9 @@ public class LandscapeDisplay {
      * @param scale controls the relative size of the display
      */
     public LandscapeDisplay(Landscape scape, int scale) {
-        // setup the window
+        // set up the window
         this.win = new JFrame("Game of Life");
         this.win.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.pauseState = false;
 
         this.scape = scape;
         this.gridScale = scale;
@@ -65,6 +63,86 @@ public class LandscapeDisplay {
         this.win.pack();
         this.win.setVisible(true);
     }
+
+    /**
+     * Creates and configures a menu bar for the graphical user interface.
+     * This method sets up a menu bar with File and Simulation menus and populates
+     * them with various menu items such as "Save Image," "Play," "Pause," "<<," and ">>."
+     * Action listeners are attached to the menu items to handle user interactions.
+     * The menu bar is then added to the JFrame for display.
+     */
+    private void createMenuBar() {
+        JMenuBar menuBar = new JMenuBar();
+
+        // Create a File menu
+        JMenu fileMenu = new JMenu("File");
+        // Create a Simulation menu
+        JMenu simMenu = new JMenu("Simulation");
+
+        // Create a "Save Image" menu item
+        JMenuItem saveMenuItem = new JMenuItem("Save Image");
+        saveMenuItem.addActionListener(e -> {
+            JFileChooser fileChooser = new JFileChooser();
+            int choice = fileChooser.showSaveDialog(null);
+            if (choice == JFileChooser.APPROVE_OPTION) {
+                String filename = fileChooser.getSelectedFile().getAbsolutePath();
+                saveImage(filename);
+            }
+        });
+
+        // Add the "Save Image" menu item to the File menu
+        fileMenu.add(saveMenuItem);
+
+        // Create a "Play" menu item
+        JMenuItem playMenuItem = new JMenuItem("Play");
+        playMenuItem.addActionListener(e -> {
+            // Start the simulation if it is paused
+            if (Landscape.paused) {
+                // Create a thread to run the simulation in the background
+                Runnable runnable = () -> scape.play(this.win);
+
+                // Create and start the thread
+                Thread.Builder builder = Thread.ofVirtual().name("playThread");
+                Thread thread1 = builder.start(runnable);
+            }
+        });
+
+        // Create a "Pause" menu item
+        JMenuItem pauseMenuItem = new JMenuItem("Pause");
+        pauseMenuItem.addActionListener(e -> {
+            if (!Landscape.paused) {
+                scape.pause();
+            }
+        });
+
+        // Create a "Previous State" menu item
+        JMenuItem backMenuItem = new JMenuItem("<<");
+        backMenuItem.addActionListener(e -> {
+            scape.revert();
+            win.repaint();
+        });
+
+        // Create a "Proceeding State" menu item
+        JMenuItem nextMenuItem = new JMenuItem(">>");
+        nextMenuItem.addActionListener(e -> {
+            scape.advance();
+            win.repaint();
+        });
+
+        // Add the "Play," "Pause," "<<," and ">>" menu items to the Simulation menu
+        simMenu.add(playMenuItem);
+        simMenu.add(pauseMenuItem);
+        simMenu.add(backMenuItem);
+        simMenu.add(nextMenuItem);
+
+        // Add the File and Simulation menus to the menu bar
+        menuBar.add(fileMenu);
+        menuBar.add(simMenu);
+
+        // Set the menu bar for the JFrame
+        win.setJMenuBar(menuBar);
+    }
+
 
     /**
      * Saves an image of the display contents to a file. The supplied
@@ -133,83 +211,12 @@ public class LandscapeDisplay {
         this.win.repaint();
     }
 
-    private void createMenuBar() {
-        JMenuBar menuBar = new JMenuBar();
-
-        // Create a File menu
-        JMenu fileMenu = new JMenu("File");
-        // Create a Simulation menu
-        JMenu simMenu = new JMenu("Simulation");
-
-        // Create a "Save Image" menu item
-        JMenuItem saveMenuItem = new JMenuItem("Save Image");
-        saveMenuItem.addActionListener(e -> {
-            JFileChooser fileChooser = new JFileChooser();
-            int choice = fileChooser.showSaveDialog(null);
-            if (choice == JFileChooser.APPROVE_OPTION) {
-                String filename = fileChooser.getSelectedFile().getAbsolutePath();
-                saveImage(filename);
-            }
-        });
-
-        // Add menu items to the File menu
-        fileMenu.add(saveMenuItem);
-
-        // Create a "Play" menu item
-        JMenuItem playMenuItem = new JMenuItem("Play");
-        playMenuItem.addActionListener(e -> {
-            if (pauseState) {
-                pauseState = false;
-            }
-        });
-
-        // Create a "Pause" menu item
-        JMenuItem pauseMenuItem = new JMenuItem("Pause");
-        pauseMenuItem.addActionListener(e -> {
-            if (!pauseState) {
-                pauseState = true;
-            }
-        });
-
-        // Create a "Previous State" menu item
-        JMenuItem backMenuItem = new JMenuItem("<<");
-        playMenuItem.addActionListener(e -> {
-            scape.revert();
-            //display.repaint();
-        });
-
-        // Create a "Proceeding State" menu item
-        JMenuItem nextMenuItem = new JMenuItem(">>");
-        pauseMenuItem.addActionListener(e -> {
-            scape.advance();
-            //display.repaint();
-        });
-
-        // Add menu items to the File menu
-        simMenu.add(playMenuItem);
-        simMenu.add(pauseMenuItem);
-        simMenu.add(backMenuItem);
-        simMenu.add(nextMenuItem);
-
-        // Add the File menu to the menu bar
-        menuBar.add(fileMenu);
-        menuBar.add(simMenu);
-
-        // Set the menu bar for the JFrame
-        win.setJMenuBar(menuBar);
-    }
 
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
         Landscape scape = new Landscape(100, 100, 50);
 
         LandscapeDisplay display = new LandscapeDisplay(scape, 6);
 
-        // Uncomment below when advance() has been finished
-        while (true) {
-            Thread.sleep(100);
-            scape.advance();
-            display.repaint();
-        }
     }
 }
