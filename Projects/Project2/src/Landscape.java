@@ -1,15 +1,25 @@
+/*
+Hi this is the main backbone for things, I'll comment this up a little better later, but I made some effort here to
+make this run relatively efficiently. Hope it worked well enough.
+ */
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 import java.util.*;
 
+
+/**
+ * @author      Roman Schiffino <rjschi24@colby.edu>
+ * @version     1.1
+ * @since       1.1
+ */
 public class Landscape {
 
     /**
      * The underlying grid of Cells for Conway's Game
      */
     public Cell[][] landscape;
-    private Random rand;
+    private final Random rand;
     // Keeps a history of game states
     public LinkedList<Cell[][]> stateList;
     //Stores previous state, not yet implemented.
@@ -94,6 +104,17 @@ public class Landscape {
      */
     public int getCols() {
         return landscape[0].length;
+    }
+
+
+    /**
+     * Returns the Cell specified the given row and column.
+     *
+     * @param input Array of cell identifier.
+     * @return the Cell specified the given row and column
+     */
+    public Cell getCell(Integer[] input) {
+        return getCell(input[0],input[1]);
     }
 
     /**
@@ -288,6 +309,10 @@ public class Landscape {
 
     }
 
+    /*
+    Quick note this was implemented slightly wrong in the original,
+    rows and columns were switched so I rewrote it.
+     */
     /**
      * Draws the Cell to the given Graphics object at the specified scale.
      * <p>
@@ -297,10 +322,11 @@ public class Landscape {
      * @param scale the scale of the representation of this Cell
      */
     public void draw(Graphics g, int scale) {
-        for (int x = 0; x < getRows(); x++) {
-            for (int y = 0; y < getCols(); y++) {
-                g.setColor(getCell(x, y).getAlive() ? Color.BLACK : Color.gray);
-                g.fillOval(x * scale, y * scale, scale, scale);
+        for (Cell[] row : landscape) {
+            for (Cell col : row) {
+                Integer[] identifier = cellHashMap.get(col);
+                g.setColor(getCell(identifier).getAlive() ? Color.BLACK : Color.gray);
+                g.fillOval((identifier[1] + 2) * scale, (identifier[0] + 2) * scale, scale, scale);
             }
         }
     }
@@ -338,6 +364,12 @@ public class Landscape {
         return equivalent;
     }
 
+
+    /**
+     * Overrode equals for some convenience. Pretty basic implementation.
+     * @param input object to compare against.
+     * @return boolean value representing whether input is equal to stored gameState.
+     */
     @Override
     public boolean equals(Object input) {
         Boolean output;

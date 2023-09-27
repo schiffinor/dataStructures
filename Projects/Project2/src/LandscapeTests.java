@@ -6,11 +6,21 @@ last modified:  9/18/2022
 How to run:     java -ea LandscapeTests
 */
 
+/*
+Not gonna lie super low effort implementation here on my part. I wrote this entire thing in pretty much 8 hours and have
+since been making slight modifications and tweaks here and there. I've been behind due to other work and some other
+concerns. Won't happen again... hopefully.
+ */
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 
+/**
+ * @author      Roman Schiffino <rjschi24@colby.edu>
+ * @version     1.1
+ * @since       1.1
+ */
 public class LandscapeTests {
 
     public static void landscapeTests() {
