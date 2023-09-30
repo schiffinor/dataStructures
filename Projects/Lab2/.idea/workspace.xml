@@ -5,17 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e2d80e6e-1791-41bb-b47c-ce1097476c4f" name="Changes" comment="created grid Class">
-      <change afterPath="$PROJECT_DIR$/../Project2/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Project2/src/LandscapeTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Project2/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Project2/src/AbstractLandscapePresenter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Project2/src/JHolder.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Project 2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Project 2/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Project1/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Project1/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Project2/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Project2/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Project2/Project2.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../Project2/Project2.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Project2/src/Cell.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Project2/src/Cell.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Project2/src/DialogDemo.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Project2/src/PopUpClass.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Project2/src/DisplayPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Project2/src/DisplayPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Project2/src/Landscape.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Project2/src/Landscape.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Project2/src/LandscapeDisplay.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Project2/src/LandscapeDisplay.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Project2/src/LandscapeTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Project2/src/LandscapeTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Project2/src/LandscapeFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Project2/src/LandscapeFrame.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

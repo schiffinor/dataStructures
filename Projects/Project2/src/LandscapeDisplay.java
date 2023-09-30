@@ -38,7 +38,7 @@ import javax.swing.*;
  * 
  * @author bseastwo
  */
-public class LandscapeDisplay {
+public class LandscapeDisplay extends AbstractLandscapePresenter{
 
     //I may have made many a tweak.
     final JFrame win;
@@ -119,7 +119,7 @@ public class LandscapeDisplay {
         }
 
         /**
-         * Method overridden from JComponent that is responsible for
+         * Method overridden from JHolder that is responsible for
          * drawing components on the screen. The supplied Graphics
          * object is used to draw.
          * 
@@ -135,6 +135,7 @@ public class LandscapeDisplay {
 
     } // end LandscapePanel
 
+    @Override
     public void repaint() {
         this.win.repaint();
     }
@@ -185,7 +186,7 @@ public class LandscapeDisplay {
             // Start the simulation if it is paused
             if (Landscape.paused) {
                 // Create a thread to run the simulation in the background
-                Runnable runnable = () -> scape.play(this.win);
+                Runnable runnable = () -> scape.play(this);
 
                 // Create and start the thread
                 Thread.Builder builder = Thread.ofVirtual().name("playThread");

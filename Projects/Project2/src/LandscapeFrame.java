@@ -10,13 +10,15 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+import static javax.swing.SwingUtilities.invokeLater;
+
 /**
  * @author      Roman Schiffino <rjschi24@colby.edu>
  * @version     1.1
  * @since       1.1
  */
 
-public class LandscapeFrame {
+public class LandscapeFrame extends AbstractLandscapePresenter{
 
     final JFrame win;
     protected final Landscape gameInit;
@@ -24,6 +26,7 @@ public class LandscapeFrame {
     public JScrollPane holder;
     public DisplayPanel landscapePanel;
     public LandscapeFrame(Landscape landscapeObj, int scale) {
+        super();
         // set up the window
         this.win = new JFrame("Specific Game of Life");
         this.win.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -80,7 +83,7 @@ public class LandscapeFrame {
             // Start the simulation if it is paused
             if (Landscape.paused) {
                 // Create a thread to run the simulation in the background
-                Runnable runnable = () -> gameInit.play(this.win);
+                Runnable runnable = () -> gameInit.play(this);
 
                 // Create and start the thread
                 Thread.Builder builder = Thread.ofVirtual().name("playThread");
@@ -128,35 +131,21 @@ public class LandscapeFrame {
                 }
         });
 
-        // Create a "enable Predator Cells" Button item
-        JCheckBoxMenuItem enablePredatorCells = new JCheckBoxMenuItem("Enable Predator Cells");
-        enablePredatorCells.addActionListener(e -> {
-            if (this.gridScale>2) {
-                this.gridScale -= 1;
-                repaint();
-            }
-        });
+        // Create a "Settings" menu item
+        JMenuItem settings = new JMenuItem("Settings");
+        settings.addActionListener(e -> {
+            JDialog settingsDialog = new JDialog(this.win);
+            settingsDialog.setTitle("Settings Menu");
 
-        // Create a "enable Predator Cells" Button item
-        JCheckBoxMenuItem enableProtectorCells = new JCheckBoxMenuItem("Enable Protector Cells");
-        enableProtectorCells.addActionListener(e -> {
-            if (this.gridScale>2) {
-                this.gridScale -= 1;
-                repaint();
-            }
-        });
+            PopUpClass settingsPopup = new PopUpClass(settingsDialog,gameInit,this);
+            settingsDialog.setContentPane(settingsPopup);
 
-        // Create a "enable Predator Cells" Button item
-        JMenuItem reset = new JMenuItem("Reset Game");
-        reset.addActionListener(e -> {
-            JOptionPane resetConditions = new JOptionPane();
-            JMenu resetData = new JMenu();
-
-            String o;
+            settingsDialog.setVisible(true);
+            settingsDialog.pack();
         });
 
         // Add the "Play," "Pause," "<<," and ">>" menu items to the Simulation menu
-
+        simMenu.add(settings);
 
         // Add the File and Simulation menus to the menu bar
         menuBar.add(fileMenu);
@@ -201,18 +190,23 @@ public class LandscapeFrame {
         }
     }
 
-    /**
-     * This inner class provides the panel on which Landscape elements
-     * are drawn.
-     */
-
-
+    @Override
     public void repaint() {
-        this.win.repaint();
-        this.landscapePanel.updateHeight((this.gameInit.getCols() + 4) * this.gridScale,
-                (this.gameInit.getRows() + 4) * this.gridScale, this.gridScale);
+        final JFrame win1 = this.win;
+        EventQueue.invokeLater(new Runnable() {
+
+            public void run() {
+                win1.repaint();
+            }
+        });
+        int calcWidth = (this.gameInit.getCols() + 4) * this.gridScale;
+        int calcHeight = (this.gameInit.getRows() + 4) * this.gridScale;
+        this.landscapePanel.updateHeight(calcWidth, calcHeight, this.gridScale);
         this.holder.revalidate();
         this.holder.getViewport().revalidate();
+        if (calcWidth<1920||calcHeight<1080) {
+            this.win.pack();
+        }
     }
 
     public static void main(String[] args) {

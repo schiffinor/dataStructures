@@ -7,6 +7,8 @@ import java.awt.*;
 import java.util.List;
 import java.util.*;
 
+import static javax.swing.SwingUtilities.invokeLater;
+
 
 /**
  * @author      Roman Schiffino <rjschi24@colby.edu>
@@ -27,6 +29,8 @@ public class Landscape {
     //Stores unique row column data per cell.
     private HashMap<Cell,Integer[]> cellHashMap;
     public static boolean paused;
+    public int rowCount;
+    public int columnCount;
 
     /**
      * The original probability each individual Cell is alive
@@ -55,9 +59,10 @@ public class Landscape {
      * @param chance  the probability each individual Cell is initially alive
      */
     public Landscape(int rows, int columns, double chance) {
+        rowCount = rows;
+        columnCount = columns;
         initialChance = chance;
         rand = new Random();
-        landscape = new Cell[rows][columns];
         stateList = new LinkedList<>();
         previousGame = new HashMap<>();
         paused = true;
@@ -68,8 +73,9 @@ public class Landscape {
      * Recreates the Landscape according to the specifications given in its initial construction.
      */
     public void reset() {
-        int curRow = 0;
+        landscape = new Cell[rowCount][columnCount];
         cellHashMap = new HashMap<>();
+        int curRow = 0;
         for (Cell[] row : landscape) {
             int curCol = 0;
             for (Cell column: row) {
@@ -94,7 +100,7 @@ public class Landscape {
      * @return the number of rows in the Landscape
      */
     public int getRows() {
-        return landscape.length;
+        return rowCount;
     }
 
     /**
@@ -103,9 +109,22 @@ public class Landscape {
      * @return the number of columns in the Landscape
      */
     public int getCols() {
-        return landscape[0].length;
+        return columnCount;
     }
 
+    /**
+     * Sets row count.
+     */
+    public void setRows(int rows) {
+        rowCount = rows;
+    }
+
+    /**
+     * Sets column count.
+     */
+    public void setCols(int columns) {
+        columnCount = columns;
+    }
 
     /**
      * Returns the Cell specified the given row and column.
@@ -294,17 +313,37 @@ public class Landscape {
      *
      * @param window the JFrame used for displaying the simulation
      */
-    public void play(JFrame window) {
-        paused = false;
-        advance();
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        window.repaint();
-        if (!paused) {
-            play(window);
+    public void play(Object window) {
+        if (window instanceof LandscapeFrame || window instanceof LandscapeDisplay) {
+            final AbstractLandscapePresenter window1;
+            paused = false;
+            if (window instanceof LandscapeFrame) {
+                window1 = (LandscapeFrame) window;
+            }
+            else {
+                window1 = (LandscapeDisplay) window;
+            }
+            EventQueue.invokeLater(new Runnable() {
+
+                public void run() {
+                    window1.repaint();
+                }
+            });
+            advance();
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            EventQueue.invokeLater(new Runnable() {
+
+                public void run() {
+                    window1.repaint();
+                }
+            });
+            if (!paused) {
+                play(window);
+            }
         }
 
     }

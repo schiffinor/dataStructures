@@ -32,7 +32,7 @@ public class DisplayPanel extends JPanel {
     }
 
     /**
-     * Method overridden from JComponent that is responsible for
+     * Method overridden from JHolder that is responsible for
      * drawing components on the screen. The supplied Graphics
      * object is used to draw.
      *
