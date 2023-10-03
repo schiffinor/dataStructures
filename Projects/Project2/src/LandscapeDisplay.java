@@ -43,8 +43,8 @@ public class LandscapeDisplay extends AbstractLandscapePresenter{
     //I may have made many a tweak.
     final JFrame win;
     protected final Landscape scape;
-    private final LandscapePanel canvas;
     private final int gridScale; // width (and height) of each square in the grid
+    public Thread thread1;
 
     /**
      * Initializes a display window for a Landscape.
@@ -62,12 +62,12 @@ public class LandscapeDisplay extends AbstractLandscapePresenter{
 
         // create a panel in which to display the Landscape
         // put a buffer of two rows around the display grid
-        this.canvas = new LandscapePanel((int) (this.scape.getCols() + 4) * this.gridScale,
-                (int) (this.scape.getRows() + 4) * this.gridScale);
+        LandscapePanel canvas = new LandscapePanel((this.scape.getCols() + 4) * this.gridScale,
+                (this.scape.getRows() + 4) * this.gridScale);
 
         // add the panel to the window, layout, and display
         createMenuBar();
-        this.win.add(this.canvas, BorderLayout.CENTER);
+        this.win.add(canvas, BorderLayout.CENTER);
         this.win.pack();
         this.win.setVisible(true);
     }
@@ -81,7 +81,7 @@ public class LandscapeDisplay extends AbstractLandscapePresenter{
      */
     public void saveImage(String filename) {
         // get the file extension from the filename
-        String ext = filename.substring(filename.lastIndexOf('.') + 1, filename.length());
+        String ext = filename.substring(filename.lastIndexOf('.') + 1);
 
         // create an image buffer to save this component
         Component tosave = this.win.getRootPane();
@@ -184,13 +184,13 @@ public class LandscapeDisplay extends AbstractLandscapePresenter{
         JMenuItem playMenuItem = new JMenuItem("Play");
         playMenuItem.addActionListener(e -> {
             // Start the simulation if it is paused
-            if (Landscape.paused) {
+            if (scape.getPaused()) {
                 // Create a thread to run the simulation in the background
                 Runnable runnable = () -> scape.play(this);
 
                 // Create and start the thread
                 Thread.Builder builder = Thread.ofVirtual().name("playThread");
-                Thread thread1 = builder.start(runnable);
+                thread1 = builder.start(runnable);
             }
         });
 

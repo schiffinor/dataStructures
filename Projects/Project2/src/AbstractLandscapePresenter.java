@@ -1,7 +1,7 @@
 import javax.swing.*;
 
 abstract class AbstractLandscapePresenter {
-    JFrame win;
+    final JFrame win;
     public AbstractLandscapePresenter(){
         this.win = new JFrame("hehe");
     }

@@ -7,8 +7,6 @@ import java.awt.*;
 import java.util.List;
 import java.util.*;
 
-import static javax.swing.SwingUtilities.invokeLater;
-
 
 /**
  * @author      Roman Schiffino <rjschi24@colby.edu>
@@ -23,9 +21,9 @@ public class Landscape {
     public Cell[][] landscape;
     private final Random rand;
     // Keeps a history of game states
-    public LinkedList<Cell[][]> stateList;
+    public final LinkedList<Cell[][]> stateList;
     //Stores previous state, not yet implemented.
-    public HashMap<String,LinkedList<Cell[][]>> previousGame;
+    public final HashMap<String,LinkedList<Cell[][]>> previousGame;
     //Stores unique row column data per cell.
     private HashMap<Cell,Integer[]> cellHashMap;
     public static boolean paused;
@@ -35,7 +33,7 @@ public class Landscape {
     /**
      * The original probability each individual Cell is alive
      */
-    private double initialChance;
+    private final double initialChance;
 
     /**
      * Constructs a Landscape of the specified number of rows and columns.
@@ -84,7 +82,7 @@ public class Landscape {
                 Integer[] identifier = new Integer[2];
                 identifier[0] = curRow;
                 identifier[1] = curCol;
-                cellHashMap.put(landscape[curRow][curCol], identifier);
+                cellHashMap.put(landscape[curRow][curCol], identifier.clone());
                 curCol++;
             }
             curRow++;
@@ -199,21 +197,30 @@ public class Landscape {
      * @return an ArrayList of the neighboring Cells to the specified location
      */
     public ArrayList<Cell> getNeighbors(int row, int col) {
+        //Clones array.
         Cell[][] landscapeSnapshot = landscape.clone();
         ArrayList<Cell> neighbors = new ArrayList<>();
+        //Constructor for boolean-array of directions to check for neighbors.
         boolean[] checkDirections = new boolean[4];
+        //Up.
         checkDirections[0] = (row > 0);
+        //Right.
         checkDirections[1] = (col > 0);
+        //Down.
         checkDirections[2] = (row < getRows()-1);
+        //Left.
         checkDirections[3] = (col < getCols()-1);
+        //Check whether ref-cell in the scope of array.
         try {
             Cell refCell = landscapeSnapshot[row][col];
         } catch (Exception ArrayIndexOutOfBoundsException) {
             System.out.println("Cell not within bounds of game. Neighbors DNE.");
         }
+        //Checks allotted directions.
         for (int i = 0; i < 4; i++) {
             if (checkDirections[i]) {
-                neighbors.add((landscapeSnapshot[row-((int) Math.cos((Math.PI / 2) * i))][col-((int) Math.sin((Math.PI / 2) * i))]).clone());
+                //Handy function to indicate directions.
+                neighbors.add((landscapeSnapshot[row-((int) Math.cos((Math.PI / 2) * i))][col-((int) Math.sin((Math.PI / 2) * i))]));
             }
         }
         return neighbors;
@@ -224,6 +231,9 @@ public class Landscape {
      * This method creates a snapshot of the current landscape, calculates the next state
      * for each living cell based on its neighbors, and updates the landscape accordingly.
      * If the landscape returns to a previous state, the simulation is paused.
+     * <p>
+     * Also, P.S. I managed to track down that bug to here effectively when the array was large enough, the likelihood
+     * of having cells with no neighbors increases and I just wasn't handling a potential null value.
      */
     public void advance() {
         // Create a snapshot of the current landscape
@@ -253,22 +263,29 @@ public class Landscape {
             // Remove dead cells from the row
             rowSet.removeIf(cell -> cell.equals(new Cell(false)));
 
-            // Add the living cells to the list
-            livingCells.addAll(rowSet);
+            // Add the living cells to the list. One of the potential nulls in question.
+            if (!rowSet.isEmpty()) {
+                livingCells.addAll(rowSet);
+            }
+
         }
 
         // Calculate neighbors for each living cell and store them in neighborMap
         for (Cell cell : livingCells) {
-            neighborMap.put(cell, getNeighbors(cellHashMap.get(cell)));
+            Integer[] identity = cellHashMap.get(cell);
+            neighborMap.put(cell, getNeighbors(identity));
         }
-
         // Update the state of each living cell based on its neighbors
         for (Cell cell : livingCells) {
-            cell.updateState(neighborMap.get(cell));
+            ArrayList<Cell> reference = neighborMap.get(cell);
+            //Second null value.
+            if (reference == null) {
+                reference = new ArrayList<>();
+            }
+            cell.updateState(reference);
         }
-
         // Check if the landscape has returned to a previous state, and pause the simulation if so
-        if (this.equals((Object[][]) stateList.getLast())) {
+        if (this.equals(stateList.getLast())) {
             pause();
         }
     }
@@ -306,6 +323,19 @@ public class Landscape {
         System.out.println("paused");
     }
 
+    public void setPause(boolean bool) {
+        paused = bool;
+        System.out.println("paused");
+    }
+
+    /**
+     * Getter for paused state.
+     * @return boolean state of pause variable.
+     */
+    public boolean getPaused() {
+        return paused;
+    }
+
 
     /**
      * Resumes the Game of Life simulation.
@@ -323,26 +353,10 @@ public class Landscape {
             else {
                 window1 = (LandscapeDisplay) window;
             }
-            EventQueue.invokeLater(new Runnable() {
-
-                public void run() {
-                    window1.repaint();
-                }
-            });
             advance();
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-            EventQueue.invokeLater(new Runnable() {
-
-                public void run() {
-                    window1.repaint();
-                }
-            });
+            SwingUtilities.invokeLater(window1::repaint);
             if (!paused) {
-                play(window);
+                SwingUtilities.invokeLater(() -> play(window));
             }
         }
 
@@ -350,7 +364,7 @@ public class Landscape {
 
     /*
     Quick note this was implemented slightly wrong in the original,
-    rows and columns were switched so I rewrote it.
+    rows and columns were switched, so I rewrote it.
      */
     /**
      * Draws the Cell to the given Graphics object at the specified scale.
@@ -421,7 +435,5 @@ public class Landscape {
         return output;
     }
 
-    public static void main(String[] args) {
-    }
 
 }

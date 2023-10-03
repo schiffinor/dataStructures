@@ -44,9 +44,9 @@ public class CellTests {
             System.out.println(c3.getAlive() + " == false");
 
             // test
-            assert c1.getAlive() == false : "Error in Cell::Cell() or Cell::getValue()";
-            assert c2.getAlive() == true : "Error in Cell::Cell() or Cell::getValue()";
-            assert c3.getAlive() == false : "Error in Cell::Cell() or Cell::getValue()";
+            assert !c1.getAlive() : "Error in Cell::Cell() or Cell::getValue()";
+            assert c2.getAlive() : "Error in Cell::Cell() or Cell::getValue()";
+            assert !c3.getAlive() : "Error in Cell::Cell() or Cell::getValue()";
         }
 
         // case 3: testing setAlive()
@@ -66,9 +66,9 @@ public class CellTests {
             System.out.println(c3.getAlive() + " == true");
 
             // test
-            assert c1.getAlive() == true : "Error in Cell::getAlive() or Cell::setAlive()";
-            assert c2.getAlive() == false : "Error in Cell::getAlive() or Cell::setAlive()";
-            assert c3.getAlive() == true : "Error in Cell::getAlive() or Cell::setAlive()";
+            assert c1.getAlive() : "Error in Cell::getAlive() or Cell::setAlive()";
+            assert !c2.getAlive() : "Error in Cell::getAlive() or Cell::setAlive()";
+            assert c3.getAlive() : "Error in Cell::getAlive() or Cell::setAlive()";
         }
 
         // case 4: testing updateState()
@@ -80,7 +80,7 @@ public class CellTests {
             Cell c4 = new Cell(false);
             Cell c5 = new Cell(false);
 
-            ArrayList<Cell> neighbors = new ArrayList<Cell>();
+            ArrayList<Cell> neighbors = new ArrayList<>();
             neighbors.add(c2);
             neighbors.add(c3);
             neighbors.add(c4);
@@ -92,7 +92,7 @@ public class CellTests {
             System.out.println(c1.getAlive() + " == false");
 
             // test
-            assert c1.getAlive() == false : "Error in Cell::updateState()";
+            assert !c1.getAlive() : "Error in Cell::updateState()";
         }
 
         // case 5: testing updateState()
@@ -104,7 +104,7 @@ public class CellTests {
             Cell c4 = new Cell(false);
             Cell c5 = new Cell(false);
 
-            ArrayList<Cell> neighbors = new ArrayList<Cell>();
+            ArrayList<Cell> neighbors = new ArrayList<>();
             neighbors.add(c2);
             neighbors.add(c3);
             neighbors.add(c4);
@@ -116,7 +116,7 @@ public class CellTests {
             System.out.println(c1.getAlive() + " == false");
 
             // test
-            assert c1.getAlive() == false : "Error in Cell::updateState()";
+            assert !c1.getAlive() : "Error in Cell::updateState()";
         }
 
         // case 6: testing updateState()
@@ -128,7 +128,7 @@ public class CellTests {
             Cell c4 = new Cell(false);
             Cell c5 = new Cell(false);
 
-            ArrayList<Cell> neighbors = new ArrayList<Cell>();
+            ArrayList<Cell> neighbors = new ArrayList<>();
             neighbors.add(c2);
             neighbors.add(c3);
             neighbors.add(c4);
@@ -140,7 +140,7 @@ public class CellTests {
             System.out.println(c1.getAlive() + " == true");
 
             // test
-            assert c1.getAlive() == true : "Error in Cell::updateState()";
+            assert c1.getAlive() : "Error in Cell::updateState()";
         }
 
         // case 7: testing updateState()
@@ -152,7 +152,7 @@ public class CellTests {
             Cell c4 = new Cell(true);
             Cell c5 = new Cell(false);
 
-            ArrayList<Cell> neighbors = new ArrayList<Cell>();
+            ArrayList<Cell> neighbors = new ArrayList<>();
             neighbors.add(c2);
             neighbors.add(c3);
             neighbors.add(c4);
@@ -164,7 +164,7 @@ public class CellTests {
             System.out.println(c1.getAlive() + " == true");
 
             // test
-            assert c1.getAlive() == true : "Error in Cell::updateState()";
+            assert c1.getAlive() : "Error in Cell::updateState()";
         }
 
         // case 8: testing updateState()
@@ -176,7 +176,7 @@ public class CellTests {
             Cell c4 = new Cell(true);
             Cell c5 = new Cell(true);
 
-            ArrayList<Cell> neighbors = new ArrayList<Cell>();
+            ArrayList<Cell> neighbors = new ArrayList<>();
             neighbors.add(c2);
             neighbors.add(c3);
             neighbors.add(c4);
@@ -188,7 +188,7 @@ public class CellTests {
             System.out.println(c1.getAlive() + " == false");
 
             // test
-            assert c1.getAlive() == false : "Error in Cell::updateState()";
+            assert !c1.getAlive() : "Error in Cell::updateState()";
         }
 
         // case 9: testing updateState()
@@ -200,7 +200,7 @@ public class CellTests {
             Cell c4 = new Cell(false);
             Cell c5 = new Cell(false);
 
-            ArrayList<Cell> neighbors = new ArrayList<Cell>();
+            ArrayList<Cell> neighbors = new ArrayList<>();
             neighbors.add(c2);
             neighbors.add(c3);
             neighbors.add(c4);
@@ -212,7 +212,7 @@ public class CellTests {
             System.out.println(c1.getAlive() + " == false");
 
             // test
-            assert c1.getAlive() == false : "Error in Cell::updateState()";
+            assert !c1.getAlive() : "Error in Cell::updateState()";
         }
 
         // case 10: testing updateState()
@@ -224,7 +224,7 @@ public class CellTests {
             Cell c4 = new Cell(false);
             Cell c5 = new Cell(false);
 
-            ArrayList<Cell> neighbors = new ArrayList<Cell>();
+            ArrayList<Cell> neighbors = new ArrayList<>();
             neighbors.add(c2);
             neighbors.add(c3);
             neighbors.add(c4);
@@ -236,7 +236,7 @@ public class CellTests {
             System.out.println(c1.getAlive() + " == false");
 
             // test
-            assert c1.getAlive() == false : "Error in Cell::updateState()";
+            assert !c1.getAlive() : "Error in Cell::updateState()";
         }
 
         // case 11: testing updateState()
@@ -248,7 +248,7 @@ public class CellTests {
             Cell c4 = new Cell(false);
             Cell c5 = new Cell(false);
 
-            ArrayList<Cell> neighbors = new ArrayList<Cell>();
+            ArrayList<Cell> neighbors = new ArrayList<>();
             neighbors.add(c2);
             neighbors.add(c3);
             neighbors.add(c4);
@@ -260,7 +260,7 @@ public class CellTests {
             System.out.println(c1.getAlive() + " == false");
 
             // test
-            assert c1.getAlive() == false : "Error in Cell::updateState()";
+            assert !c1.getAlive() : "Error in Cell::updateState()";
         }
 
         // case 12: testing updateState()
@@ -272,7 +272,7 @@ public class CellTests {
             Cell c4 = new Cell(true);
             Cell c5 = new Cell(false);
 
-            ArrayList<Cell> neighbors = new ArrayList<Cell>();
+            ArrayList<Cell> neighbors = new ArrayList<>();
             neighbors.add(c2);
             neighbors.add(c3);
             neighbors.add(c4);
@@ -284,7 +284,7 @@ public class CellTests {
             System.out.println(c1.getAlive() + " == true");
 
             // test
-            assert c1.getAlive() == true : "Error in Cell::updateState()";
+            assert c1.getAlive() : "Error in Cell::updateState()";
         }
 
         // case 13: testing updateState()
@@ -296,7 +296,7 @@ public class CellTests {
             Cell c4 = new Cell(true);
             Cell c5 = new Cell(true);
 
-            ArrayList<Cell> neighbors = new ArrayList<Cell>();
+            ArrayList<Cell> neighbors = new ArrayList<>();
             neighbors.add(c2);
             neighbors.add(c3);
             neighbors.add(c4);
@@ -308,7 +308,7 @@ public class CellTests {
             System.out.println(c1.getAlive() + " == false");
 
             // test
-            assert c1.getAlive() == false : "Error in Cell::updateState()";
+            assert !c1.getAlive() : "Error in Cell::updateState()";
         }
 
         // no test for toString(), students could format string differently

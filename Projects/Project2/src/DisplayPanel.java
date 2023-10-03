@@ -3,7 +3,7 @@ import java.awt.*;
 
 public class DisplayPanel extends JPanel {
 
-    public Landscape game;
+    public final Landscape game;
     public int width;
     public int height;
     public int gridScale;
@@ -32,7 +32,7 @@ public class DisplayPanel extends JPanel {
     }
 
     /**
-     * Method overridden from JHolder that is responsible for
+     * Method overridden from JPanel that is responsible for
      * drawing components on the screen. The supplied Graphics
      * object is used to draw.
      *

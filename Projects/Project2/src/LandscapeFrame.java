@@ -9,8 +9,9 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
-import static javax.swing.SwingUtilities.invokeLater;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  * @author      Roman Schiffino <rjschi24@colby.edu>
@@ -23,8 +24,9 @@ public class LandscapeFrame extends AbstractLandscapePresenter{
     final JFrame win;
     protected final Landscape gameInit;
     public int gridScale; // width (and height) of each square in the grid
-    public JScrollPane holder;
-    public DisplayPanel landscapePanel;
+    public final JScrollPane holder;
+    public final DisplayPanel landscapePanel;
+
     public LandscapeFrame(Landscape landscapeObj, int scale) {
         super();
         // set up the window
@@ -55,7 +57,7 @@ public class LandscapeFrame extends AbstractLandscapePresenter{
      * Action listeners are attached to the menu items to handle user interactions.
      * The menu bar is then added to the JFrame for display.
      */
-    private void createMenuBar() {
+    public void createMenuBar() {
         JMenuBar menuBar = new JMenuBar();
 
         // Create a File menu
@@ -81,20 +83,19 @@ public class LandscapeFrame extends AbstractLandscapePresenter{
         JButton playButton = new JButton("Play");
         playButton.addActionListener(e -> {
             // Start the simulation if it is paused
-            if (Landscape.paused) {
+            if (gameInit.getPaused()) {
                 // Create a thread to run the simulation in the background
                 Runnable runnable = () -> gameInit.play(this);
 
+                SwingUtilities.invokeLater(runnable);
                 // Create and start the thread
-                Thread.Builder builder = Thread.ofVirtual().name("playThread");
-                Thread thread1 = builder.start(runnable);
             }
         });
 
         // Create a "Pause" button item
         JButton pauseButton = new JButton("Pause");
         pauseButton.addActionListener(e -> {
-            if (!Landscape.paused) {
+            if (!gameInit.getPaused()) {
                 gameInit.pause();
             }
         });
@@ -170,7 +171,7 @@ public class LandscapeFrame extends AbstractLandscapePresenter{
      */
     public void saveImage(String filename) {
         // get the file extension from the filename
-        String ext = filename.substring(filename.lastIndexOf('.') + 1, filename.length());
+        String ext = filename.substring(filename.lastIndexOf('.') + 1);
 
         // create an image buffer to save this component
         Component tosave = this.win.getRootPane();
@@ -183,6 +184,12 @@ public class LandscapeFrame extends AbstractLandscapePresenter{
         g.dispose();
 
         // save the image
+        Path folderPath = Paths.get("data");
+        try {
+            Files.createDirectories(folderPath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        };
         try {
             ImageIO.write(image, ext, new File(filename));
         } catch (IOException ioe) {
@@ -190,15 +197,15 @@ public class LandscapeFrame extends AbstractLandscapePresenter{
         }
     }
 
+    /**
+     * Override of the basic repaint() method from Swing.
+     * <p>
+     * This effectively just adds a bunch of additional utilities as well as aiding in implementing automatic zoom
+     * functions, and a scroll pane.
+     */
     @Override
     public void repaint() {
-        final JFrame win1 = this.win;
-        EventQueue.invokeLater(new Runnable() {
-
-            public void run() {
-                win1.repaint();
-            }
-        });
+        SwingUtilities.invokeLater(this.win::repaint);
         int calcWidth = (this.gameInit.getCols() + 4) * this.gridScale;
         int calcHeight = (this.gameInit.getRows() + 4) * this.gridScale;
         this.landscapePanel.updateHeight(calcWidth, calcHeight, this.gridScale);
@@ -207,12 +214,13 @@ public class LandscapeFrame extends AbstractLandscapePresenter{
         if (calcWidth<1920||calcHeight<1080) {
             this.win.pack();
         }
+
     }
 
     public static void main(String[] args) {
+        //Initiates the game.
         Landscape game = new Landscape(100, 200, 50);
-
+        //Initiates game frame.
         LandscapeFrame display = new LandscapeFrame(game, 6);
-
     }
 }

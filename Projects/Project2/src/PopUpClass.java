@@ -1,40 +1,47 @@
 /*
-So this is a basic popup menu in a dialog form. Tremendously difficult and annoying to make
+This class is used to create a pop-up window that allows the user to set the game settings. It's pretty simple. I used
+some default Java Swing Demo from Oracle to teach myself how all the components work, but this is my own creation.
+I hate coding GUIs, but here it is.
 */
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.*;
 import java.util.Arrays;
 
+/**
+ * @author Roman Schiffino <rjschi24@colby.edu>
+ * @version     1.1
+ * @since       1.1
+ */
 public class PopUpClass extends JPanel {
-    JLabel label;
-    ImageIcon icon = createImageIcon("gura2.png");
-    JDialog frame;
-    Landscape landData;
-    LandscapeFrame parentFrame;
+    final JLabel label;
+    final ImageIcon icon = createImageIcon("gura2.png");
+    final JDialog frame;
+    final Landscape landData;
+    final LandscapeFrame parentFrame;
 
 
     /**
-     * Creates the GUI shown inside the frame's content pane.
+     * Creates the pop-up window off of a provided Dialog frame. Then tags on some properties and the cute icon.
      */
     public PopUpClass(JDialog frame, Landscape landscape, LandscapeFrame parent) {
         //Creates the base panel.
         super(new BorderLayout());
-        //Creates panel parts and window.
+        //Icon for the pop-up window.
         this.frame = frame;
+        assert icon != null;
         this.frame.setIconImage(icon.getImage());
-        //Sets landscape data.
+        //Sets landscape data and parent frame.
         this.landData = landscape;
         this.parentFrame = parent;
 
-        //Create the panel components.
+        //Creates the panel components.
         JPanel settingPanel = gameSettings();
         JPanel sizePanel = gameSize();
         label = new JLabel("Click Reset once you've input your desired settings.", JLabel.CENTER);
 
-        //Place them in panel.
+        //Places them in the panel.
         Border padding = BorderFactory.createEmptyBorder(20,20,5,20);
         settingPanel.setBorder(padding);
         sizePanel.setBorder(padding);
@@ -53,9 +60,9 @@ public class PopUpClass extends JPanel {
     /**
      * Creates an image icon object from a provided image path.
      * <p>
-     * If file does not exist returns null.
+     * If the file does not exist, will return null.
      * @param path image file path.
-     * @return ImageIcon object to use as icon for window.
+     * @return ImageIcon object to use as icon for the window.
      */
     protected static ImageIcon createImageIcon(String path) {
         java.net.URL imgURL = PopUpClass.class.getResource(path);
@@ -71,13 +78,14 @@ public class PopUpClass extends JPanel {
      * Creates the panel used in the first page of the tabbed pane structure.
      * <p>
      * Creates a bunch of toggle buttons and appends them to an array.
-     * Then creates a submit button that fetches the state of the buttons, constructs array of booleans and
-     * passes values as a boolean array.
+     * Then creates a submit button that fetches the state of the buttons, constructs an array of booleans and
+     * passes values as a boolean array. Never implemented this as game rules would've taken too long.
      */
     private JPanel gameSettings() {
+        //Button definitions.
         JToggleButton[] toggleButtons = new JToggleButton[3];
 
-        JButton resetButton = null;
+        JButton resetButton;
 
         toggleButtons[0] = new JToggleButton("Enable Predator Cells");
 
@@ -85,18 +93,16 @@ public class PopUpClass extends JPanel {
 
         toggleButtons[2] = new JToggleButton("Enable Alternative Cells");
 
-
+        //Creates the reset button and ties action.
         resetButton = new JButton("Reset?");
-        resetButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                Boolean[] dataArray = new Boolean[3];
-                for (int i = 0, toggleButtonsLength = toggleButtons.length; i < toggleButtonsLength; i++) {
-                    JToggleButton toggleButton = toggleButtons[i];
-                    dataArray[i] = toggleButton.isSelected();
-                }
-                landData.reset();
-                System.out.println(Arrays.toString(dataArray));
+        resetButton.addActionListener(e -> {
+            Boolean[] dataArray = new Boolean[3];
+            for (int i = 0, toggleButtonsLength = toggleButtons.length; i < toggleButtonsLength; i++) {
+                JToggleButton toggleButton = toggleButtons[i];
+                dataArray[i] = toggleButton.isSelected();
             }
+            landData.reset();
+            System.out.println(Arrays.toString(dataArray));
         });
 
         return panelConstructor(toggleButtons, resetButton);
@@ -105,34 +111,37 @@ public class PopUpClass extends JPanel {
     /**
      * Creates the panel used in the second page of the tabbed pane structure.
      * <p>
-     * Creates two spinner boxes using a class I outline below. There basically a Box and a JSpinner all in one.
-     * Then creates a submit button that fetches the state of the spinners, constructs array of ints and
-     * passes values as a int array.
+     * Creates two spinner boxes using a class I outline below.
+     * There is basically a Box and a JSpinner all in one.
+     * Then creates a submit button that fetches the state of the spinners, constructs an array of ints and
+     * passes values as an int array.
      */
     private JPanel gameSize() {
+        //Button declarations.
+        JButton resizeButton;
 
-        JButton resizeButton = null;
-
+        //Creates the spinners.
         SpinBox rows = new SpinBox("Rows: ");
 
         SpinBox columns = new SpinBox("Columns: ");
 
+        //Creates the boxes.
         Box[] container = new Box[2];
         container[0] = rows.getBox();
         container[1] =columns.getBox();
 
+        //Creates the submit button and ties action.
         resizeButton = new JButton("Resize?");
-        resizeButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                Integer[] sizeArray = new Integer[2];
-                sizeArray[0] = (int) rows.getSpinner().getValue();
-                sizeArray[1] = (int) columns.getSpinner().getValue();
-                System.out.println(Arrays.toString(sizeArray));
-                landData.setRows(sizeArray[0]);
-                landData.setCols(sizeArray[1]);
-                landData.reset();
-                parentFrame.repaint();
-            }
+        resizeButton.addActionListener(e -> {
+            Integer[] sizeArray = new Integer[2];
+            sizeArray[0] = (int) rows.getSpinner().getValue();
+            sizeArray[1] = (int) columns.getSpinner().getValue();
+            System.out.println(Arrays.toString(sizeArray));
+            landData.setRows(sizeArray[0]);
+            landData.setCols(sizeArray[1]);
+            SwingUtilities.invokeLater(() -> landData.reset());
+
+            SwingUtilities.invokeLater(() -> parentFrame.repaint());
         });
 
         return panelConstructor(container, resizeButton);
@@ -145,8 +154,8 @@ public class PopUpClass extends JPanel {
      */
     public static class SpinBox {
 
-        public Box panel;
-        public JSpinner spinner;
+        public final Box panel;
+        public final JSpinner spinner;
 
         /**
          * Constructor for the class does all the important set-up.
