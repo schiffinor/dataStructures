@@ -197,7 +197,7 @@ public class LandscapeDisplay extends AbstractLandscapePresenter{
         // Create a "Pause" menu item
         JMenuItem pauseMenuItem = new JMenuItem("Pause");
         pauseMenuItem.addActionListener(e -> {
-            if (!Landscape.paused) {
+            if (!scape.getPaused()) {
                 scape.pause();
             }
         });

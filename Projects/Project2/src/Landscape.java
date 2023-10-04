@@ -26,7 +26,7 @@ public class Landscape {
     public final HashMap<String,LinkedList<Cell[][]>> previousGame;
     //Stores unique row column data per cell.
     private HashMap<Cell,Integer[]> cellHashMap;
-    public static boolean paused;
+    public boolean paused;
     public int rowCount;
     public int columnCount;
 
