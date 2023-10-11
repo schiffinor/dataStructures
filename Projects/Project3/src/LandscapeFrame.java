@@ -86,9 +86,8 @@ public class LandscapeFrame{
             // Start the simulation if it is paused
             if (gameInit.getPaused()) {
                 // Create a thread to run the simulation in the background
-                Runnable runnable = () -> gameInit.play(this);
-
-                SwingUtilities.invokeLater(runnable);
+                gameInit.paused = false;
+                gameInit.play(this);
                 // Create and start the thread
             }
         });
@@ -97,15 +96,8 @@ public class LandscapeFrame{
         JButton pauseButton = new JButton("Pause");
         pauseButton.addActionListener(e -> {
             if (!gameInit.getPaused()) {
-                gameInit.pause();
+                SwingUtilities.invokeLater(gameInit::pause);
             }
-        });
-
-        // Create a "Previous State" button item
-        JButton backButton = new JButton("<<");
-        backButton.addActionListener(e -> {
-            gameInit.revert();
-            repaint();
         });
 
         // Create a "Proceeding State" button item
@@ -151,7 +143,6 @@ public class LandscapeFrame{
 
         // Add the File and Simulation menus to the menu bar
         menuBar.add(fileMenu);
-        menuBar.add(backButton);
         menuBar.add(pauseButton);
         menuBar.add(playButton);
         menuBar.add(nextButton);
@@ -190,7 +181,7 @@ public class LandscapeFrame{
             Files.createDirectories(folderPath);
         } catch (IOException e) {
             e.printStackTrace();
-        };
+        }
         try {
             ImageIO.write(image, ext, new File(filename));
         } catch (IOException ioe) {
@@ -245,10 +236,10 @@ public class LandscapeFrame{
         LandscapeFrame display = new LandscapeFrame(scape,1);
 
         // Uncomment below when updateAgents() has been implemented
-        // while(true){
-        //     Thread.sleep(10);
-        //     scape.updateAgents();
-        //     display.repaint();
-        // }
+        while(true){
+            Thread.sleep(10);
+            scape.updateAgents();
+            display.repaint();
+        }
     }
 }

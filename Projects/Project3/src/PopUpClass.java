@@ -37,19 +37,16 @@ public class PopUpClass extends JPanel {
         this.parentFrame = parent;
 
         //Creates the panel components.
-        JPanel settingPanel = gameSettings();
         JPanel sizePanel = gameSize();
         label = new JLabel("Click Reset once you've input your desired settings.", JLabel.CENTER);
 
         //Places them in the panel.
         Border padding = BorderFactory.createEmptyBorder(20,20,5,20);
-        settingPanel.setBorder(padding);
         sizePanel.setBorder(padding);
 
         //Creates tabbed pane and panes.
         JTabbedPane tabbedPane = new JTabbedPane();
-        tabbedPane.addTab("Game Settings", null, settingPanel);
-        tabbedPane.addTab("Game Size", null, sizePanel);
+        tabbedPane.addTab("Game Settings", null, sizePanel);
 
         //Adds tabbed panes and labels to window.
         add(tabbedPane, BorderLayout.CENTER);
@@ -75,40 +72,6 @@ public class PopUpClass extends JPanel {
     }
 
     /**
-     * Creates the panel used in the first page of the tabbed pane structure.
-     * <p>
-     * Creates a bunch of toggle buttons and appends them to an array.
-     * Then creates a submit button that fetches the state of the buttons, constructs an array of booleans and
-     * passes values as a boolean array. Never implemented this as game rules would've taken too long.
-     */
-    private JPanel gameSettings() {
-        //Button definitions.
-        JToggleButton[] toggleButtons = new JToggleButton[3];
-
-        JButton resetButton;
-
-        toggleButtons[0] = new JToggleButton("Enable Predator Cells");
-
-        toggleButtons[1] = new JToggleButton("Enable Protector Cells");
-
-        toggleButtons[2] = new JToggleButton("Enable Alternative Cells");
-
-        //Creates the reset button and ties action.
-        resetButton = new JButton("Reset?");
-        resetButton.addActionListener(e -> {
-            Boolean[] dataArray = new Boolean[3];
-            for (int i = 0, toggleButtonsLength = toggleButtons.length; i < toggleButtonsLength; i++) {
-                JToggleButton toggleButton = toggleButtons[i];
-                dataArray[i] = toggleButton.isSelected();
-            }
-            landData.reset();
-            System.out.println(Arrays.toString(dataArray));
-        });
-
-        return panelConstructor(toggleButtons, resetButton);
-    }
-
-    /**
      * Creates the panel used in the second page of the tabbed pane structure.
      * <p>
      * Creates two spinner boxes using a class I outline below.
@@ -121,14 +84,26 @@ public class PopUpClass extends JPanel {
         JButton resizeButton;
 
         //Creates the spinners.
-        SpinBox height = new SpinBox("Height: ");
+        SpinBox height = new SpinBox("Height: ",500,10,1000000,10);
 
-        SpinBox width = new SpinBox("Width: ");
+        SpinBox width = new SpinBox("Width: ",500,10,1000000,10);
+
+        SpinBox sleep = new SpinBox("Sleep: ",100,0,1000000,1);
+
+        SpinBox agents = new SpinBox("Agents: ",100,1,1000000,1);
+
+        SpinBox sRad = new SpinBox("Social \nRadius: ",25,1,1000000,1);
+
+        SpinBox aRad = new SpinBox("AntiSocial \nRadius: ",25,1,1000000,1);
 
         //Creates the boxes.
-        Box[] container = new Box[2];
+        Box[] container = new Box[6];
         container[0] = height.getBox();
         container[1] =width.getBox();
+        container[2] =sleep.getBox();
+        container[3] =agents.getBox();
+        container[4] =sRad.getBox();
+        container[5] =aRad.getBox();
 
         //Creates the submit button and ties action.
         resizeButton = new JButton("Resize?");
@@ -143,9 +118,13 @@ public class PopUpClass extends JPanel {
             System.out.println(Arrays.toString(sizeArray));
             landData.setHeight(sizeArray[0]);
             landData.setWidth(sizeArray[1]);
-            SwingUtilities.invokeLater(() -> landData.reset());
+            landData.setSleepTime((int) sleep.getSpinner().getValue());
+            landData.setAgents((int) agents.getSpinner().getValue());
+            landData.setSocialRadius((int) sRad.getSpinner().getValue());
+            landData.setAntiSocialRadius((int) aRad.getSpinner().getValue());
+            SwingUtilities.invokeLater(landData::reset);
 
-            SwingUtilities.invokeLater(() -> parentFrame.repaint());
+            SwingUtilities.invokeLater(parentFrame::repaint);
         });
 
         return panelConstructor(container, resizeButton);
@@ -165,8 +144,8 @@ public class PopUpClass extends JPanel {
          * Constructor for the class does all the important set-up.
          * @param text text to put in Label.
          */
-        public SpinBox(String text) {
-            SpinnerNumberModel spin = new SpinnerNumberModel(500,10, 1000000, 10);
+        public SpinBox(String text, int defaultValue, int min, int max, int step) {
+            SpinnerNumberModel spin = new SpinnerNumberModel(defaultValue,min, max, step);
             this.panel = Box.createHorizontalBox();
             this.spinner = new JSpinner(spin);
             this.panel.add(new JLabel(text));

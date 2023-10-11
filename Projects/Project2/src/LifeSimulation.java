@@ -28,7 +28,7 @@ public class LifeSimulation {
         while (!display.gameInit.getPaused()) {
             display.saveImage( "data/life_frame_" + String.format( "%03d", i ) + ".png" );
             ((JButton) display.win.getJMenuBar().getComponent(4)).doClick();
-            Thread.sleep(300);
+            Thread.sleep(200);
             i++;
         }
 

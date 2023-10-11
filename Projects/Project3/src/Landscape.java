@@ -9,18 +9,20 @@ import java.util.*;
  * Use your implementation of a linked list.
  */
 public class Landscape implements Cloneable{
-    public Landscape currentGame;
     public LinkedList<Agent> agentList;
-    private Random rand;
+    private final Random rand;
     // Keeps a history of game states
-    public LinkedList<Landscape> stateList;
     //Stores previous state, not yet implemented.
     public HashMap<String,LinkedList<Landscape>> previousGame;
     public HashMap<String,LinkedList<Agent>> sectorMap;
     public boolean paused;
     public int width;
     public int height;
+    public int sleepTime;
     public int sectorSize;
+    public int agentCount;
+    private int antiSocialRadius;
+    private int socialRadius;
 
 
     /**
@@ -32,31 +34,30 @@ public class Landscape implements Cloneable{
         this.rand = new Random();
         this.width = w;
         this.height = h;
-        this.sectorSize = 10;
-        this.agentList = new LinkedList<>();
-        this.stateList = new LinkedList<>();
-        this.previousGame = new HashMap<>();
         this.paused = true;
+        this.sleepTime = 250;
+        this.agentCount = 100;
+        this.socialRadius = 25;
+        this.antiSocialRadius = 25;
         reset();
     }
 
-    /**
-     * a constructor that sets the width and height fields, and initializes the agent list.
-     *
-     */
-    public Landscape() {
-        //TODO
-    }
 
     /**
      * Recreates the Landscape according to the specifications given in its initial construction.
      */
     public void reset() {
-        //TODO
+        this.sectorSize = 10;
+        this.agentList = new LinkedList<>();
+        this.previousGame = new HashMap<>();
         sectorMap = createSectorMap(this.width, this.height, this.sectorSize);
-        stateList.clear();
-        stateList.addLast(currentGame);
-        previousGame.put("previousGame",stateList);
+        for (int i = 0; i < agentCount; i++) {
+            addAgent(new SocialAgent(rand.nextDouble() * getWidth(),
+                    rand.nextDouble() * getHeight(), socialRadius));
+            addAgent(new AntiSocialAgent(rand.nextDouble() * getWidth(),
+                    rand.nextDouble() * getHeight(), antiSocialRadius));
+        }
+
     }
 
     public HashMap<String,LinkedList<Agent>> createSectorMap(int width, int height, int refinement) {
@@ -79,12 +80,12 @@ public class Landscape implements Cloneable{
 
 
     public int[] getSector(Agent agent) {
-        return getSector((int) agent.getX(),(int) agent.getY());
+        return getSector(agent.getX(), agent.getY());
     }
-    public int[] getSector(int xCor, int yCor) {
+    public int[] getSector(double xCor, double yCor) {
         int[] output = new int[2];
-        output[0] = ((yCor - (yCor % this.sectorSize))/(this.sectorSize));
-        output[1] = ((xCor - (xCor % this.sectorSize))/(this.sectorSize));
+        output[0] = (int) ((yCor - (yCor % this.sectorSize))/(this.sectorSize));
+        output[1] = (int) ((xCor - (xCor % this.sectorSize))/(this.sectorSize));
         return output;
     }
 
@@ -129,11 +130,7 @@ public class Landscape implements Cloneable{
      * @return
      */
     public String toString() {
-        StringBuilder builder = new StringBuilder();
-        builder.append(this.agentList.size());
-        builder.append(" Agents: ");
-        builder.append(agentList.toString());
-        return builder.toString();
+        return this.agentList.size() + " Agents: " + agentList;
     }
 
     /**
@@ -144,98 +141,95 @@ public class Landscape implements Cloneable{
      * @return
      */
     public LinkedList<Agent> getNeighbors(double x0, double y0, double radius) {
+        ArrayList<String> sectorTracker = new ArrayList<>();
+        int[] refSector = getSector(x0, y0);
+        sectorTracker.add(Arrays.toString(refSector));
+        //Constructor for boolean-array of directions to check for neighbors.
+        if (radius <= this.sectorSize) {
+            //Check whether ref-sector in the scope of array.
+            if (sectorMap.get(Arrays.toString(refSector)) == null) {
+                System.out.println("Point not within bounds of game. Neighbors DNE.");
+            }
+            else {
+                boolean[] checkDirections = new boolean[4];
+                //Up.
+                checkDirections[0] = ((y0 % this.sectorSize) < ((double) this.sectorSize / 2));
+                //Right.
+                checkDirections[1] = ((x0 % this.sectorSize) >= ((double) this.sectorSize / 2));
+                //Down.
+                checkDirections[2] = ((y0 % this.sectorSize) >= ((double) this.sectorSize / 2));
+                //Left.
+                checkDirections[3] = ((x0 % this.sectorSize) < ((double) this.sectorSize / 2));
+                //Get allotted sectors
+                for (int i = 0; i < 4; i++) {
+                    if (checkDirections[i]) {
+                        //Handy function to indicate directions.
+                        int sectorRow = (int) (refSector[0] - (Math.cos((Math.PI / 2) * i)));
+                        int sectorColumn = (int) (refSector[1] - (Math.sin((Math.PI / 2) * i)));
+                        String adjacentSector = "["+sectorRow+", "+sectorColumn+"]";
+                        if (sectorMap.containsKey(adjacentSector)) {
+                            sectorTracker.add(adjacentSector);
+                        }
+                        if (checkDirections[i] && checkDirections[(i + 1) % 4]) {
+                            int sectorRowD = (int) (refSector[0] - (Math.cos((Math.PI / 2) * i)));
+                            int sectorColumnD = (int) (refSector[1] - (Math.sin((Math.PI / 2) * ((i + 1) % 4))));
+                            String diagSector = "["+sectorRowD+", "+sectorColumnD+"]";
+                            if (sectorMap.containsKey(diagSector)) {
+                                sectorTracker.add(diagSector);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        else {
+            int intRadius = (int) Math.floor(radius / (double) this.sectorSize);
+            for (int i = (refSector[0]-intRadius); i < (refSector[0])+intRadius ; i++) {
+                for (int j = (refSector[1]-intRadius); j < (refSector[1]+intRadius); j++) {
+                    String addSector = "[" + i + ", " + j + "]";
+                    if (sectorMap.containsKey(addSector)) {
+                        sectorTracker.add(addSector);
+                    }
+                }
+            }
+        }
+        LinkedList<Agent> combinedSectorMaster = new LinkedList<>();
+        for (String sector : sectorTracker) {
+            combinedSectorMaster.addAll(sectorMap.get(sector));
+        }
+        LinkedList<Agent> neighbors = new LinkedList<>();
+        for (Agent agent : combinedSectorMaster) {
+            if (Math.sqrt(Math.pow((agent.getX()-x0),2)+Math.pow((agent.getY()-y0),2)) <= radius) {
+                neighbors.add(agent);
+            }
+        }
+        return neighbors;
+    }
 
-        return new LinkedList<>();
+
+
+    public void updateAgents() {
+        for (Agent agent : this.agentList) {
+            agent.updateState(this);
+        }
+
     }
 
     public void advance() {
-        //TODO
-        /*
         // Create a snapshot of the current landscape
-        Landscape landscapeFreeze = new Landscape();
-
-        // Copy the current state to the snapshot
-        int cR = 0;
-        for (Cell[] row : landscapeFreeze) {
-            int cC = 0;
-            for (Cell column: row) {
-                landscapeFreeze[cR][cC] = (landscape[cR][cC]).clone();
-                cC++;
-            }
-            cR++;
+        updateAgents();
+        ArrayList<Boolean> moveList = new ArrayList<>();
+        for (Agent agent : this.agentList) {
+            moveList.add(agent.moved);
         }
-
-        // Add the snapshot to the state history
-        stateList.addLast(landscapeFreeze);
-
-        // Get a list of living cells in the current landscape
-        ArrayList<Cell> livingCells = new ArrayList<>();
-        HashMap<Cell,ArrayList<Cell>> neighborMap = new HashMap<>();
-        for (Cell[] row : landscape) {
-            List<Cell> tempRow = Arrays.asList(row);
-            HashSet<Cell> rowSet = new HashSet<>(tempRow);
-
-            // Remove dead cells from the row
-            rowSet.removeIf(cell -> cell.equals(new Cell(false)));
-
-            // Add the living cells to the list. One of the potential nulls in question.
-            if (!rowSet.isEmpty()) {
-                livingCells.addAll(rowSet);
-            }
-
-        }
-
-        // Calculate neighbors for each living cell and store them in neighborMap
-        for (Cell cell : livingCells) {
-            Integer[] identity = cellHashMap.get(cell);
-            neighborMap.put(cell, getNeighbors(identity));
-        }
-        // Update the state of each living cell based on its neighbors
-        for (Cell cell : livingCells) {
-            ArrayList<Cell> reference = neighborMap.get(cell);
-            //Second null value.
-            if (reference == null) {
-                reference = new ArrayList<>();
-            }
-            cell.updateState(reference);
-        }
-        // Check if the landscape has returned to a previous state, and pause the simulation if so
-        if (this.equals(stateList.getLast())) {
+        if (!moveList.contains(true)) {
             pause();
         }
-         */
     }
-
-    /**
-     * Reverts the current Landscape to the previous state stored in the state history.
-     * This method undoes the last step of the simulation by restoring the landscape
-     * to its previous state.
-     */
-    public void revert() {
-        //TODO
-        /*
-        // Retrieve the previous state from the state history
-        Cell[][] landscapeFreeze = stateList.pollLast();
-
-        // Restore the landscape to the previous state
-        int cR = 0;
-        if (landscapeFreeze != null) {
-            for (Cell[] row : landscapeFreeze) {
-                int cC = 0;
-                for (Cell column: row) {
-                    landscape[cR][cC].setAlive(column.getAlive());
-                    cC++;
-                }
-                cR++;
-            }
-        }
-         */
-    }
-
 
     /**
      * Pauses the Game of Life simulation.
-     * Sets the 'paused' flag to true and displays a message.
+     * Sets the 'paused' flag tco true and displays a message.
      */
     public void pause() {
         paused = true;
@@ -263,9 +257,13 @@ public class Landscape implements Cloneable{
      * @param window the JFrame used for displaying the simulation
      */
     public void play(LandscapeFrame window) {
-        paused = false;
         advance();
         SwingUtilities.invokeLater(window::repaint);
+        try {
+            Thread.sleep(this.sleepTime);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         if (!paused) {
             SwingUtilities.invokeLater(() -> play(window));
         }
@@ -288,13 +286,27 @@ public class Landscape implements Cloneable{
     @Override
     public Landscape clone() throws CloneNotSupportedException {
         Landscape clone = (Landscape) super.clone();
-        clone.currentGame = this.currentGame.clone();
         clone.agentList = new LinkedList<>(this.agentList);
-        clone.stateList = new LinkedList<>(this.stateList);
+        clone.sectorMap = new HashMap<>(this.sectorMap);
+        for (String agentLinkedListKey : this.sectorMap.keySet()) {
+            clone.sectorMap.put(agentLinkedListKey, new LinkedList<>(sectorMap.get(agentLinkedListKey)));
+        }
         clone.setPause(true);
         clone.width = this.width;
         clone.height = this.height;
+        clone.sleepTime = this.sleepTime;
         return clone;
+    }
+
+    public void copy(Landscape source) {
+        this.agentList = new LinkedList<>(source.agentList);
+        this.sectorMap = new HashMap<>(source.sectorMap);
+        for (String agentLinkedListKey : source.sectorMap.keySet()) {
+            this.sectorMap.put(agentLinkedListKey, new LinkedList<>(source.sectorMap.get(agentLinkedListKey)));
+        }
+        this.setPause(true);
+        this.width = source.width;
+        this.height = source.height;
     }
 
     public static void main(String[] args) {
@@ -302,15 +314,40 @@ public class Landscape implements Cloneable{
         Random gen = new Random();
 
         // Creates 100 SocialAgents and 100 AntiSocialAgents
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < scape.agentCount; i++) {
             scape.addAgent(new SocialAgent(gen.nextDouble() * scape.getWidth(),
                     gen.nextDouble() * scape.getHeight(),
-                    25));
+                    5));
             scape.addAgent(new AntiSocialAgent(gen.nextDouble() * scape.getWidth(),
                     gen.nextDouble() * scape.getHeight(),
-                    50));
+                    11));
         }
         LandscapeFrame display = new LandscapeFrame(scape,1);
         System.out.println(scape);
+        System.out.println(scape.sectorMap);
+    }
+
+    public void setSleepTime(int value) {
+        this.sleepTime = value;
+    }
+
+    public void setAgents(int value) {
+        this.agentCount = value;
+    }
+
+    public void setSocialRadius(int value) {
+        this.socialRadius = value;
+    }
+
+    public void setAntiSocialRadius(int value) {
+        this.antiSocialRadius = value;
+    }
+
+    public int getSocialRadius() {
+        return this.socialRadius;
+    }
+
+    public int getAntiSocialRadius() {
+        return this.antiSocialRadius;
     }
 }

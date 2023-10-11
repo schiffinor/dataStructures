@@ -39,8 +39,6 @@ public class LandscapeTests {
             System.out.println(l2);
 
             // test
-            assert l1 != null : "Error in Landscape::Landscape(int, int)";
-            assert l2 != null : "Error in Landscape::Landscape(int, int)";
         }
 
         // Case 2: Testing reset()
@@ -145,8 +143,6 @@ public class LandscapeTests {
             System.out.println(l3+"\n"+l2);
 
             // test
-            assert l1 != null : "Error in Landscape::Landscape(int, int)";
-            assert l2 != null : "Error in Landscape::Landscape(int, int)";
 
         }
 

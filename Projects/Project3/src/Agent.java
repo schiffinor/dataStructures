@@ -1,6 +1,5 @@
 import java.awt.*;
 import java.util.Arrays;
-import java.util.List;
 
 public abstract class Agent {
     double xCor;
@@ -87,7 +86,6 @@ public abstract class Agent {
      */
     public Double[] setPos(Double[] newPos) {
         Double[] prev = this.position;
-
         if (!Arrays.deepEquals(prev, newPos)) {
             this.xCor = newPos[0];
             this.yCor = newPos[1];
@@ -97,8 +95,7 @@ public abstract class Agent {
         else {
             this.moved = false;
         }
-        return prev;
-    }
+        return prev;    }
 
     public int getScale() {
         return this.scale;
@@ -137,4 +134,5 @@ public abstract class Agent {
     }
 
     public abstract void draw(Graphics g, int gridScale);
+    public abstract int getRadius();
 }

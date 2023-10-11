@@ -26,9 +26,6 @@ public class CellTests {
             System.out.println(c3 + " == 0");
 
             // test
-            assert c1 != null : "Error in Cell::Cell()";
-            assert c2 != null : "Error in Cell::Cell(bool)";
-            assert c3 != null : "Error in Cell::Cell(bool)";
         }
 
         // case 2: testing getAlive()

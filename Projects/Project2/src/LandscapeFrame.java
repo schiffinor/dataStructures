@@ -189,7 +189,7 @@ public class LandscapeFrame extends AbstractLandscapePresenter{
             Files.createDirectories(folderPath);
         } catch (IOException e) {
             e.printStackTrace();
-        };
+        }
         try {
             ImageIO.write(image, ext, new File(filename));
         } catch (IOException ioe) {

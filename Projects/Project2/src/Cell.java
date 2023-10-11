@@ -98,8 +98,8 @@ public class Cell {
      */
     @Override
     public boolean equals(Object obj){
-        if(obj instanceof Cell checkCell){
-            return ((Boolean) this.getAlive()).equals(checkCell.getAlive());
+        if(obj instanceof Cell ){
+            return ((Boolean) this.getAlive()).equals(((Cell) obj).getAlive());
         } else if (obj instanceof Boolean) {
             return ((Boolean) this.getAlive()).equals(obj);
         } else

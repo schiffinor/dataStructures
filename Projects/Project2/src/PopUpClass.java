@@ -139,9 +139,9 @@ public class PopUpClass extends JPanel {
             System.out.println(Arrays.toString(sizeArray));
             landData.setRows(sizeArray[0]);
             landData.setCols(sizeArray[1]);
-            SwingUtilities.invokeLater(() -> landData.reset());
+            SwingUtilities.invokeLater(landData::reset);
 
-            SwingUtilities.invokeLater(() -> parentFrame.repaint());
+            SwingUtilities.invokeLater(parentFrame::repaint);
         });
 
         return panelConstructor(container, resizeButton);
