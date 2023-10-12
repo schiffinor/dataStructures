@@ -15,34 +15,37 @@ import java.nio.file.Paths;
 import java.util.Random;
 
 /**
+ * The LandscapeFrame class represents a graphical user interface, GUI,
+ * window for visualizing and interacting with a landscape simulation.
+ * It provides features to display the landscape, control the simulation, and save images of the display.
+ *
  * @author      Roman Schiffino <rjschi24@colby.edu>
  * @version     1.1
  * @since       1.1
  */
-
 public class LandscapeFrame{
 
     public final JScrollPane holder;
     public final DisplayPanel landscapePanel;
     protected final Landscape gameInit;
     final JFrame win;
-    public int scale; // width (and height) of each square in the grid
+    public int scale; //width (and height) of each square in the grid
 
     public LandscapeFrame(Landscape landscapeObj, int scale) {
         super();
-        // set up the window
+        //set up the window
         this.win = new JFrame("Social Simulation");
         this.win.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         this.gameInit = landscapeObj;
         this.scale = scale;
 
-        // create a panel in which to display the Landscape
-        // put a buffer of two rows around the display grid
+        //create a panel in which to display the Landscape
+        //put a buffer of two rows around the display grid
         this.landscapePanel = new DisplayPanel(gameInit, (this.gameInit.getWidth() + 20) * this.scale,
                 (this.gameInit.getHeight() + 20) * this.scale, scale);
 
-        // add the panel to the window, layout, and display
+        //add the panel to the window, layout, and display
         createMenuBar();
         this.holder = new JScrollPane(landscapePanel,ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
@@ -51,13 +54,12 @@ public class LandscapeFrame{
         this.win.setVisible(true);
     }
 
-    // test function that creates a new LandscapeDisplay and populates it with 200
-    // agents.
+    //test function that creates a new LandscapeDisplay and populates it with 200 agents.
     public static void main(String[] args) throws InterruptedException {
         Landscape scape = new Landscape(500, 500);
         Random gen = new Random();
 
-        // Creates 100 SocialAgents and 100 AntiSocialAgents
+        //Creates 100 SocialAgents and 100 AntiSocialAgents
         for (int i = 0; i < 100; i++) {
             scape.addAgent(new SocialAgent(gen.nextDouble() * scape.getWidth(),
                     gen.nextDouble() * scape.getHeight(),
@@ -69,7 +71,6 @@ public class LandscapeFrame{
 
         LandscapeFrame display = new LandscapeFrame(scape,1);
 
-        // Uncomment below when updateAgents() has been implemented
         while(true){
             Thread.sleep(10);
             scape.updateAgents();
@@ -87,12 +88,12 @@ public class LandscapeFrame{
     public void createMenuBar() {
         JMenuBar menuBar = new JMenuBar();
 
-        // Create a File menu
+        //Create a File menu
         JMenu fileMenu = new JMenu("File");
-        // Create a Simulation menu
+        //Create a Simulation menu
         JMenu simMenu = new JMenu("Simulation");
 
-        // Create a "Save Image" menu item
+        //Create a "Save Image" menu item
         JMenuItem saveMenuItem = new JMenuItem("Save Image");
         saveMenuItem.addActionListener(e -> {
             JFileChooser fileChooser = new JFileChooser();
@@ -103,22 +104,22 @@ public class LandscapeFrame{
             }
         });
 
-        // Add the "Save Image" menu item to the File menu
+        //Add the "Save Image" menu item to the File menu
         fileMenu.add(saveMenuItem);
 
-        // Create a "Play" button item
+        //Create a "Play" button item
         JButton playButton = new JButton("Play");
         playButton.addActionListener(e -> {
-            // Start the simulation if it is paused
+            //Start the simulation if it is paused
             if (gameInit.getPaused()) {
-                // Create a thread to run the simulation in the background
+                //Create a thread to run the simulation in the background
                 gameInit.paused = false;
                 gameInit.play(this);
-                // Create and start the thread
+                //Create and start the thread
             }
         });
 
-        // Create a "Pause" button item
+        //Create a "Pause" button item
         JButton pauseButton = new JButton("Pause");
         pauseButton.addActionListener(e -> {
             if (!gameInit.getPaused()) {
@@ -126,14 +127,14 @@ public class LandscapeFrame{
             }
         });
 
-        // Create a "Proceeding State" button item
+        //Create a "Proceeding State" button item
         JButton nextButton = new JButton(">>");
         nextButton.addActionListener(e -> {
             gameInit.advance();
             repaint();
         });
 
-        // Create a "ZoomIn" Button item
+        //Create a "ZoomIn" Button item
         JButton zoomInButton = new JButton("+");
         zoomInButton.addActionListener(e -> {
             if (this.scale<30) {
@@ -142,7 +143,7 @@ public class LandscapeFrame{
             }
         });
 
-        // Create a "ZoomOut" Button item
+        //Create a "ZoomOut" Button item
         JButton zoomOutButton = new JButton("-");
         zoomOutButton.addActionListener(e -> {
                 if (this.scale>1) {
@@ -151,7 +152,7 @@ public class LandscapeFrame{
                 }
         });
 
-        // Create a "Settings" menu item
+        //Create a "Settings" menu item
         JMenuItem settings = new JMenuItem("Settings");
         settings.addActionListener(e -> {
             JDialog settingsDialog = new JDialog(this.win);
@@ -164,10 +165,10 @@ public class LandscapeFrame{
             settingsDialog.pack();
         });
 
-        // Add the "Play," "Pause," "<<," and ">>" menu items to the Simulation menu
+        //Add the "Play," "Pause," "<<," and ">>" menu items to the Simulation menu
         simMenu.add(settings);
 
-        // Add the File and Simulation menus to the menu bar
+        //Add the File and Simulation menus to the menu bar
         menuBar.add(fileMenu);
         menuBar.add(pauseButton);
         menuBar.add(playButton);
@@ -176,7 +177,7 @@ public class LandscapeFrame{
         menuBar.add(zoomInButton);
         menuBar.add(simMenu);
 
-        // Set the menu bar for the JFrame
+        //Set the menu bar for the JFrame
         win.setJMenuBar(menuBar);
     }
 
@@ -188,20 +189,20 @@ public class LandscapeFrame{
      * @param filename the name of the file to save
      */
     public void saveImage(String filename) {
-        // get the file extension from the filename
+        //get the file extension from the filename
         String ext = filename.substring(filename.lastIndexOf('.') + 1);
 
-        // create an image buffer to save this component
+        //create an image buffer to save this component
         Component tosave = this.win.getRootPane();
         BufferedImage image = new BufferedImage(tosave.getWidth(), tosave.getHeight(),
                 BufferedImage.TYPE_INT_RGB);
 
-        // paint the component to the image buffer
+        //paint the component to the image buffer
         Graphics g = image.createGraphics();
         tosave.paint(g);
         g.dispose();
 
-        // save the image
+        //save the image
         Path folderPath = Paths.get("data");
         try {
             Files.createDirectories(folderPath);

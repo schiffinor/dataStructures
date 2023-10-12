@@ -12,11 +12,11 @@ import java.util.Arrays;
  * @version 1.0
  */
 public abstract class Agent {
-    protected double xCor;            // x-coordinate of the agent
-    protected double yCor;            // y-coordinate of the agent
-    protected Double[] position;      // array storing the agent's position [xCor, yCor]
-    protected boolean moved;          // indicates whether the agent has moved
-    protected int scale;              // scale of the agent's representation
+    protected double xCor;            //x-coordinate of the agent
+    protected double yCor;            //y-coordinate of the agent
+    protected Double[] position;      //array storing the agent's position [xCor, yCor]
+    protected boolean moved;          //indicates whether the agent has moved
+    protected int scale;              //scale of the agent's representation
 
     /**
      * Creates an abstract agent with the specified initial coordinates.

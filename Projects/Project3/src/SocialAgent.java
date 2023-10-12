@@ -58,25 +58,25 @@ public class SocialAgent extends Agent{
     @Override
     public void updateState(Landscape scape) {
 
-        // Generate a random number generator for making random movements
+        //Generate a random number generator for making random movements
         Random rand = new Random();
 
-        // Get a list of neighboring agents within the social interaction radius
+        //Get a list of neighboring agents within the social interaction radius
         LinkedList<Agent> neighborList = scape.getNeighbors(getX(), getY(), getRadius());
 
-        // Remove the current agent from the neighbor list
+        //Remove the current agent from the neighbor list
         neighborList.remove(this);
 
 
         if (neighborList.size()<4) {
 
-            // Sets up conditions for moving the agent.
+            //Sets up conditions for moving the agent.
             int[] oldSector = scape.getSector(this);
             double newX = -1.;
             double newY = -1.;
             Double[] newPos = new Double[2];
 
-            // Randomly generate new X coordinate within a specific range
+            //Randomly generate new X coordinate within a specific range
             do {
                 //Standard range
                 double lowerBound = -10;
@@ -91,7 +91,7 @@ public class SocialAgent extends Agent{
                 //Random Generation
                 newX = getX()+rand.nextDouble(lowerBound,upperBound);
             } while (newX<0||newX>scape.getWidth());
-            // Randomly generate new Y coordinate within a specific range
+            //Randomly generate new Y coordinate within a specific range
             do {
                 //Standard Range
                 double lowerBound = -10;
@@ -107,20 +107,20 @@ public class SocialAgent extends Agent{
                 newY = getY()+rand.nextDouble(lowerBound,upperBound);
             } while (newY<0||newY>scape.getHeight());
 
-            // Update the agent's position with the new coordinates
+            //Update the agent's position with the new coordinates
             newPos[0] = newX;
             newPos[1] = newY;
             setPos(newPos);
 
-            // Get the new sector based on the updated position
+            //Get the new sector based on the updated position
             int[] newSector = scape.getSector(this);
 
-            // Remove the agent from the old sector and add it to the new sector in the landscape
+            //Remove the agent from the old sector and add it to the new sector in the landscape
             scape.sectorMap.get(Arrays.toString(oldSector)).remove(this);
             scape.sectorMap.get(Arrays.toString(newSector)).add(this);
         }
         else {
-            // The agent has enough neighbors, so it maintains its current position
+            //The agent has enough neighbors, so it maintains its current position
             setPos(getPos());
         }
     }
