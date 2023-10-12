@@ -6,17 +6,10 @@ import java.util.HashMap;
 import java.util.Random;
 
 /**
- * Create a class called Landscape. It serves the same purpose as the Landscape in the Game of Life simulation,
- * but is different enough that you probably don't want to copy the old one and edit it. Start with a new file.
- * The Landscape will need fields to store its width and height (as ints) and a LinkedList of Agents.
- * Use your implementation of a linked list.
- */
-
-/**
  * The `Landscape` class represents a simulation landscape for agents.
  * It contains fields to store various properties, such as width, height, and agent information.
  * This class is used to manage agents on the landscape, update their state, and control the simulation.
- *
+ * <p>
  * The landscape is divided into sectors for efficient neighbor search and interaction between agents.
  *
  * @see Agent
@@ -26,7 +19,7 @@ import java.util.Random;
  */
 public class Landscape implements Cloneable{
 
-    // Fields to store agents and landscape properties
+    //Fields to store agents and landscape properties
     private final Random rand;
     public LinkedList<Agent> agentList;
     public HashMap<String,LinkedList<Landscape>> previousGame;
@@ -63,7 +56,7 @@ public class Landscape implements Cloneable{
         Landscape scape = new Landscape(500, 500);
         Random gen = new Random();
 
-        // Creates 100 SocialAgents and 100 AntiSocialAgents
+        //Creates 100 SocialAgents and 100 AntiSocialAgents
         for (int i = 0; i < scape.agentCount; i++) {
             scape.addAgent(new SocialAgent(gen.nextDouble() * scape.getWidth(),
                     gen.nextDouble() * scape.getHeight(),
@@ -96,14 +89,21 @@ public class Landscape implements Cloneable{
 
     /**
      * Creates a sector map based on the specified width, height, and refinement size.
+     * The sector map divides the landscape into a grid of sectors,
+     * each represented as a key in the map with an empty list of agents.
      *
      * @param width      The width of the landscape.
      * @param height     The height of the landscape.
      * @param refinement The sector refinement size.
-     * @return A map of sectors with empty lists of agents.
+     * @return A map of sectors,
+     * where each sector is identified by a unique key
+     * (e.g., "[row, column]") and associated with an empty list of agents.
+     * @throws ArithmeticException If the specified width and height are not both divisible by the refinement size, an exception is thrown.
      */
     public HashMap<String,LinkedList<Agent>> createSectorMap(int width, int height, int refinement) {
         HashMap<String,LinkedList<Agent>> output = new HashMap<>();
+
+        //Check if the specified dimensions are divisible by the refinement size
         if ((width % refinement != 0 || height % refinement != 0)) {
             throw new ArithmeticException(width+", "+height+" are not both divisible by "+refinement);
         }
@@ -113,6 +113,7 @@ public class Landscape implements Cloneable{
                     int[] identifier = new int[2];
                     identifier[0] = i;
                     identifier[1] = j;
+                    //Create an empty list of agents for the current sector.
                     output.put(Arrays.toString(identifier), new LinkedList<>());
                 }
             }
@@ -223,15 +224,16 @@ public class Landscape implements Cloneable{
      * @param x0     The x-coordinate of the location.
      * @param y0     The y-coordinate of the location.
      * @param radius The radius for neighbor search.
-     * @return A list of agents within the specified radius.
+     * @return A list of agents within the specified radius of the provided location (x0, y0).
      */
     public LinkedList<Agent> getNeighbors(double x0, double y0, double radius) {
         ArrayList<String> sectorTracker = new ArrayList<>();
         int[] refSector = getSector(x0, y0);
         sectorTracker.add(Arrays.toString(refSector));
         //Constructor for boolean-array of directions to check for neighbors.
+        //Check if radius is smaller than or equal to the sector size.
         if (radius <= this.sectorSize) {
-            //Check whether ref-sector in the scope of array.
+            //Check whether the reference sector is within the scope of the array.
             if (sectorMap.get(Arrays.toString(refSector)) == null) {
                 System.out.println("Point not within bounds of game. Neighbors DNE.");
             }
@@ -245,10 +247,11 @@ public class Landscape implements Cloneable{
                 checkDirections[2] = ((y0 % this.sectorSize) >= ((double) this.sectorSize / 2));
                 //Left.
                 checkDirections[3] = ((x0 % this.sectorSize) < ((double) this.sectorSize / 2));
-                //Get allotted sectors
+                //Get sectors to check based on directions
                 for (int i = 0; i < 4; i++) {
                     if (checkDirections[i]) {
                         //Handy function to indicate directions.
+                        //Think of how cosine and sine correspond to axes segments on the cartesian plane.
                         int sectorRow = (int) (refSector[0] - (Math.cos((Math.PI / 2) * i)));
                         int sectorColumn = (int) (refSector[1] - (Math.sin((Math.PI / 2) * i)));
                         String adjacentSector = "["+sectorRow+", "+sectorColumn+"]";
@@ -256,9 +259,16 @@ public class Landscape implements Cloneable{
                             sectorTracker.add(adjacentSector);
                         }
                         if (checkDirections[i] && checkDirections[(i + 1) % 4]) {
+                            /*
+                            Second handy function to indicate directions (includes diagonal quadrants).
+                            Think of how cosine and sine correspond to quadrants on the cartesian plane,
+                            also consider mapping each of these quadrant on Z mod 4.
+                            */
                             int sectorRowD = (int) (refSector[0] - (Math.cos((Math.PI / 2) * i)));
                             int sectorColumnD = (int) (refSector[1] - (Math.sin((Math.PI / 2) * ((i + 1) % 4))));
                             String diagSector = "["+sectorRowD+", "+sectorColumnD+"]";
+
+                            //Add each sector in the range to the list of sectors to consider
                             if (sectorMap.containsKey(diagSector)) {
                                 sectorTracker.add(diagSector);
                             }
@@ -268,26 +278,40 @@ public class Landscape implements Cloneable{
             }
         }
         else {
+            //If the radius is larger than the sector size, calculate a larger range of sectors to consider.
             int intRadius = (int) Math.floor(radius / (double) this.sectorSize);
+
+            //Iterate over a square of sectors centered around the reference sector
             for (int i = (refSector[0]-intRadius); i < (refSector[0])+intRadius ; i++) {
                 for (int j = (refSector[1]-intRadius); j < (refSector[1]+intRadius); j++) {
                     String addSector = "[" + i + ", " + j + "]";
+
+                    //Add each sector in the range to the list of sectors to consider
                     if (sectorMap.containsKey(addSector)) {
                         sectorTracker.add(addSector);
                     }
                 }
             }
         }
+
+        //Create a list to store agents from all sectors under consideration
         LinkedList<Agent> combinedSectorMaster = new LinkedList<>();
+
+        //Iterate over the sectors in sectorTracker and collect agents from each sector
         for (String sector : sectorTracker) {
             combinedSectorMaster.addAll(sectorMap.get(sector));
         }
+
+        //Create a list to store the final neighbors based on radius proximity
         LinkedList<Agent> neighbors = new LinkedList<>();
+
+        //Iterate over agents in combinedSectorMaster and check if they are within the specified radius
         for (Agent agent : combinedSectorMaster) {
             if (Math.sqrt(Math.pow((agent.getX()-x0),2)+Math.pow((agent.getY()-y0),2)) <= radius) {
                 neighbors.add(agent);
             }
         }
+        //Return the list of neighbors found within the specified radius
         return neighbors;
     }
 
@@ -309,7 +333,7 @@ public class Landscape implements Cloneable{
      * If no agent has moved, the simulation is paused.
      */
     public void advance() {
-        // Create a snapshot of the current landscape
+        //Create a snapshot of the current landscape
         updateAgents();
         ArrayList<Boolean> moveList = new ArrayList<>();
         for (Agent agent : this.agentList) {
@@ -369,7 +393,7 @@ public class Landscape implements Cloneable{
 
     /**
      * Calls the draw method of all the agents on the Landscape.
-     * @param g
+     * @param g graphics window
      */
     public void draw(Graphics g) {
         draw(g,1);
@@ -426,26 +450,56 @@ public class Landscape implements Cloneable{
         this.height = source.height;
     }
 
+    /**
+     * Sets the sleep-time between updates in landscape.
+     *
+     * @param value The desired number of agents.
+     */
     public void setSleepTime(int value) {
         this.sleepTime = value;
     }
 
+    /**
+     * Sets the number of agents in the landscape.
+     *
+     * @param value The desired number of agents.
+     */
     public void setAgents(int value) {
         this.agentCount = value;
     }
 
+    /**
+     * Gets the social radius value, which represents the interaction radius for social agents.
+     *
+     * @return The social radius value.
+     */
     public int getSocialRadius() {
         return this.socialRadius;
     }
 
+    /**
+     * Sets the social radius value, which represents the interaction radius for social agents.
+     *
+     * @param value The new social radius value to set.
+     */
     public void setSocialRadius(int value) {
         this.socialRadius = value;
     }
 
+    /**
+     * Gets the anti-social radius value, which represents the interaction radius for anti-social agents.
+     *
+     * @return The anti-social radius value.
+     */
     public int getAntiSocialRadius() {
         return this.antiSocialRadius;
     }
 
+    /**
+     * Sets the anti-social radius value, which represents the interaction radius for anti-social agents.
+     *
+     * @param value The new anti-social radius value to set.
+     */
     public void setAntiSocialRadius(int value) {
         this.antiSocialRadius = value;
     }

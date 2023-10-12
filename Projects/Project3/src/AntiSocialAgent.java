@@ -2,11 +2,24 @@ import java.awt.*;
 import java.util.Arrays;
 import java.util.Random;
 
+/**
+ * The `AntiSocialAgent` class represents a type of agent in a social simulation.
+ * <p>
+ * Social agents inherit from the `Agent` class and have an additional radius property,
+ * which defines their social interaction range.
+ * They are capable of updating their state based on the landscape and can be drawn on the landscape.
+ *
+ * @version 1.0
+ */
 public class AntiSocialAgent extends Agent{
     int radius;
+
     /**
-     * @param x0
-     * @param y0
+     * Creates an antiSocial agent with the specified initial coordinates and social interaction radius.
+     *
+     * @param x0     The initial x-coordinate of the agent.
+     * @param y0     The initial y-coordinate of the agent.
+     * @param radius The social interaction radius of the agent.
      */
     public AntiSocialAgent(double x0, double y0, int radius) {
         super(x0, y0);
@@ -14,17 +27,20 @@ public class AntiSocialAgent extends Agent{
     }
 
     /**
+     * Gets the social interaction radius of the agent.
      *
-     * @return
+     * @return The social interaction radius of the agent.
      */
     @Override
-
     public int getRadius() {
         return this.radius;
     }
+
     /**
+     * Sets the social interaction radius of the agent and returns the previous radius.
      *
-     * @return
+     * @param radius The new social interaction radius to set.
+     * @return The previous social interaction radius of the agent.
      */
     public int setRadius(int radius) {
         int prev = this.radius;
@@ -32,6 +48,13 @@ public class AntiSocialAgent extends Agent{
         return prev;
     }
 
+    /**
+     * Updates the state of the antiSocial agent based on the provided landscape.
+     * AntiSocial agents randomly move if they more than one neighbors within their social radius.
+     * Otherwise, they maintain their current position.
+     *
+     * @param scape The landscape on which the agent resides.
+     */
     @Override
     public void updateState(Landscape scape) {
         Random rand = new Random();
@@ -76,6 +99,12 @@ public class AntiSocialAgent extends Agent{
         }
     }
 
+    /**
+     * Draws the social agent using the specified Graphics object with the given scale.
+     *
+     * @param g      The Graphics object to use for drawing.
+     * @param scale  The scale to use for drawing the agent on a grid.
+     */
     @Override
     public void draw(Graphics g, int scale) {
         if (!moved) {

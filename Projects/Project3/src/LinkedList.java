@@ -1,5 +1,27 @@
+/*
+One thing I should make clear is that I wrote the project before I wrote this class.
+Thus, I recreated a bunch of features from the java.util implementation of the `LinkedList` class.
+This is to ensure maximum compatibility with my code.
+
+On a side note, I learned how to use ternary operators to make this work so that's cool.
+ */
+
 import java.util.*;
 
+/**
+ * The `LinkedList` class represents a doubly-linked list data structure.
+ * It extends `AbstractList` and implements various list-related interfaces,
+ * such as `List`, `Iterable`, and `Cloneable`.
+ * This class allows you to create and manipulate a list of elements of type `E`.
+ * The list supports adding, removing, and retrieving elements,
+ * and it provides methods for iterating through the list.
+ *
+ * @param <E> The type of elements stored in the list.
+ *
+ * @author Roman Schiffino <rjschi24@colby.edu>
+ * @version     1.1
+ * @since       1.1
+ */
 public class LinkedList<E> 
         extends AbstractList<E>
         implements List<E>, Iterable<E>, Cloneable {
@@ -12,11 +34,21 @@ public class LinkedList<E>
         head = null;
         tail = null;
     }
+
+    /**
+     * Creates a new `LinkedList` containing elements from the specified collection.
+     * The elements are added in the order they appear in the collection.
+     *
+     * @param list A collection of elements to add to the `LinkedList`.
+     */
     public LinkedList(Collection<? extends E> list) {
         this();
         addAll(list);
     }
 
+    /**
+     * Creates a new `LinkedList` with no elements.
+     */
     @SuppressWarnings("unchecked")
     @Override
     public LinkedList<E> clone() {
@@ -35,14 +67,33 @@ public class LinkedList<E>
         return clone;
     }
 
+    /**
+     * Returns the size of the `LinkedList`, which is the number of elements it contains.
+     *
+     * @return The size of the `LinkedList`.
+     */
     public int size(){
         return size;
     }
 
+    /**
+     * Returns the index of the first occurrence of the specified object in the `LinkedList`,
+     * or -1 if the object is not found.
+     *
+     * @param obj The object to search for.
+     * @return The index of the first occurrence of the object, or -1 if not found.
+     */
     public int indexFetch(Object obj){
         return indexOf(obj);
     }
 
+    /**
+     * Returns the index of the specified node within the `LinkedList`.
+     * This method finds the index of the given node in the list.
+     *
+     * @param node The node whose index is to be determined.
+     * @return The index of the specified node, or -1 if the node is not found in the list.
+     */
     public int indexFetch(Node<E> node) {
         int curIndex = 0;
         for(Node<E> node_i = head; node_i != node; node_i = node_i.getNext()) {
@@ -51,6 +102,14 @@ public class LinkedList<E>
         return curIndex;
     }
 
+    /**
+     * Returns the node at the specified index in the `LinkedList`.
+     * This method retrieves the node at the given index.
+     *
+     * @param index The index of the node to retrieve.
+     * @return The node at the specified index.
+     * @throws IndexOutOfBoundsException If the index is out of the valid range.
+     */
     public Node<E> nodeFetch(int index){
         Node<E> fetchNode = this.head;
 
@@ -61,11 +120,24 @@ public class LinkedList<E>
         return fetchNode;
     }
 
+    /**
+     * Adds an element to the beginning of the `LinkedList`.
+     * This method adds the specified item to the front of the list.
+     *
+     * @param item The item to add to the list.
+     * @return Always returns true to indicate success.
+     */
     public boolean add(E item){
         addFirst(item);
         return true;
     }
 
+    /**
+     * Adds an element to the beginning of the `LinkedList`.
+     * This method adds the specified item to the front of the list.
+     *
+     * @param item The item to add to the list.
+     */
     public void addFirst(E item){
         Node<E> newNode = new Node<>(item, head, null);
         newNode.setParent(this);
@@ -78,6 +150,12 @@ public class LinkedList<E>
         head = newNode;
     }
 
+    /**
+     * Adds an element to the end of the `LinkedList`.
+     * This method adds the specified item to the back of the list.
+     *
+     * @param item The item to add to the list.
+     */
     public void addLast(E item){
         Node<E> newNode = new Node<>(item, null, tail);
         newNode.setParent(this);
@@ -90,10 +168,14 @@ public class LinkedList<E>
         tail = newNode;
     }
 
-    // this will add item into the list at the given index, meaning everything
-    // after will be now 1 index later.
+    /**
+     * Inserts an element at the specified index in the `LinkedList`.
+     * This method inserts the specified item at the given index.
+     *
+     * @param index The index at which to insert the item.
+     * @param item  The item to insert into the list.
+     */
     public void add(int index, E item){
-        // If index is 0, let's just use addFirst, which updates head accordingly
         if (index == 0) {
             addFirst(item);
             return;
@@ -112,14 +194,19 @@ public class LinkedList<E>
     }
 
     /**
-     * @return
+     * Retrieves the first element in the `LinkedList` without removing it.
+     * This method is equivalent to calling `peekFirst()`.
+     *
+     * @return The first element in the list or null if the list is empty.
      */
     public E peek() {
         return peekFirst();
     }
 
     /**
-     * @return
+     * Retrieves the first element in the `LinkedList` without removing it.
+     *
+     * @return The first element in the list or null if the list is empty.
      */
     public E peekFirst() {
         final Node<E> node = head;
@@ -127,7 +214,9 @@ public class LinkedList<E>
     }
 
     /**
-     * @return
+     * Retrieves the last element in the `LinkedList` without removing it.
+     *
+     * @return The last element in the list or null if the list is empty.
      */
     public E peekLast() {
         final Node<E> node = tail;
@@ -135,14 +224,18 @@ public class LinkedList<E>
     }
 
     /**
-     * @return
+     * Retrieves and removes the first element in the `LinkedList`. This method is equivalent to calling `pollFirst()`.
+     *
+     * @return The first element in the list or null if the list is empty.
      */
     public E poll() {
         return pollFirst();
     }
 
     /**
-     * @return
+     * Retrieves and removes the first element in the `LinkedList`.
+     *
+     * @return The first element in the list or null if the list is empty.
      */
     public E pollFirst() {
         final Node<E> node = head;
@@ -152,7 +245,9 @@ public class LinkedList<E>
     }
 
     /**
-     * @return
+     * Retrieves and removes the last element in the `LinkedList`.
+     *
+     * @return The last element in the list or null if the list is empty.
      */
     public E pollLast() {
         final Node<E> node = tail;
@@ -161,14 +256,23 @@ public class LinkedList<E>
         return dataLoad;
     }
 
+    /**
+     * Returns the element at the specified index in the `LinkedList`.
+     *
+     * @param index The index of the element to retrieve.
+     * @return The element at the specified index.
+     * @throws IndexOutOfBoundsException If the index is out of the valid range.
+     */
     public E get(int index){
         return nodeFetch(index).getData();
     }
 
     /**
+     * Removes and returns the element at the specified index in the `LinkedList`.
      *
-     * @param index
-     * @return the item stored at the given index
+     * @param index The index of the element to remove.
+     * @return The element that was removed.
+     * @throws IndexOutOfBoundsException If the index is out of the valid range.
      */
     public E remove(int index){
         Node<E> node = nodeFetch(index);
@@ -190,6 +294,11 @@ public class LinkedList<E>
         return new LLIterator<>(index, this.head);
     }
 
+    /**
+     * Removes and returns the first element in the `LinkedList`.
+     *
+     * @return The first element that was removed.
+     */
     public E remove(){
         E dataLoad = head.getData();
 
@@ -204,6 +313,12 @@ public class LinkedList<E>
         return dataLoad;
     }
 
+    /**
+     * Removes and returns the element stored in the specified node in the `LinkedList`.
+     *
+     * @param node The node containing the element to be removed.
+     * @return The element that was removed.
+     */
     public E remove(Node<E> node){
         E dataLoad = node.getData();
         Node<E> prev = node.getPrev();
@@ -225,6 +340,11 @@ public class LinkedList<E>
         return dataLoad;
     }
 
+    /**
+     * Removes and returns the last element in the `LinkedList`.
+     *
+     * @return The last element that was removed.
+     */
     public E removeLast(){
         E dataLoad = tail.getData();
 
@@ -240,8 +360,10 @@ public class LinkedList<E>
     }
 
     /**
-     * @param obj element to be removed from this list, if present
-     * @return
+     * Removes the first occurrence of the specified element from the `LinkedList`, if present.
+     *
+     * @param obj The element to be removed from this list.
+     * @return `true` if the element was found and removed, `false` otherwise.
      */
     public boolean removeFirstOccurrence(Object obj) {
         if (obj == null) {
@@ -263,8 +385,10 @@ public class LinkedList<E>
     }
 
     /**
-     * @param obj element to be removed from this list, if present
-     * @return
+     * Removes the last occurrence of the specified element from the `LinkedList`, if present.
+     *
+     * @param obj The element to be removed from this list.
+     * @return `true` if the element was found and removed, `false` otherwise.
      */
     public boolean removeLastOccurrence(Object obj) {
         if (obj == null) {
@@ -285,6 +409,12 @@ public class LinkedList<E>
         return false;
     }
 
+    /**
+     * Compares the `LinkedList` with another object for equality.
+     *
+     * @param obj The object to compare with this `LinkedList`.
+     * @return `true` if the objects are equal, `false` otherwise.
+     */
     @SuppressWarnings("unchecked")
     @Override
     public boolean equals(Object obj) {
@@ -303,73 +433,140 @@ public class LinkedList<E>
         return true;
     }
 
+    /**
+     * A node within the `LinkedList`.
+     * Each node contains an element of type `F` and maintains references to the next and previous nodes in the list.
+     * This inner class is used to construct the doubly-linked list.
+     *
+     * @param <F> The type of elements stored in the node.
+     */
     public static class Node<F> {
         F data;
         Node<F> next;
         Node<F> prev;
         private LinkedList<F> parent;
 
+        /**
+         * Creates a new node with the specified data and no next or previous nodes.
+         *
+         * @param data The data to be stored in the node.
+         */
         public Node(F data) {
             this(data, null, null);
         }
 
+        /**
+         * Creates a new node with the specified data, next, and previous nodes.
+         *
+         * @param item      The data to be stored in the node.
+         * @param nextNode  The node that follows this node.
+         * @param prevNode  The node that precedes this node.
+         */
         public Node(F item, Node<F> nextNode, Node<F> prevNode){
             data = item;
             next = nextNode;
             prev = prevNode;
         }
 
+        /**
+         * Returns the data stored in this node.
+         *
+         * @return The data in this node.
+         */
         public F getData() {
             return data;
         }
 
+        /**
+         * Sets the data stored in this node.
+         *
+         * @param data The new data to be stored in the node.
+         */
         public void setData(F data) {
             this.data = data;
         }
 
+        /**
+         * Returns the node that follows this node.
+         *
+         * @return The next node.
+         */
         public Node<F> getNext() {
             return next;
         }
 
+        /**
+         * Sets the node that follows this node.
+         *
+         * @param next The new next node.
+         */
         public void setNext(Node<F> next) {
             this.next = next;
         }
 
+        /**
+         * Returns the node that precedes this node.
+         *
+         * @return The previous node.
+         */
         public Node<F> getPrev() {
             return prev;
         }
 
+        /**
+         * Sets the node that precedes this node.
+         *
+         * @param prev The new previous node.
+         */
         public void setPrev(Node<F> prev) {
             this.prev = prev;
         }
 
+        /**
+         * Returns the parent `LinkedList` to which this node belongs.
+         *
+         * @return The parent `LinkedList`.
+         */
         public LinkedList<F> getParent() {
             return parent;
         }
 
+        /**
+         * Sets the parent `LinkedList` to which this node belongs.
+         *
+         * @param parent The new parent `LinkedList`.
+         */
         public void setParent(LinkedList<F> parent) {
             this.parent = parent;
         }
     }
 
+    /**
+     * An iterator for the `LinkedList` that allows you to traverse the list in both forward and backward directions.
+     * This iterator is returned by the `listIterator` method.
+     *
+     * @param <E> The type of elements stored in the `LinkedList`.
+     */
     public static class LLIterator<E>
             implements ListIterator<E> {
 
-        private Node<E> current;  // Node class is assumed to be previously defined.
+        private Node<E> current;  //Node class is assumed to be previously defined.
         private int index;
 
+        /**
+         * Creates a new `LLIterator` with the specified starting index and the head node of the `LinkedList`.
+         *
+         * @param index The starting index for the iterator.
+         * @param head The head node of the `LinkedList`.
+         */
         public LLIterator(int index, Node<E> head) {
             this.current = head;
             this.index = index;
         }
         /**
-         * Returns {@code true} if this list iterator has more elements when
-         * traversing the list in the forward direction. (In other words,
-         * returns {@code true} if {@link #next} would return an element rather
-         * than throwing an exception.)
+         * Returns {@code true} if {@link #next} returns an element not null.
          *
-         * @return {@code true} if the list iterator has more elements when
-         * traversing the list in the forward direction
+         * @return {@code true} if there is a next element in the list, {@code false} otherwise.
          */
         @Override
         public boolean hasNext() {
@@ -380,11 +577,7 @@ public class LinkedList<E>
         }
 
         /**
-         * Returns the next element in the list and advances the cursor position.
-         * This method may be called repeatedly to iterate through the list,
-         * or intermixed with calls to {@link #previous} to go back and forth.
-         * (Note that alternating calls to {@code next} and {@code previous}
-         * will return the same element repeatedly.)
+         * Returns the next element in the list and increments the cursor index by 1.
          *
          * @return the next element in the list
          */
@@ -398,13 +591,9 @@ public class LinkedList<E>
         }
 
         /**
-         * Returns {@code true} if this list iterator has more elements when
-         * traversing the list in the reverse direction.  (In other words,
-         * returns {@code true} if {@link #previous} would return an element
-         * rather than throwing an exception.)
+         * Returns true if {@link #previous} returns an element not null.
          *
-         * @return {@code true} if the list iterator has more elements when
-         * traversing the list in the reverse direction
+         * @return true if there is a next element in the list, false otherwise.
          */
         @Override
         public boolean hasPrevious() {
@@ -415,12 +604,7 @@ public class LinkedList<E>
         }
 
         /**
-         * Returns the previous element in the list and moves the cursor
-         * position backwards.  This method may be called repeatedly to
-         * iterate through the list backwards, or intermixed with calls to
-         * {@link #next} to go back and forth.  (Note that alternating calls
-         * to {@code next} and {@code previous} will return the same
-         * element repeatedly.)
+         * Returns the previous element in the list and decrements the cursor index by 1.
          *
          * @return the previous element in the list
          */
@@ -434,13 +618,9 @@ public class LinkedList<E>
         }
 
         /**
-         * Returns the index of the element that would be returned by a
-         * subsequent call to {@link #next}. (Returns list size if the list
-         * iterator is at the end of the list.)
+         * Returns the index of the element that would be returned by {@link #next}.
          *
-         * @return the index of the element that would be returned by a
-         * subsequent call to {@code next}, or list size if the list
-         * iterator is at the end of the list
+         * @return the index of the element that would be returned  {@code next}.
          */
         @Override
         public int nextIndex() {
@@ -448,13 +628,9 @@ public class LinkedList<E>
         }
 
         /**
-         * Returns the index of the element that would be returned by a
-         * subsequent call to {@link #previous}. (Returns -1 if the list
-         * iterator is at the beginning of the list.)
+         * Returns the index of the element that would be returned by {@link #previous}.
          *
-         * @return the index of the element that would be returned by a
-         * subsequent call to {@code previous}, or -1 if the list
-         * iterator is at the beginning of the list
+         * @return the index of the element that would be returned  {@code previous}.
          */
         @Override
         public int previousIndex() {
@@ -462,18 +638,13 @@ public class LinkedList<E>
         }
 
         /**
-         * Removes from the list the last element that was returned by {@link
-         * #next} or {@link #previous} (optional operation).  This call can
-         * only be made once per call to {@code next} or {@code previous}.
-         * It can be made only if {@link #add} has not been
-         * called after the last call to {@code next} or {@code previous}.
+         * Removes the last element returned by {@link #next} or {@link #previous}.
+         * This call can be made once per {@code next} or {@code previous}.
+         * Usage mutually exclusive with {@link #add}, should only call one per
+         * {@code next} or {@code previous} usage.
+         * <p>
+         * Use replace if combined usage necessary.
          *
-         * @throws UnsupportedOperationException if the {@code remove}
-         *                                       operation is not supported by this list iterator
-         * @throws IllegalStateException         if neither {@code next} nor
-         *                                       {@code previous} have been called, or {@code remove} or
-         *                                       {@code add} have been called after the last call to
-         *                                       {@code next} or {@code previous}
          */
         @Override
         public void remove() {
@@ -491,24 +662,12 @@ public class LinkedList<E>
         }
 
         /**
-         * Replaces the last element returned by {@link #next} or
-         * {@link #previous} with the specified element (optional operation).
-         * This call can be made only if neither {@link #remove} nor {@link
-         * #add} have been called after the last call to {@code next} or
-         * {@code previous}.
+         * Replaces the last element (current node) returned by {@link #next} or {@link #previous}
+         * with the specified element.
+         * Similarly, mutually exclusive with {@link #add} and {@link #remove}, should only
+         * call one per {@code next} or {@code previous} usage.
          *
-         * @param e the element with which to replace the last element returned by
-         *          {@code next} or {@code previous}
-         * @throws UnsupportedOperationException if the {@code set} operation
-         *                                       is not supported by this list iterator
-         * @throws ClassCastException            if the class of the specified element
-         *                                       prevents it from being added to this list
-         * @throws IllegalArgumentException      if some aspect of the specified
-         *                                       element prevents it from being added to this list
-         * @throws IllegalStateException         if neither {@code next} nor
-         *                                       {@code previous} have been called, or {@code remove} or
-         *                                       {@code add} have been called after the last call to
-         *                                       {@code next} or {@code previous}
+         * @param e the element to replace with.
          */
         @Override
         public void set(E e) {
@@ -516,24 +675,11 @@ public class LinkedList<E>
         }
 
         /**
-         * Inserts the specified element into the list (optional operation).
-         * The element is inserted immediately before the element that
-         * would be returned by {@link #next}, if any, and after the element
-         * that would be returned by {@link #previous}, if any.  (If the
-         * list contains no elements, the new element becomes the sole element
-         * on the list.)  The new element is inserted before the implicit
-         * cursor: a subsequent call to {@code next} would be unaffected, and a
-         * subsequent call to {@code previous} would return the new element.
-         * (This call increases by one the value that would be returned by a
-         * call to {@code nextIndex} or {@code previousIndex}.)
+         * Adds a node containing e between the node returned by {@link #next} and the current node.
+         * Similarly, mutually exclusive with {@link #set} and {@link #remove}, should only
+         * call one per {@code next} or {@code previous} usage.
          *
-         * @param e the element to insert
-         * @throws UnsupportedOperationException if the {@code add} method is
-         *                                       not supported by this list iterator
-         * @throws ClassCastException            if the class of the specified element
-         *                                       prevents it from being added to this list
-         * @throws IllegalArgumentException      if some aspect of this element
-         *                                       prevents it from being added to this list
+         * @param e the element to add in.
          */
         @Override
         public void add(E e) {
