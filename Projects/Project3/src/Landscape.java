@@ -1,6 +1,9 @@
 import javax.swing.*;
 import java.awt.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Random;
 
 /**
  * Create a class called Landscape. It serves the same purpose as the Landscape in the Game of Life simulation,
