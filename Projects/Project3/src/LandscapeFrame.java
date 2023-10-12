@@ -22,11 +22,11 @@ import java.util.Random;
 
 public class LandscapeFrame{
 
-    final JFrame win;
-    protected final Landscape gameInit;
-    public int scale; // width (and height) of each square in the grid
     public final JScrollPane holder;
     public final DisplayPanel landscapePanel;
+    protected final Landscape gameInit;
+    final JFrame win;
+    public int scale; // width (and height) of each square in the grid
 
     public LandscapeFrame(Landscape landscapeObj, int scale) {
         super();
@@ -49,6 +49,32 @@ public class LandscapeFrame{
         this.win.add(holder, BorderLayout.CENTER);
         this.win.pack();
         this.win.setVisible(true);
+    }
+
+    // test function that creates a new LandscapeDisplay and populates it with 200
+    // agents.
+    public static void main(String[] args) throws InterruptedException {
+        Landscape scape = new Landscape(500, 500);
+        Random gen = new Random();
+
+        // Creates 100 SocialAgents and 100 AntiSocialAgents
+        for (int i = 0; i < 100; i++) {
+            scape.addAgent(new SocialAgent(gen.nextDouble() * scape.getWidth(),
+                    gen.nextDouble() * scape.getHeight(),
+                    25));
+            scape.addAgent(new AntiSocialAgent(gen.nextDouble() * scape.getWidth(),
+                    gen.nextDouble() * scape.getHeight(),
+                    50));
+        }
+
+        LandscapeFrame display = new LandscapeFrame(scape,1);
+
+        // Uncomment below when updateAgents() has been implemented
+        while(true){
+            Thread.sleep(10);
+            scape.updateAgents();
+            display.repaint();
+        }
     }
 
     /**
@@ -212,34 +238,7 @@ public class LandscapeFrame{
         return this.scale;
     }
 
-
     public void setscale(int scale) {
         this.scale = scale;
-    }
-
-    // test function that creates a new LandscapeDisplay and populates it with 200
-    // agents.
-    public static void main(String[] args) throws InterruptedException {
-        Landscape scape = new Landscape(500, 500);
-        Random gen = new Random();
-
-        // Creates 100 SocialAgents and 100 AntiSocialAgents
-        for (int i = 0; i < 100; i++) {
-            scape.addAgent(new SocialAgent(gen.nextDouble() * scape.getWidth(),
-                    gen.nextDouble() * scape.getHeight(),
-                    25));
-            scape.addAgent(new AntiSocialAgent(gen.nextDouble() * scape.getWidth(),
-                    gen.nextDouble() * scape.getHeight(),
-                    50));
-        }
-
-        LandscapeFrame display = new LandscapeFrame(scape,1);
-
-        // Uncomment below when updateAgents() has been implemented
-        while(true){
-            Thread.sleep(10);
-            scape.updateAgents();
-            display.repaint();
-        }
     }
 }

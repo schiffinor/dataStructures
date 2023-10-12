@@ -4,6 +4,305 @@ public class LinkedList<E>
         extends AbstractList<E>
         implements List<E>, Iterable<E>, Cloneable {
 
+    private int size;
+    private Node<E> head;
+    private Node<E> tail;
+    public LinkedList() {
+        size = 0;
+        head = null;
+        tail = null;
+    }
+    public LinkedList(Collection<? extends E> list) {
+        this();
+        addAll(list);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public LinkedList<E> clone() {
+        LinkedList<E> clone;
+        try {
+            clone = (LinkedList<E>) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new InternalError(e);
+        }
+        clone.head = null;
+        clone.tail = null;
+        clone.size = 0;
+        for (Node<E> node = head; node!= null; node = node.getNext()) {
+            clone.add(node.getData());
+        }
+        return clone;
+    }
+
+    public int size(){
+        return size;
+    }
+
+    public int indexFetch(Object obj){
+        return indexOf(obj);
+    }
+
+    public int indexFetch(Node<E> node) {
+        int curIndex = 0;
+        for(Node<E> node_i = head; node_i != node; node_i = node_i.getNext()) {
+            curIndex++;
+        }
+        return curIndex;
+    }
+
+    public Node<E> nodeFetch(int index){
+        Node<E> fetchNode = this.head;
+
+        for(int i = 0; i < index; i++){
+            fetchNode = fetchNode.getNext();
+        }
+
+        return fetchNode;
+    }
+
+    public boolean add(E item){
+        addFirst(item);
+        return true;
+    }
+
+    public void addFirst(E item){
+        Node<E> newNode = new Node<>(item, head, null);
+        newNode.setParent(this);
+        if (size == 0){
+            tail = newNode;
+        } else {
+            head.setPrev(newNode);
+        }
+        size++;
+        head = newNode;
+    }
+
+    public void addLast(E item){
+        Node<E> newNode = new Node<>(item, null, tail);
+        newNode.setParent(this);
+        if (size == 0){
+            head = newNode;
+        } else {
+            tail.setNext(newNode);
+        }
+        size++;
+        tail = newNode;
+    }
+
+    // this will add item into the list at the given index, meaning everything
+    // after will be now 1 index later.
+    public void add(int index, E item){
+        // If index is 0, let's just use addFirst, which updates head accordingly
+        if (index == 0) {
+            addFirst(item);
+            return;
+        } if (index == size) {
+            addLast(item);
+            return;
+        }
+        Node<E> curr = nodeFetch(index);
+
+        Node<E> newNode = new Node<>(item, curr.getPrev(), curr);
+        newNode.setParent(this);
+        newNode.getPrev().setNext(newNode);
+        newNode.getNext().setPrev(newNode);
+
+        size++;
+    }
+
+    /**
+     * @return
+     */
+    public E peek() {
+        return peekFirst();
+    }
+
+    /**
+     * @return
+     */
+    public E peekFirst() {
+        final Node<E> node = head;
+        return (node == null) ? null : node.getData();
+    }
+
+    /**
+     * @return
+     */
+    public E peekLast() {
+        final Node<E> node = tail;
+        return (node == null) ? null : node.getData();
+    }
+
+    /**
+     * @return
+     */
+    public E poll() {
+        return pollFirst();
+    }
+
+    /**
+     * @return
+     */
+    public E pollFirst() {
+        final Node<E> node = head;
+        E dataLoad = (node == null) ? null : node.getData();
+        remove();
+        return dataLoad;
+    }
+
+    /**
+     * @return
+     */
+    public E pollLast() {
+        final Node<E> node = tail;
+        E dataLoad = (node == null) ? null : node.getData();
+        removeLast();
+        return dataLoad;
+    }
+
+    public E get(int index){
+        return nodeFetch(index).getData();
+    }
+
+    /**
+     *
+     * @param index
+     * @return the item stored at the given index
+     */
+    public E remove(int index){
+        Node<E> node = nodeFetch(index);
+        E dataLoad = node.getData();
+        remove(node);
+        return dataLoad;
+    }
+
+    /**
+     * Returns a list iterator over the elements in this list (in proper
+     * sequence).
+     *
+     * @return a list iterator over the elements in this list (in proper
+     * sequence)
+     * @throws IndexOutOfBoundsException {@inheritDoc}
+     */
+    @Override
+    public ListIterator<E> listIterator(int index) {
+        return new LLIterator<>(index, this.head);
+    }
+
+    public E remove(){
+        E dataLoad = head.getData();
+
+        head = head.getNext();
+        if (size > 1) {
+            head.setPrev(null);
+        } else {
+            head = null;
+        }
+
+        size--;
+        return dataLoad;
+    }
+
+    public E remove(Node<E> node){
+        E dataLoad = node.getData();
+        Node<E> prev = node.getPrev();
+        Node<E> next = node.getNext();
+
+        if (prev!= null) {
+            prev.setNext(next);
+        }
+        else {
+            this.head = next;
+        }
+        if (next!= null) {
+            next.setPrev(prev);
+        }
+        else {
+            this.tail = prev;
+        }
+        size--;
+        return dataLoad;
+    }
+
+    public E removeLast(){
+        E dataLoad = tail.getData();
+
+        tail = tail.getPrev();
+        if (size > 1) {
+            tail.setNext(null);
+        } else {
+            head = null;
+        }
+
+        size--;
+        return dataLoad;
+    }
+
+    /**
+     * @param obj element to be removed from this list, if present
+     * @return
+     */
+    public boolean removeFirstOccurrence(Object obj) {
+        if (obj == null) {
+            for (Node<E> node = head; node != null; node = node.getNext()) {
+                if (node.getData() == null) {
+                    remove(node);
+                    return true;
+                }
+            }
+        } else {
+            for (Node<E> node = head; node != null; node = node.getNext()) {
+                if (obj.equals(node.getData())) {
+                    remove(node);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * @param obj element to be removed from this list, if present
+     * @return
+     */
+    public boolean removeLastOccurrence(Object obj) {
+        if (obj == null) {
+            for (Node<E> node = tail; node != null; node = node.getPrev()) {
+                if (node.getData() == null) {
+                    remove(node);
+                    return true;
+                }
+            }
+        } else {
+            for (Node<E> node = tail; node != null; node = node.getPrev()) {
+                if (obj.equals(node.getData())) {
+                    remove(node);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass()!= obj.getClass()) return false;
+
+        LinkedList<E> list = (LinkedList<E>) obj;
+
+        if (size!= list.size()) return false;
+        Node<E> curNode = list.head;
+        for (Node<E> node = head; node != null; node = node.getNext()) {
+            if (!node.getData().equals(curNode.getData())) return false;
+            curNode = curNode.getNext();
+        }
+
+        return true;
+    }
+
     public static class Node<F> {
         F data;
         Node<F> next;
@@ -24,32 +323,32 @@ public class LinkedList<E>
             return data;
         }
 
-        public void setNext(Node<F> next) {
-            this.next = next;
+        public void setData(F data) {
+            this.data = data;
         }
 
         public Node<F> getNext() {
             return next;
         }
 
-        public void setPrev(Node<F> prev) {
-            this.prev = prev;
+        public void setNext(Node<F> next) {
+            this.next = next;
         }
 
         public Node<F> getPrev() {
             return prev;
         }
 
-        public void setData(F data) {
-            this.data = data;
-        }
-
-        public void setParent(LinkedList<F> parent) {
-            this.parent = parent;
+        public void setPrev(Node<F> prev) {
+            this.prev = prev;
         }
 
         public LinkedList<F> getParent() {
             return parent;
+        }
+
+        public void setParent(LinkedList<F> parent) {
+            this.parent = parent;
         }
     }
 
@@ -247,310 +546,5 @@ public class LinkedList<E>
             this.current.getParent().size++;
 
         }
-    }
-
-    private int size;
-    private Node<E> head;
-    private Node<E> tail;
-
-    public LinkedList() {
-        size = 0;
-        head = null;
-        tail = null;
-    }
-
-    public LinkedList(Collection<? extends E> list) {
-        this();
-        addAll(list);
-    }
-
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public LinkedList<E> clone() {
-        LinkedList<E> clone;
-        try {
-            clone = (LinkedList<E>) super.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new InternalError(e);
-        }
-        clone.head = null;
-        clone.tail = null;
-        clone.size = 0;
-        for (Node<E> node = head; node!= null; node = node.getNext()) {
-            clone.add(node.getData());
-        }
-        return clone;
-    }
-
-    public int size(){
-        return size;
-    }
-
-    public int indexFetch(Object obj){
-        return indexOf(obj);
-    }
-
-    public int indexFetch(Node<E> node) {
-        int curIndex = 0;
-        for(Node<E> node_i = head; node_i != node; node_i = node_i.getNext()) {
-            curIndex++;
-        }
-        return curIndex;
-    }
-
-    public Node<E> nodeFetch(int index){
-        Node<E> fetchNode = this.head;
-
-        for(int i = 0; i < index; i++){
-            fetchNode = fetchNode.getNext();
-        }
-
-        return fetchNode;
-    }
-
-
-    public boolean add(E item){
-        addFirst(item);
-        return true;
-    }
-
-    public void addFirst(E item){
-        Node<E> newNode = new Node<>(item, head, null);
-        newNode.setParent(this);
-        if (size == 0){
-            tail = newNode;
-        } else {
-            head.setPrev(newNode);
-        }
-        size++;
-        head = newNode;
-    }
-
-    public void addLast(E item){
-        Node<E> newNode = new Node<>(item, null, tail);
-        newNode.setParent(this);
-        if (size == 0){
-            head = newNode;
-        } else {
-            tail.setNext(newNode);
-        } 
-        size++;
-        tail = newNode;
-    }
-
-    // this will add item into the list at the given index, meaning everything
-    // after will be now 1 index later.
-    public void add(int index, E item){
-        // If index is 0, let's just use addFirst, which updates head accordingly
-        if (index == 0) {
-            addFirst(item);
-            return;
-        } if (index == size) {
-            addLast(item);
-            return;
-        }
-        Node<E> curr = nodeFetch(index);
-
-        Node<E> newNode = new Node<>(item, curr.getPrev(), curr);
-        newNode.setParent(this);
-        newNode.getPrev().setNext(newNode);
-        newNode.getNext().setPrev(newNode);
-
-        size++;
-    }
-
-    /**
-     * @return
-     */
-    public E peek() {
-        return peekFirst();
-    }
-
-    /**
-     * @return
-     */
-    public E peekFirst() {
-        final Node<E> node = head;
-        return (node == null) ? null : node.getData();
-    }
-
-    /**
-     * @return
-     */
-    public E peekLast() {
-        final Node<E> node = tail;
-        return (node == null) ? null : node.getData();
-    }
-
-    /**
-     * @return
-     */
-    public E poll() {
-        return pollFirst();
-    }
-
-    /**
-     * @return
-     */
-    public E pollFirst() {
-        final Node<E> node = head;
-        E dataLoad = (node == null) ? null : node.getData();
-        remove();
-        return dataLoad;
-    }
-
-    /**
-     * @return
-     */
-    public E pollLast() {
-        final Node<E> node = tail;
-        E dataLoad = (node == null) ? null : node.getData();
-        removeLast();
-        return dataLoad;
-    }
-
-    public E get(int index){
-        return nodeFetch(index).getData();
-    }
-
-
-    /**
-     *
-     * @param index
-     * @return the item stored at the given index
-     */
-    public E remove(int index){
-        Node<E> node = nodeFetch(index);
-        E dataLoad = node.getData();
-        remove(node);
-        return dataLoad;
-    }
-
-    /**
-     * Returns a list iterator over the elements in this list (in proper
-     * sequence).
-     *
-     * @return a list iterator over the elements in this list (in proper
-     * sequence)
-     * @throws IndexOutOfBoundsException {@inheritDoc}
-     */
-    @Override
-    public ListIterator<E> listIterator(int index) {
-        return new LLIterator<>(index, this.head);
-    }
-
-    public E remove(){
-        E dataLoad = head.getData();
-
-        head = head.getNext();
-        if (size > 1) {
-            head.setPrev(null);
-        } else {
-            head = null;
-        }
-
-        size--;
-        return dataLoad;
-    }
-
-    public E remove(Node<E> node){
-        E dataLoad = node.getData();
-        Node<E> prev = node.getPrev();
-        Node<E> next = node.getNext();
-
-        if (prev!= null) {
-            prev.setNext(next);
-        }
-        else {
-            this.head = next;
-        }
-        if (next!= null) {
-            next.setPrev(prev);
-        }
-        else {
-            this.tail = prev;
-        }
-        size--;
-        return dataLoad;
-    }
-
-    public E removeLast(){
-        E dataLoad = tail.getData();
-
-        tail = tail.getPrev();
-        if (size > 1) {
-            tail.setNext(null);
-        } else {
-            head = null;
-        }
-
-        size--;
-        return dataLoad;
-    }
-
-    /**
-     * @param obj element to be removed from this list, if present
-     * @return
-     */
-    public boolean removeFirstOccurrence(Object obj) {
-        if (obj == null) {
-            for (Node<E> node = head; node != null; node = node.getNext()) {
-                if (node.getData() == null) {
-                    remove(node);
-                    return true;
-                }
-            }
-        } else {
-            for (Node<E> node = head; node != null; node = node.getNext()) {
-                if (obj.equals(node.getData())) {
-                    remove(node);
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    /**
-     * @param obj element to be removed from this list, if present
-     * @return
-     */
-    public boolean removeLastOccurrence(Object obj) {
-        if (obj == null) {
-            for (Node<E> node = tail; node != null; node = node.getPrev()) {
-                if (node.getData() == null) {
-                    remove(node);
-                    return true;
-                }
-            }
-        } else {
-            for (Node<E> node = tail; node != null; node = node.getPrev()) {
-                if (obj.equals(node.getData())) {
-                    remove(node);
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass()!= obj.getClass()) return false;
-
-        LinkedList<E> list = (LinkedList<E>) obj;
-
-        if (size!= list.size()) return false;
-        Node<E> curNode = list.head;
-        for (Node<E> node = head; node != null; node = node.getNext()) {
-            if (!node.getData().equals(curNode.getData())) return false;
-            curNode = curNode.getNext();
-        }
-
-        return true;
     }
 }

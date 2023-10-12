@@ -11,11 +11,24 @@ import java.util.Random;
  * The Landscape will need fields to store its width and height (as ints) and a LinkedList of Agents.
  * Use your implementation of a linked list.
  */
+
+/**
+ * The `Landscape` class represents a simulation landscape for agents.
+ * It contains fields to store various properties, such as width, height, and agent information.
+ * This class is used to manage agents on the landscape, update their state, and control the simulation.
+ *
+ * The landscape is divided into sectors for efficient neighbor search and interaction between agents.
+ *
+ * @see Agent
+ * @see SocialAgent
+ * @see AntiSocialAgent
+ * @see LandscapeFrame
+ */
 public class Landscape implements Cloneable{
-    public LinkedList<Agent> agentList;
+
+    // Fields to store agents and landscape properties
     private final Random rand;
-    // Keeps a history of game states
-    //Stores previous state, not yet implemented.
+    public LinkedList<Agent> agentList;
     public HashMap<String,LinkedList<Landscape>> previousGame;
     public HashMap<String,LinkedList<Agent>> sectorMap;
     public boolean paused;
@@ -29,9 +42,10 @@ public class Landscape implements Cloneable{
 
 
     /**
-     * a constructor that sets the width and height fields, and initializes the agent list.
-     * @param w
-     * @param h
+     * Constructs a new landscape with the specified width and height.
+     *
+     * @param w The width of the landscape.
+     * @param h The height of the landscape.
      */
     public Landscape(int w, int h) {
         this.rand = new Random();
@@ -45,9 +59,26 @@ public class Landscape implements Cloneable{
         reset();
     }
 
+    public static void main(String[] args) {
+        Landscape scape = new Landscape(500, 500);
+        Random gen = new Random();
+
+        // Creates 100 SocialAgents and 100 AntiSocialAgents
+        for (int i = 0; i < scape.agentCount; i++) {
+            scape.addAgent(new SocialAgent(gen.nextDouble() * scape.getWidth(),
+                    gen.nextDouble() * scape.getHeight(),
+                    5));
+            scape.addAgent(new AntiSocialAgent(gen.nextDouble() * scape.getWidth(),
+                    gen.nextDouble() * scape.getHeight(),
+                    11));
+        }
+        LandscapeFrame display = new LandscapeFrame(scape,1);
+        System.out.println(scape);
+        System.out.println(scape.sectorMap);
+    }
 
     /**
-     * Recreates the Landscape according to the specifications given in its initial construction.
+     * Resets the landscape to its initial state based on the specified agent count and radii.
      */
     public void reset() {
         this.sectorSize = 10;
@@ -63,6 +94,14 @@ public class Landscape implements Cloneable{
 
     }
 
+    /**
+     * Creates a sector map based on the specified width, height, and refinement size.
+     *
+     * @param width      The width of the landscape.
+     * @param height     The height of the landscape.
+     * @param refinement The sector refinement size.
+     * @return A map of sectors with empty lists of agents.
+     */
     public HashMap<String,LinkedList<Agent>> createSectorMap(int width, int height, int refinement) {
         HashMap<String,LinkedList<Agent>> output = new HashMap<>();
         if ((width % refinement != 0 || height % refinement != 0)) {
@@ -81,10 +120,23 @@ public class Landscape implements Cloneable{
         return output;
     }
 
-
+    /**
+     * Returns the sector to which an agent belongs based on its position.
+     *
+     * @param agent The agent whose sector is to be determined.
+     * @return An array of two integers representing the sector.
+     */
     public int[] getSector(Agent agent) {
         return getSector(agent.getX(), agent.getY());
     }
+
+    /**
+     * Returns the sector to which a coordinate pair belongs.
+     *
+     * @param xCor The x-coordinate of the pair whose sector is to be determined.
+     * @param yCor The y-coordinate of the pair whose sector is to be determined.
+     * @return An array of two integers representing the sector.
+     */
     public int[] getSector(double xCor, double yCor) {
         int[] output = new int[2];
         output[0] = (int) ((yCor - (yCor % this.sectorSize))/(this.sectorSize));
@@ -93,34 +145,63 @@ public class Landscape implements Cloneable{
     }
 
     /**
-     * returns the height.
-     * @return
+     * Returns the height of the landscape.
+     *
+     * @return The height of the landscape.
      */
     public int getHeight() {
         return this.height;
     }
+
+    /**
+     * Sets the height of the landscape.
+     *
+     * @param height The new height to set.
+     */
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    /**
+     * Returns the width of the landscape.
+     *
+     * @return The width of the landscape.
+     */
     public int getWidth() {
         return this.width;
     }
 
-    public void setHeight(int height) {
-        this.height = height;
-    }
+    /**
+     * Sets the width of the landscape.
+     *
+     * @param width The new width to set.
+     */
     public void setWidth(int width) {
         this.width = width;
     }
 
+    /**
+     * Returns the sector size.
+     *
+     * @return The sector size.
+     */
     public int getSectorSize() {
         return this.sectorSize;
     }
 
+    /**
+     * Sets the sector size.
+     *
+     * @param size The new sector size to set.
+     */
     public void setSectorSize(int size) {
         this.sectorSize = size;
     }
 
     /**
-     * inserts an agent at the beginning of its list of agents.
-     * @param agent
+     * Inserts an agent at the beginning of the agent list.
+     *
+     * @param agent The agent to add to the landscape.
      */
     public void addAgent( Agent agent) {
         this.agentList.addFirst(agent);
@@ -128,20 +209,21 @@ public class Landscape implements Cloneable{
     }
 
     /**
-     * returns a String representing the Landscape.
-     * It can be as simple as indicating the number of Agents on the Landscape.
-     * @return
+     * Returns a string representation of the landscape, indicating the number of agents on the landscape.
+     *
+     * @return A string representation of the landscape.
      */
     public String toString() {
         return this.agentList.size() + " Agents: " + agentList;
     }
 
     /**
-     * returns a list of the Agents within radius distance of the location x0, y0.
-     * @param x0
-     * @param y0
-     * @param radius
-     * @return
+     * Returns a list of agents within a specified radius of a location (x0, y0).
+     *
+     * @param x0     The x-coordinate of the location.
+     * @param y0     The y-coordinate of the location.
+     * @param radius The radius for neighbor search.
+     * @return A list of agents within the specified radius.
      */
     public LinkedList<Agent> getNeighbors(double x0, double y0, double radius) {
         ArrayList<String> sectorTracker = new ArrayList<>();
@@ -209,8 +291,11 @@ public class Landscape implements Cloneable{
         return neighbors;
     }
 
-
-
+    /**
+     * Updates the state of all agents on the landscape.
+     * This method iterates through the list of agents and calls their respective updateState methods,
+     * allowing agents to interact or move based on the simulation rules.
+     */
     public void updateAgents() {
         for (Agent agent : this.agentList) {
             agent.updateState(this);
@@ -218,6 +303,11 @@ public class Landscape implements Cloneable{
 
     }
 
+    /**
+     * Advances the simulation by updating agent states.
+     * After updating agent states, it checks if any agent has moved.
+     * If no agent has moved, the simulation is paused.
+     */
     public void advance() {
         // Create a snapshot of the current landscape
         updateAgents();
@@ -239,6 +329,11 @@ public class Landscape implements Cloneable{
         System.out.println("paused");
     }
 
+    /**
+     * Pauses or unpauses the simulation based on the provided boolean value.
+     *
+     * @param bool `true` to pause the simulation, `false` to unpause it.
+     */
     public void setPause(boolean bool) {
         paused = bool;
         System.out.println("paused");
@@ -252,9 +347,8 @@ public class Landscape implements Cloneable{
         return paused;
     }
 
-
     /**
-     * Resumes the Game of Life simulation.
+     * Resumes the Agent simulation.
      * Sets the 'paused' flag to false, advances the simulation, and updates the window.
      *
      * @param window the JFrame used for displaying the simulation
@@ -281,11 +375,26 @@ public class Landscape implements Cloneable{
         draw(g,1);
     }
 
+    /**
+     * Draws the agents on the landscape with a specified scaling factor.
+     *
+     * @param g The graphics context to draw on.
+     * @param scale The scaling factor for agent rendering.
+     */
     public void draw(Graphics g, int scale) {
         for (Agent agent : agentList) {
             agent.draw(g,scale);
         }
     }
+
+    /**
+     * Creates a deep clone of the current landscape.
+     * This method duplicates the landscape, including its agents and sector map, and returns the cloned landscape.
+     * The clone is initially paused.
+     *
+     * @return A deep clone of the landscape.
+     * @throws CloneNotSupportedException If the cloning process encounters an issue.
+     */
     @Override
     public Landscape clone() throws CloneNotSupportedException {
         Landscape clone = (Landscape) super.clone();
@@ -301,6 +410,11 @@ public class Landscape implements Cloneable{
         return clone;
     }
 
+    /**
+     * Copies the contents of another landscape to this landscape. This method overwrites the current landscape's data with the data from the source landscape. The copied landscape will be initially paused.
+     *
+     * @param source The source landscape to copy from.
+     */
     public void copy(Landscape source) {
         this.agentList = new LinkedList<>(source.agentList);
         this.sectorMap = new HashMap<>(source.sectorMap);
@@ -312,24 +426,6 @@ public class Landscape implements Cloneable{
         this.height = source.height;
     }
 
-    public static void main(String[] args) {
-        Landscape scape = new Landscape(500, 500);
-        Random gen = new Random();
-
-        // Creates 100 SocialAgents and 100 AntiSocialAgents
-        for (int i = 0; i < scape.agentCount; i++) {
-            scape.addAgent(new SocialAgent(gen.nextDouble() * scape.getWidth(),
-                    gen.nextDouble() * scape.getHeight(),
-                    5));
-            scape.addAgent(new AntiSocialAgent(gen.nextDouble() * scape.getWidth(),
-                    gen.nextDouble() * scape.getHeight(),
-                    11));
-        }
-        LandscapeFrame display = new LandscapeFrame(scape,1);
-        System.out.println(scape);
-        System.out.println(scape.sectorMap);
-    }
-
     public void setSleepTime(int value) {
         this.sleepTime = value;
     }
@@ -338,19 +434,19 @@ public class Landscape implements Cloneable{
         this.agentCount = value;
     }
 
-    public void setSocialRadius(int value) {
-        this.socialRadius = value;
-    }
-
-    public void setAntiSocialRadius(int value) {
-        this.antiSocialRadius = value;
-    }
-
     public int getSocialRadius() {
         return this.socialRadius;
     }
 
+    public void setSocialRadius(int value) {
+        this.socialRadius = value;
+    }
+
     public int getAntiSocialRadius() {
         return this.antiSocialRadius;
+    }
+
+    public void setAntiSocialRadius(int value) {
+        this.antiSocialRadius = value;
     }
 }

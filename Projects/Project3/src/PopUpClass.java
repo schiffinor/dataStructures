@@ -8,11 +8,20 @@ import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.util.Arrays;
-
 /**
+ * The `PopUpClass` is used to create a pop-up window for configuring game settings in a Java Swing-based application.
+ * This class provides an interface for users to set various game parameters such as landscape size, sleep time, and
+ * agent parameters. It encapsulates the layout and interaction components of the settings window.
+ * <p>
+ * The `PopUpClass` class creates a tabbed window with multiple tabs, and the main "Game Settings" tab contains input fields for setting
+ * various game parameters. Users can modify settings and apply changes to the simulation by clicking the "Resize?" button.
+ * A custom icon is set for the pop-up window, and the layout is designed to be user-friendly.
+ * <p>
+ * The class also includes a utility method for creating image icons and a sub-class `SpinBox` for creating spinner-box components.
+ *
  * @author Roman Schiffino <rjschi24@colby.edu>
- * @version     1.1
- * @since       1.1
+ * @version 1.1
+ * @since 1.1
  */
 public class PopUpClass extends JPanel {
     final JLabel label;
@@ -131,6 +140,37 @@ public class PopUpClass extends JPanel {
     }
 
     /**
+     * Utility class for going through a list of Components and creating a combined JPanel with a submit button.
+     *
+     * @param items Components to be added.
+     * @param button submit button to be added.
+     * @return constructed JPanel to be displayed.
+     */
+    private JPanel panelConstructor(Component[] items, JButton button) {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS ));
+        panel.setBorder(new EmptyBorder(new Insets(50, 75, 50, 75)));
+        panel.add(Box.createVerticalGlue());
+        panel.add(items[0]);
+        panel.add(Box.createVerticalGlue());
+        panel.add(Box.createRigidArea(new Dimension(0, 2)));
+        for (int i = 1; i < items.length; i++) {
+            panel.add(Box.createVerticalGlue());
+            panel.add(items[i]);
+            panel.add(Box.createVerticalGlue());
+            panel.add(Box.createRigidArea(new Dimension(0, 2)));
+        }
+        panel.add(Box.createVerticalGlue());
+        panel.add(Box.createRigidArea(new Dimension(0, 10)));
+        panel.add(button);
+        for (Component item : items) {
+            item.setMaximumSize(new Dimension(1920, item.getHeight()+40));
+            item.setPreferredSize(new Dimension((int) item.getPreferredSize().getWidth(), item.getHeight()+40));
+        }
+        return panel;
+    }
+
+    /**
      * Aforementioned SpinBox Class, basically a JSpinner-Box AIO structure.
      * <p>
      * Creates Box and JSpinner puts JSpinner in Box, adds Label, and makes values individually fetch-able.
@@ -163,36 +203,5 @@ public class PopUpClass extends JPanel {
             return this.panel;
         }
 
-    }
-
-    /**
-     * Utility class for going through a list of Components and creating a combined JPanel with a submit button.
-     *
-     * @param items Components to be added.
-     * @param button submit button to be added.
-     * @return constructed JPanel to be displayed.
-     */
-    private JPanel panelConstructor(Component[] items, JButton button) {
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS ));
-        panel.setBorder(new EmptyBorder(new Insets(50, 75, 50, 75)));
-        panel.add(Box.createVerticalGlue());
-        panel.add(items[0]);
-        panel.add(Box.createVerticalGlue());
-        panel.add(Box.createRigidArea(new Dimension(0, 2)));
-        for (int i = 1; i < items.length; i++) {
-            panel.add(Box.createVerticalGlue());
-            panel.add(items[i]);
-            panel.add(Box.createVerticalGlue());
-            panel.add(Box.createRigidArea(new Dimension(0, 2)));
-        }
-        panel.add(Box.createVerticalGlue());
-        panel.add(Box.createRigidArea(new Dimension(0, 10)));
-        panel.add(button);
-        for (Component item : items) {
-            item.setMaximumSize(new Dimension(1920, item.getHeight()+40));
-            item.setPreferredSize(new Dimension((int) item.getPreferredSize().getWidth(), item.getHeight()+40));
-        }
-        return panel;
     }
 }
