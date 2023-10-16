@@ -1,5 +1,5 @@
 /*
-The LifeSimulation class implements a simple game of life simulation. Pretty much like the project requires.
+The AgentSimulation class implements a simple agent simulation. Pretty much like the project requires.
 Just a bit cleaner and simpler utilizing methods from LandscapeFrame.
  */
 
@@ -26,9 +26,9 @@ public class AgentSimulation {
         //Creates 100 SocialAgents and 100 AntiSocialAgents
         for (int i = 0; i < 100; i++) {
             scape.addAgent(new SocialAgent(gen.nextDouble() * scape.getWidth(),
-                    gen.nextDouble() * scape.getHeight(), 30));
+                    gen.nextDouble() * scape.getHeight(), 15));
             scape.addAgent(new AntiSocialAgent(gen.nextDouble() * scape.getWidth(),
-                    gen.nextDouble() * scape.getHeight(), 22));
+                    gen.nextDouble() * scape.getHeight(), 11));
         }
 
         //Initiates game frame.
