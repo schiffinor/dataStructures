@@ -4,21 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a951b0dc-03ac-46fd-ac71-ff79c54c0530" name="Changes" comment="Started and implemented most aspects of Project4">
-      <change afterPath="$PROJECT_DIR$/src/CircularLinkedList.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/DisplayPanel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/LandscapeDisplay.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/LandscapeFrame.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/PopUpClass.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Sudoku.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ToroidalDoublyLinkedList.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/gura2.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Project1/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Project1/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="a951b0dc-03ac-46fd-ac71-ff79c54c0530" name="Changes" comment="Created Toroidal Doubly Linked List Class and began to implement Dancing Links&#10;Created 1/2 of incidence matrix generator">
+      <change afterPath="$PROJECT_DIR$/incidenceMatrix.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Board.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Cell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Cell.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/LinkedList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/LinkedList.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Sudoku.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Sudoku.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ToroidalDoublyLinkedList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ToroidalDoublyLinkedList.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,7 +87,7 @@
       <workItem from="1697354874533" duration="7771000" />
       <workItem from="1697410323687" duration="14172000" />
       <workItem from="1697424526105" duration="50777000" />
-      <workItem from="1697529039824" duration="23440000" />
+      <workItem from="1697529039824" duration="26666000" />
     </task>
     <task id="LOCAL-00001" summary="Started and implemented most aspects of Project4">
       <option name="closed" value="true" />
@@ -106,7 +97,15 @@
       <option name="project" value="LOCAL" />
       <updated>1697456894144</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Created Toroidal Doubly Linked List Class and began to implement Dancing Links&#10;Created 1/2 of incidence matrix generator">
+      <option name="closed" value="true" />
+      <created>1697552666301</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1697552666301</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -114,7 +113,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Started and implemented most aspects of Project4" />
-    <option name="LAST_COMMIT_MESSAGE" value="Started and implemented most aspects of Project4" />
+    <MESSAGE value="Created Toroidal Doubly Linked List Class and began to implement Dancing Links&#10;Created 1/2 of incidence matrix generator" />
+    <option name="LAST_COMMIT_MESSAGE" value="Created Toroidal Doubly Linked List Class and began to implement Dancing Links&#10;Created 1/2 of incidence matrix generator" />
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>

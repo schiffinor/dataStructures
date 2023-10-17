@@ -276,7 +276,6 @@ public class Board {
                 do {
                     currLine = fileGetter.readLine();
                     if (currLine == null || rowCount > 9) break;
-                    // assign to an array of Strings the result of splitting the line up by spaces (line.split("[ ]+"))
                     Pattern pattern = Pattern.compile("\\d+");
                     Matcher matcher = pattern.matcher(currLine);
                     ArrayList<Integer> matchList = new ArrayList<>();

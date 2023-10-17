@@ -170,6 +170,14 @@ public class ToroidalDoublyLinkedList<E> {
     }
 
 
+    public String arrayString() {
+        StringBuilder outString = new StringBuilder();
+        for (CircularLinkedList<E> row : this.rowList) {
+            outString.append(row.toString()).append("\n");
+        }
+        return outString.toString();
+    }
+
     @Override
     public String toString() {
         return "RowList: \n" +

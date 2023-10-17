@@ -1,12 +1,75 @@
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class Sudoku {
 
     public Board board;
+    private String fileName;
+    private ToroidalDoublyLinkedList<Boolean> incidenceMatrix;
     public Sudoku() {
         this.board = new Board(25);
     }
 
-    public ToroidalDoublyLinkedList<Boolean> generateIncidenceMatrix() {
-        ToroidalDoublyLinkedList<Boolean> outputMatrix;
+
+    /**
+     * Constructor for AI Object.
+     * <p>
+     * Instantiates most variables and extracts data from text
+     * files, creates files if not present.
+     * <p>
+     * All data is placed into nested hash maps. Which can
+     * then be accessed via unique identifiers.
+     *
+     */
+    public ToroidalDoublyLinkedList<Integer> readWriteFile() throws IOException {
+        BufferedReader fileGetter = null;
+        BufferedWriter fileWriter = null;
+        ToroidalDoublyLinkedList<Integer> output;
+        this.fileName = "incidenceMatrix.txt";
+            try {
+                fileGetter = new BufferedReader(new FileReader(fileName));
+            } catch (Exception FileNotFoundException) {
+                output = generateIncidenceMatrix();
+                fileWriter = new BufferedWriter(new FileWriter(fileName)) ;
+                fileWriter.write(output.arrayString());
+                fileWriter.close();
+                return output;
+            }
+        int valuePositions = (int) Math.pow(board.getRows(),3);
+        int constraints = (int) Math.pow(board.getRows(),2);
+        output = new ToroidalDoublyLinkedList<>(valuePositions,4*constraints);
+        String currLine;
+        int rowCount  = 0;
+        do {
+            currLine = fileGetter.readLine();
+            if (currLine == null) break;
+            Pattern pattern = Pattern.compile("\\d+");
+            Matcher matcher = pattern.matcher(currLine);
+            ArrayList<Integer> matchList = new ArrayList<>();
+            while (matcher.find()) {
+                matchList.add(Integer.valueOf(matcher.group()));
+            }
+
+            for (int i = 0; i < 4*constraints; i++ ) {
+                output.setData(rowCount,i,matchList.get(i));
+            }
+            rowCount++;
+
+        } while (true);
+        fileGetter.close();
+        return output;
+    }
+
+
+
+
+    public ToroidalDoublyLinkedList<Integer> generateIncidenceMatrix() {
+        ToroidalDoublyLinkedList<Integer> outputMatrix;
         int valuePositions = (int) Math.pow(board.getRows(),3);
         int constraints = (int) Math.pow(board.getRows(),2);
         outputMatrix = new ToroidalDoublyLinkedList<>(valuePositions,4*constraints);
@@ -17,9 +80,9 @@ public class Sudoku {
             }
         }*/
 
-        CircularLinkedList<Boolean> valueList1 = new CircularLinkedList<>();
+        CircularLinkedList<Integer> valueList1 = new CircularLinkedList<>();
         for (int i = 0; i < valuePositions; i++) {
-            valueList1.addLast(i<9);
+            valueList1.addLast((i<9) ? 1 : 0);
         }
         for (int j = 0; j < constraints; j++) {
             outputMatrix.setColumn(j,valueList1);
@@ -29,9 +92,9 @@ public class Sudoku {
         }
 
 
-        CircularLinkedList<Boolean> valueList2 = new CircularLinkedList<>();
+        CircularLinkedList<Integer> valueList2 = new CircularLinkedList<>();
         for (int i = 0; i < valuePositions; i++) {
-            valueList2.addLast(i%9==0 && i<81);
+            valueList2.addLast((i%9==0 && i<81) ? 1 : 0);
         }
         for (int j = 0; j < constraints; j++) {
             outputMatrix.setColumn(j+constraints,valueList2);
@@ -43,18 +106,18 @@ public class Sudoku {
             }
         }
 
-        CircularLinkedList<Boolean> valueList3 = new CircularLinkedList<>();
+        CircularLinkedList<Integer> valueList3 = new CircularLinkedList<>();
         for (int i = 0; i < valuePositions; i++) {
-            valueList3.addLast(i%81==0);
+            valueList3.addLast((i%81==0) ? 1 : 0);
         }
         for (int j = 0; j < constraints; j++) {
             outputMatrix.setColumn(j+2*constraints,valueList3);
             valueList3.addFirst(valueList3.removeLast());
         }
 
-        CircularLinkedList<Boolean> valueList4 = new CircularLinkedList<>();
+        CircularLinkedList<Integer> valueList4 = new CircularLinkedList<>();
         for (int i = 0; i < valuePositions; i++) {
-            valueList4.addLast(i % 9 == 0 && i<243 && i%81 < 27);
+            valueList4.addLast((i % 9 == 0 && i<243 && i%81 < 27) ? 1 : 0);
         }
         for (int j = 0; j < constraints; j++) {
             if (j != 0 && j % 9 == 0) {
@@ -69,16 +132,15 @@ public class Sudoku {
             }
             outputMatrix.setColumn(j + 3 * constraints, valueList4);
             valueList4.addFirst(valueList4.removeLast());
-            System.out.println(outputMatrix.getColumn(j + 3 * constraints));
         }
         return outputMatrix;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Sudoku sudoku = new Sudoku();
-        ToroidalDoublyLinkedList<Boolean> outputMatrix = sudoku.generateIncidenceMatrix();
+        ToroidalDoublyLinkedList<Integer> outputMatrix = sudoku.readWriteFile();
         System.out.print(outputMatrix.getColumnNum()+" "+outputMatrix.getRowNum());
-        //System.out.print(outputMatrix);
+        System.out.print(outputMatrix);
     }
 
 }
