@@ -41,21 +41,36 @@ public class Sudoku {
                     valueList2.addFirst(valueList2.removeLast());
                 }
             }
-            System.out.println(outputMatrix.getColumn(j+constraints));
         }
 
+        CircularLinkedList<Boolean> valueList3 = new CircularLinkedList<>();
         for (int i = 0; i < valuePositions; i++) {
-            for (int j = 0; j < constraints; j++) {
-                //TODO
-            }
+            valueList3.addLast(i%81==0);
+        }
+        for (int j = 0; j < constraints; j++) {
+            outputMatrix.setColumn(j+2*constraints,valueList3);
+            valueList3.addFirst(valueList3.removeLast());
         }
 
+        CircularLinkedList<Boolean> valueList4 = new CircularLinkedList<>();
         for (int i = 0; i < valuePositions; i++) {
-            for (int j = 0; j < constraints; j++) {
-                //TODO
-            }
+            valueList4.addLast(i % 9 == 0 && i<243 && i%81 < 27);
         }
-
+        for (int j = 0; j < constraints; j++) {
+            if (j != 0 && j % 9 == 0) {
+                for (int i = 0; i < 18; i++) {
+                    valueList4.addFirst(valueList4.removeLast());
+                }
+            }
+            if (j != 0 && j % 27 == 0) {
+                for (int i = 0; i < 162; i++) {
+                    valueList4.addFirst(valueList4.removeLast());
+                }
+            }
+            outputMatrix.setColumn(j + 3 * constraints, valueList4);
+            valueList4.addFirst(valueList4.removeLast());
+            System.out.println(outputMatrix.getColumn(j + 3 * constraints));
+        }
         return outputMatrix;
     }
 
