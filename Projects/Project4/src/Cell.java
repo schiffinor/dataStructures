@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Random;
@@ -240,5 +241,12 @@ public class Cell {
             }
         }
         System.out.println(board);
+    }
+
+
+    public void draw(Graphics g, int x, int y, int scale){
+        char toDraw = (char) ((int) '0' + getValue());
+        g.setColor(isLocked()? Color.BLUE : Color.RED);
+        g.drawChars(new char[] {toDraw}, 0, 1, x, y);
     }
 }

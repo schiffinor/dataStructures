@@ -5,28 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="80c0bf2d-e1ab-48a3-8684-0e7bf6bab628" name="Changes" comment="finishing and cleaning methods up&#10;also bug fixes">
-      <change afterPath="$PROJECT_DIR$/../Project4/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Project4/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Project4/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Project4/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Project4/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Project4/Project4.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Project4/board1.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Project4/board2.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Project4/board3.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Project4/board4.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Project4/board5.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Project4/board6.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Project4/src/AbstractGroup.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Project4/src/Board.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Project4/src/Cell.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Project4/src/Column.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Project4/src/LinkedList.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Project4/src/Row.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Project4/src/SubGrid.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Project4/src/CircularLinkedList.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Project4/src/DisplayPanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Project4/src/LandscapeDisplay.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Project4/src/LandscapeFrame.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Project4/src/PopUpClass.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Project4/src/Sudoku.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Project4/src/ToroidalDoublyLinkedList.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Project4/src/gura2.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Project2/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Project2/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Project3/src/AgentSimulation.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Project3/src/AgentSimulation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Project4/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Project4/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Project4/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Project4/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Project4/src/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Project4/src/Board.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Project4/src/Cell.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Project4/src/Cell.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Project4/src/LinkedList.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Project4/src/LinkedList.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -168,7 +160,7 @@
       <workItem from="1696431824110" duration="44000" />
       <workItem from="1697152431399" duration="1438000" />
       <workItem from="1697221226375" duration="2226000" />
-      <workItem from="1697424677345" duration="709000" />
+      <workItem from="1697424677345" duration="1315000" />
     </task>
     <task id="LOCAL-00001" summary="finishing and cleaningmethods up">
       <option name="closed" value="true" />
