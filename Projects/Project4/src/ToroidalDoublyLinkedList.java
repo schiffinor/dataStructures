@@ -1,20 +1,36 @@
-public class ToroidalDoublyLinkedList<E> {
+import java.util.HashMap;
+
+public class ToroidalDoublyLinkedList<E> implements Cloneable{
 
     private int rowNum;
     private int columnNum;
     private int size;
     private CircularLinkedList<CircularLinkedList<E>> rowList;
     private CircularLinkedList<CircularLinkedList<E>> columnList;
+    private LinkedList<CircularLinkedList<E>> rowIdentifierCache;
+    private LinkedList<CircularLinkedList<E>> columnIdentifierCache;
+    private HashMap<String,CircularLinkedList<E>> rowNameCache;
+    private HashMap<String,CircularLinkedList<E>> columnNameCache;
 
     public ToroidalDoublyLinkedList(int rows, int columns) {
         this.rowNum = rows;
         this.columnNum = columns;
         this.size = rows * columns;
+        this.rowIdentifierCache = new LinkedList<>();
+        this.columnIdentifierCache = new LinkedList<>();
+        this.rowNameCache = new HashMap<>();
+        this.columnNameCache = new HashMap<>();
 
         this.rowList = new CircularLinkedList<>();
+        this.rowList.setParent(this);
+        this.rowList.setIdentifier(0);
+        this.rowList.setName("rows");
         for (int i = 0; i < rows; i++) {
+            final Integer iterCount = i;
             CircularLinkedList<E> row = new CircularLinkedList<>();
-            row.setIdentifier(String.valueOf(i));
+            row.setParent(this.rowList);
+            row.setIdentifier(iterCount);
+            rowIdentifierCache.add(i,row);
             rowList.addLast(row);
             for (int j = 0; j < columns; j++) {
                 row.addLast(null);
@@ -22,9 +38,14 @@ public class ToroidalDoublyLinkedList<E> {
         }
 
         this.columnList = new CircularLinkedList<>();
+        this.columnList.setParent(this);
+        this.columnList.setIdentifier(1);
+        this.columnList.setName("columns");
         for (int i = 0; i < columns; i++) {
             CircularLinkedList<E> column = new CircularLinkedList<>();
-            column.setIdentifier(String.valueOf(i));
+            column.setParent(this.columnList);
+            column.setIdentifier(i);
+            columnIdentifierCache.add(i,column);
             columnList.addLast(column);
             for (int j = 0; j < rows; j++) {
                 column.addLast(null);
@@ -95,6 +116,30 @@ public class ToroidalDoublyLinkedList<E> {
         System.out.println(list_2);
         System.out.println(list_3);
 
+    }
+
+    public static String arrayString(CircularLinkedList<CircularLinkedList<Integer>> input) {
+        StringBuilder outString = new StringBuilder();
+        for (CircularLinkedList<Integer> row : input) {
+            outString.append(row.toString()).append("\n");
+        }
+        return outString.toString();
+    }
+
+    public CircularLinkedList<CircularLinkedList<E>> getRowList() {
+        return rowList;
+    }
+
+    public void setRowList(CircularLinkedList<CircularLinkedList<E>> rowList) {
+        this.rowList = rowList;
+    }
+
+    public CircularLinkedList<CircularLinkedList<E>> getColumnList() {
+        return columnList;
+    }
+
+    public void setColumnList(CircularLinkedList<CircularLinkedList<E>> columnList) {
+        this.columnList = columnList;
     }
 
     public int getRowNum() {
@@ -248,5 +293,25 @@ public class ToroidalDoublyLinkedList<E> {
                 this.rowList.toString() +
                 "\nColumnList: \n" +
                 this.columnList.toString();
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public ToroidalDoublyLinkedList<E> clone() {
+        ToroidalDoublyLinkedList<E> clone;
+        try {
+            clone = (ToroidalDoublyLinkedList<E>) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new InternalError(e);
+        }
+        clone.rowNum = getRowNum();
+        clone.columnNum = getColumnNum();
+        clone.size = getSize();
+
+        clone.rowList = this.rowList.clone();
+
+        clone.columnList = this.columnList.clone();
+
+        return clone;
     }
 }

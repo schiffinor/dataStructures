@@ -29,7 +29,17 @@ public class CircularLinkedList<E>
     private Node<E> head;
     private Node<E> tail;
     private String name;
-    private String identifier;
+    private Integer identifier;
+
+    public Object getParent() {
+        return parent;
+    }
+
+    public void setParent(Object parent) {
+        this.parent = parent;
+    }
+
+    private Object parent;
 
     public CircularLinkedList() {
         size = 0;
@@ -73,11 +83,11 @@ public class CircularLinkedList<E>
         }
     }
 
-    public String getIdentifier() {
+    public Integer getIdentifier() {
         return identifier;
     }
 
-    public void setIdentifier(String identifier) {
+    public void setIdentifier(Integer identifier) {
         this.identifier = identifier;
     }
 
@@ -101,9 +111,11 @@ public class CircularLinkedList<E>
         } catch (CloneNotSupportedException e) {
             throw new InternalError(e);
         }
+        clone.identifier = this.identifier;
         clone.head = null;
         clone.tail = null;
         clone.size = 0;
+        clone.parent = this.parent;
 
         for (CircularLinkedList.Node<E> node = this.head; node != this.tail; node = node.getNext()) {
             clone.addLast(node.getData());
@@ -121,15 +133,54 @@ public class CircularLinkedList<E>
         return size;
     }
 
+
+    @Override
+    public int indexOf(Object item) {
+        LLIterator it = (LLIterator) listIterator();
+        if (item==null) {
+            if (it.getCurrent().getData() == null)
+                return 0;
+            while (it.hasNext() && it.getCurrent().getNext() != it.getInitial())
+                if (it.next()==null)
+                    return it.previousIndex();
+        } else {
+            if (item == it.getCurrent().getData())
+                return 0;
+            while (it.hasNext() && it.getCurrent().getNext() != it.getInitial())
+                if (item.equals(it.next()))
+                    return it.previousIndex();
+        }
+        return -1;
+    }
+
+
+    public int indexOfStrict(E item) {
+        LLIterator it = (LLIterator) listIterator();
+        if (item==null) {
+            if (it.getCurrent().getData() == null)
+                return 0;
+            while (it.hasNext() && it.getCurrent().getNext() != it.getInitial())
+                if (it.next()==null)
+                    return it.previousIndex();
+        } else {
+            if (item == it.getCurrent().getData())
+                return 0;
+            while (it.hasNext() && it.getCurrent().getNext() != it.getInitial())
+                if (item==it.next())
+                    return it.previousIndex();
+        }
+        return -1;
+    }
+
+
     /**
      * Returns the index of the first occurrence of the specified object in the `LinkedList`,
      * or -1 if the object is not found.
      *
-     * @param obj The object to search for.
      * @return The index of the first occurrence of the object, or -1 if not found.
      */
-    public int indexFetch(Object obj) {
-        return indexOf(obj);
+    public int indexFetch(E item) {
+        return indexOfStrict(item);
     }
 
     public int getFrequency(E obj) {
@@ -374,7 +425,7 @@ public class CircularLinkedList<E>
      */
     @Override
     public ListIterator<E> listIterator(int index) {
-        return new CircularLinkedList.LLIterator<>(index, this.head);
+        return new LLIterator(index);
     }
 
     /**
@@ -394,12 +445,12 @@ public class CircularLinkedList<E>
         CircularLinkedList.Node<E> prev = node.getPrev();
         CircularLinkedList.Node<E> next = node.getNext();
 
-        if (prev != null) {
+        if (node != head) {
             prev.setNext(next);
         } else {
             this.head = next;
         }
-        if (next != null) {
+        if (node != tail) {
             next.setPrev(prev);
         } else {
             this.tail = prev;
@@ -457,18 +508,26 @@ public class CircularLinkedList<E>
      */
     public boolean removeFirstOccurrence(Object obj) {
         if (obj == null) {
-            for (CircularLinkedList.Node<E> node = head; node != null; node = node.getNext()) {
+            for (CircularLinkedList.Node<E> node = head; node != tail; node = node.getNext()) {
                 if (node.getData() == null) {
                     remove(node);
                     return true;
                 }
             }
+            if (tail.getData() == null) {
+                remove(tail);
+                return true;
+            }
         } else {
-            for (CircularLinkedList.Node<E> node = head; node != null; node = node.getNext()) {
+            for (CircularLinkedList.Node<E> node = head; node != tail; node = node.getNext()) {
                 if (obj.equals(node.getData())) {
                     remove(node);
                     return true;
                 }
+            }
+            if (tail.getData() == null) {
+                remove(tail);
+                return true;
             }
         }
         return false;
@@ -482,18 +541,26 @@ public class CircularLinkedList<E>
      */
     public boolean removeLastOccurrence(Object obj) {
         if (obj == null) {
-            for (CircularLinkedList.Node<E> node = tail; node != null; node = node.getPrev()) {
+            for (CircularLinkedList.Node<E> node = tail; node != head; node = node.getPrev()) {
                 if (node.getData() == null) {
                     remove(node);
                     return true;
                 }
             }
+            if (head.getData() == null) {
+                remove(head);
+                return true;
+            }
         } else {
-            for (CircularLinkedList.Node<E> node = tail; node != null; node = node.getPrev()) {
+            for (CircularLinkedList.Node<E> node = tail; node != head; node = node.getPrev()) {
                 if (obj.equals(node.getData())) {
                     remove(node);
                     return true;
                 }
+            }
+            if (head.getData() == null) {
+                remove(head);
+                return true;
             }
         }
         return false;
@@ -530,7 +597,7 @@ public class CircularLinkedList<E>
      *
      * @param <F> The type of elements stored in the node.
      */
-    public static class Node<F> implements Cloneable {
+    public static class Node<F> {
         F data;
         CircularLinkedList.Node<F> next;
         CircularLinkedList.Node<F> prev;
@@ -630,37 +697,28 @@ public class CircularLinkedList<E>
             this.parent = parent;
         }
 
-        public Node<F> clone() {
-            Node<F> clone;
-            try {
-                clone = (Node<F>) super.clone();
-            } catch (CloneNotSupportedException e) {
-                throw new RuntimeException(e);
-            }
-            return clone;
-        }
     }
 
     /**
      * An iterator for the `LinkedList` that allows you to traverse the list in both forward and backward directions.
      * This iterator is returned by the `listIterator` method.
      *
-     * @param <E> The type of elements stored in the `LinkedList`.
      */
-    public static class LLIterator<E>
+    public class LLIterator
             implements ListIterator<E> {
 
-        private CircularLinkedList.Node<E> current;  //Node class is assumed to be previously defined.
+        private Node<E> current;  //Node class is assumed to be previously defined.
+        private Node<E> initial;
         private int index;
 
         /**
          * Creates a new `LLIterator` with the specified starting index and the head node of the `LinkedList`.
          *
          * @param index The starting index for the iterator.
-         * @param head  The head node of the `LinkedList`.
          */
-        public LLIterator(int index, CircularLinkedList.Node<E> head) {
-            this.current = head;
+        public LLIterator(int index) {
+            this.current = nodeFetch(index);
+            this.initial = this.current;
             this.index = index;
         }
 
@@ -684,12 +742,13 @@ public class CircularLinkedList<E>
          */
         @Override
         public E next() {
+            boolean nextExists = hasNext();
+            if (!nextExists) return null;
             CircularLinkedList.Node<E> next = this.current.getNext();
-            if (hasNext()) {
-                this.index = (this.index == this.current.getParent().size() - 1) ? 0 : this.index + 1;
-            }
-            E dataLoad = hasNext() ? next.getData() : null;
-            this.current = hasNext() ? next : this.current;
+
+            this.index = (this.index == this.current.getParent().size() - 1) ? 0 : this.index + 1;
+            E dataLoad = next.getData();
+            this.current = next;
             return dataLoad;
         }
 
@@ -713,12 +772,14 @@ public class CircularLinkedList<E>
          */
         @Override
         public E previous() {
+            boolean prevExists = hasPrevious();
+            if (!prevExists) return null;
+
             CircularLinkedList.Node<E> prev = this.current.getPrev();
-            if (hasPrevious()) {
-                this.index = (this.index == 0) ? this.current.getParent().size() - 1 : this.index - 1;
-            }
-            E dataLoad = hasPrevious() ? prev.getData() : null;
-            this.current = hasPrevious() ? prev : this.current;
+
+            this.index = (this.index == 0) ? this.current.getParent().size() - 1 : this.index - 1;
+            E dataLoad = prev.getData();
+            this.current = prev;
             return dataLoad;
         }
 
@@ -792,7 +853,16 @@ public class CircularLinkedList<E>
             this.current.setPrev(newNode);
             newNode.setNext(this.current);
             this.current.getParent().size++;
+        }
 
+
+        public Node<E> getCurrent() {
+            return current;
+        }
+
+
+        public Node<E> getInitial() {
+            return initial;
         }
     }
 }
