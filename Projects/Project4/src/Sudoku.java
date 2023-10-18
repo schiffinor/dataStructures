@@ -1,8 +1,7 @@
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -74,11 +73,6 @@ public class Sudoku {
         int constraints = (int) Math.pow(board.getRows(),2);
         outputMatrix = new ToroidalDoublyLinkedList<>(valuePositions,4*constraints);
 
-        /*for (int i = 0; i < valuePositions; i++) {
-            for (int j = 0; j < 4*constraints; j++) {
-                outputMatrix.setData(i,j,false);
-            }
-        }*/
 
         CircularLinkedList<Integer> valueList1 = new CircularLinkedList<>();
         for (int i = 0; i < valuePositions; i++) {
@@ -139,8 +133,52 @@ public class Sudoku {
     public static void main(String[] args) throws IOException {
         Sudoku sudoku = new Sudoku();
         ToroidalDoublyLinkedList<Integer> outputMatrix = sudoku.readWriteFile();
-        System.out.print(outputMatrix.getColumnNum()+" "+outputMatrix.getRowNum());
-        System.out.print(outputMatrix);
+        Solver solver = new Solver(sudoku.board, outputMatrix);
+        solver.getNext();
     }
+
+    public static class Solver {
+
+        private CircularLinkedList<Integer> valueList;
+        private CircularLinkedList<Integer> solutionSet;
+        private ToroidalDoublyLinkedList<Integer> incidenceMatrix;
+
+        public Solver(Board board, ToroidalDoublyLinkedList<Integer> incidenceMatrix) {
+
+            this.incidenceMatrix = incidenceMatrix;
+            valueList = new CircularLinkedList<>();
+            solutionSet = new CircularLinkedList<>();
+            for (int i = 0; i < this.incidenceMatrix.getColumnNum(); i++) {
+                Integer frequency = this.incidenceMatrix.columnFrequency(i, 1);
+                valueList.addLast(frequency);
+            }
+            valueList.addLast(1);
+        }
+
+
+        public void getNext() {
+            for (int i = 1; i < 10; i++) {
+                AtomicInteger index = new AtomicInteger();
+                final int finalI = i;
+                CircularLinkedList.Node<Integer> node;
+                Optional<Integer> val = valueList.stream().filter(x-> x == finalI).findFirst();
+                val.ifPresent(integer -> {
+                    index.set(valueList.indexOf(integer));
+                });
+            }
+
+        }
+
+        public void cover(CircularLinkedList.Node<Integer> node) {
+
+
+        }
+
+        public void uncover() {
+
+
+        }
+    }
+
 
 }

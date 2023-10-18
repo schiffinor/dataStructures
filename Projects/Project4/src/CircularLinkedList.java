@@ -17,10 +17,9 @@ import java.util.*;
  * and it provides methods for iterating through the list.
  *
  * @param <E> The type of elements stored in the list.
- *
  * @author Roman Schiffino <rjschi24@colby.edu>
- * @version     1.1
- * @since       1.1
+ * @version 1.1
+ * @since 1.1
  */
 public class CircularLinkedList<E>
         extends AbstractList<E>
@@ -29,6 +28,8 @@ public class CircularLinkedList<E>
     private int size;
     private Node<E> head;
     private Node<E> tail;
+    private String name;
+    private String identifier;
 
     public CircularLinkedList() {
         size = 0;
@@ -45,6 +46,47 @@ public class CircularLinkedList<E>
     public CircularLinkedList(Collection<? extends E> list) {
         this();
         addAll(list);
+    }
+
+    public static void main(String[] args) throws InterruptedException {
+
+        CircularLinkedList<Integer> test = new CircularLinkedList<>();
+        LinkedList<Integer> test2 = new LinkedList<>();
+
+        for (int i = 5; i > 0; i--) {
+            test.addFirst(i);
+            test2.addFirst(i);
+        }
+        for (int i = 6; i < 10; i++) {
+            test.addLast(i);
+            test2.addLast(i);
+        }
+        System.out.println(test);
+        System.out.println(test.size());
+        System.out.println(test2);
+        System.out.println(test2.size());
+
+        Integer dataLoad = test.peekFirst();
+        for (Node<Integer> node = test.head; node != null; node = node.getNext()) {
+            System.out.println(node.getData());
+            Thread.sleep(300);
+        }
+    }
+
+    public String getIdentifier() {
+        return identifier;
+    }
+
+    public void setIdentifier(String identifier) {
+        this.identifier = identifier;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     /**
@@ -75,7 +117,7 @@ public class CircularLinkedList<E>
      *
      * @return The size of the `LinkedList`.
      */
-    public int size(){
+    public int size() {
         return size;
     }
 
@@ -86,8 +128,17 @@ public class CircularLinkedList<E>
      * @param obj The object to search for.
      * @return The index of the first occurrence of the object, or -1 if not found.
      */
-    public int indexFetch(Object obj){
+    public int indexFetch(Object obj) {
         return indexOf(obj);
+    }
+
+    public int getFrequency(E obj) {
+        int output = 0;
+        for (CircularLinkedList.Node<E> node = head; node != tail; node = node.getNext()) {
+            if (node.getData().equals(obj)) output++;
+        }
+        if (tail.getData().equals(obj)) output++;
+        return output;
     }
 
     /**
@@ -99,7 +150,7 @@ public class CircularLinkedList<E>
      */
     public int indexFetch(CircularLinkedList.Node<E> node) {
         int curIndex = 0;
-        for(CircularLinkedList.Node<E> node_i = head; node_i != node; node_i = node_i.getNext()) {
+        for (CircularLinkedList.Node<E> node_i = head; node_i != node; node_i = node_i.getNext()) {
             curIndex++;
         }
         return curIndex;
@@ -113,10 +164,10 @@ public class CircularLinkedList<E>
      * @return The node at the specified index.
      * @throws IndexOutOfBoundsException If the index is out of the valid range.
      */
-    public CircularLinkedList.Node<E> nodeFetch(int index){
+    public CircularLinkedList.Node<E> nodeFetch(int index) {
         CircularLinkedList.Node<E> fetchNode = this.head;
 
-        for(int i = 0; i < index; i++){
+        for (int i = 0; i < index; i++) {
             fetchNode = fetchNode.getNext();
         }
 
@@ -130,16 +181,15 @@ public class CircularLinkedList<E>
      * @param item The item to add to the list.
      * @return Always returns true to indicate success.
      */
-    public boolean add(E item){
+    public boolean add(E item) {
         addFirst(item);
         return true;
     }
 
-
     public void addFirst(E item) {
         Node<E> newNode = new Node<>(item, head, tail);
         newNode.setParent(this);
-        if (size == 0){
+        if (size == 0) {
             tail = newNode;
             newNode.setNext(newNode);
             newNode.setPrev(newNode);
@@ -151,11 +201,10 @@ public class CircularLinkedList<E>
         head = newNode;
     }
 
-
     public void addLast(E item) {
         Node<E> newNode = new Node<>(item, head, tail);
         newNode.setParent(this);
-        if (size == 0){
+        if (size == 0) {
             head = newNode;
             newNode.setNext(newNode);
             newNode.setPrev(newNode);
@@ -174,11 +223,12 @@ public class CircularLinkedList<E>
      * @param index The index at which to insert the item.
      * @param item  The item to insert into the list.
      */
-    public void add(int index, E item){
+    public void add(int index, E item) {
         if (index == 0) {
             addFirst(item);
             return;
-        } if (index == size) {
+        }
+        if (index == size) {
             addLast(item);
             return;
         }
@@ -267,7 +317,6 @@ public class CircularLinkedList<E>
         return pollFirst();
     }
 
-
     @Override
     public E set(int index, E item) {
         final CircularLinkedList.Node<E> node = nodeFetch(index);
@@ -276,8 +325,6 @@ public class CircularLinkedList<E>
         node.setData(item);
         return dataLoad;
     }
-
-
 
     /**
      * Adds an element to the beginning of the `LinkedList`.
@@ -299,7 +346,7 @@ public class CircularLinkedList<E>
      * @return The element at the specified index.
      * @throws IndexOutOfBoundsException If the index is out of the valid range.
      */
-    public E get(int index){
+    public E get(int index) {
         return nodeFetch(index).getData();
     }
 
@@ -310,7 +357,7 @@ public class CircularLinkedList<E>
      * @return The element that was removed.
      * @throws IndexOutOfBoundsException If the index is out of the valid range.
      */
-    public E remove(int index){
+    public E remove(int index) {
         CircularLinkedList.Node<E> node = nodeFetch(index);
         E dataLoad = node.getData();
         remove(node);
@@ -330,6 +377,11 @@ public class CircularLinkedList<E>
         return new CircularLinkedList.LLIterator<>(index, this.head);
     }
 
+    /**
+     * Retrieves and removes the first element in the `LinkedList`.
+     *
+     * @return The first element in the list or null if the list is empty.
+     */
 
     /**
      * Removes and returns the element stored in the specified node in the `LinkedList`.
@@ -337,21 +389,19 @@ public class CircularLinkedList<E>
      * @param node The node containing the element to be removed.
      * @return The element that was removed.
      */
-    public E remove(CircularLinkedList.Node<E> node){
+    public E remove(CircularLinkedList.Node<E> node) {
         E dataLoad = node.getData();
         CircularLinkedList.Node<E> prev = node.getPrev();
         CircularLinkedList.Node<E> next = node.getNext();
 
-        if (prev!= null) {
+        if (prev != null) {
             prev.setNext(next);
-        }
-        else {
+        } else {
             this.head = next;
         }
-        if (next!= null) {
+        if (next != null) {
             next.setPrev(prev);
-        }
-        else {
+        } else {
             this.tail = prev;
         }
         size--;
@@ -359,16 +409,11 @@ public class CircularLinkedList<E>
     }
 
     /**
-     * Retrieves and removes the first element in the `LinkedList`.
-     *
-     * @return The first element in the list or null if the list is empty.
-     */
-    /**
      * Removes and returns the first element in the `LinkedList`.
      *
      * @return The first element that was removed.
      */
-    public E remove(){
+    public E remove() {
         E dataLoad = head.getData();
 
         head = head.getNext();
@@ -388,7 +433,7 @@ public class CircularLinkedList<E>
      *
      * @return The last element in the list or null if the list is empty.
      */
-    public E removeLast(){
+    public E removeLast() {
         E dataLoad = tail.getData();
 
         tail = tail.getPrev();
@@ -464,11 +509,11 @@ public class CircularLinkedList<E>
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
-        if (obj == null || getClass()!= obj.getClass()) return false;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
         CircularLinkedList<E> list = (CircularLinkedList<E>) obj;
 
-        if (size!= list.size()) return false;
+        if (size != list.size()) return false;
         CircularLinkedList.Node<E> curNode = list.head;
         for (CircularLinkedList.Node<E> node = head; node != tail; node = node.getNext()) {
             if (!node.getData().equals(curNode.getData())) return false;
@@ -485,7 +530,7 @@ public class CircularLinkedList<E>
      *
      * @param <F> The type of elements stored in the node.
      */
-    public static class Node<F> implements Cloneable{
+    public static class Node<F> implements Cloneable {
         F data;
         CircularLinkedList.Node<F> next;
         CircularLinkedList.Node<F> prev;
@@ -503,11 +548,11 @@ public class CircularLinkedList<E>
         /**
          * Creates a new node with the specified data, next, and previous nodes.
          *
-         * @param item      The data to be stored in the node.
-         * @param nextNode  The node that follows this node.
-         * @param prevNode  The node that precedes this node.
+         * @param item     The data to be stored in the node.
+         * @param nextNode The node that follows this node.
+         * @param prevNode The node that precedes this node.
          */
-        public Node(F item, CircularLinkedList.Node<F> nextNode, CircularLinkedList.Node<F> prevNode){
+        public Node(F item, CircularLinkedList.Node<F> nextNode, CircularLinkedList.Node<F> prevNode) {
             data = item;
             next = nextNode;
             prev = prevNode;
@@ -584,6 +629,7 @@ public class CircularLinkedList<E>
         public void setParent(CircularLinkedList<F> parent) {
             this.parent = parent;
         }
+
         public Node<F> clone() {
             Node<F> clone;
             try {
@@ -594,7 +640,6 @@ public class CircularLinkedList<E>
             return clone;
         }
     }
-
 
     /**
      * An iterator for the `LinkedList` that allows you to traverse the list in both forward and backward directions.
@@ -612,12 +657,13 @@ public class CircularLinkedList<E>
          * Creates a new `LLIterator` with the specified starting index and the head node of the `LinkedList`.
          *
          * @param index The starting index for the iterator.
-         * @param head The head node of the `LinkedList`.
+         * @param head  The head node of the `LinkedList`.
          */
         public LLIterator(int index, CircularLinkedList.Node<E> head) {
             this.current = head;
             this.index = index;
         }
+
         /**
          * Returns {@code true} if {@link #next} returns an element not null.
          *
@@ -640,7 +686,7 @@ public class CircularLinkedList<E>
         public E next() {
             CircularLinkedList.Node<E> next = this.current.getNext();
             if (hasNext()) {
-                this.index = (this.index==this.current.getParent().size()-1)? 0 : this.index + 1;
+                this.index = (this.index == this.current.getParent().size() - 1) ? 0 : this.index + 1;
             }
             E dataLoad = hasNext() ? next.getData() : null;
             this.current = hasNext() ? next : this.current;
@@ -669,7 +715,7 @@ public class CircularLinkedList<E>
         public E previous() {
             CircularLinkedList.Node<E> prev = this.current.getPrev();
             if (hasPrevious()) {
-                this.index = (this.index==0)? this.current.getParent().size()-1 : this.index - 1;
+                this.index = (this.index == 0) ? this.current.getParent().size() - 1 : this.index - 1;
             }
             E dataLoad = hasPrevious() ? prev.getData() : null;
             this.current = hasPrevious() ? prev : this.current;
@@ -683,7 +729,7 @@ public class CircularLinkedList<E>
          */
         @Override
         public int nextIndex() {
-            return hasNext() ? ((this.index==this.current.getParent().size()-1) ? 0 : this.index + 1) : index;
+            return hasNext() ? ((this.index == this.current.getParent().size() - 1) ? 0 : this.index + 1) : index;
         }
 
         /**
@@ -693,7 +739,7 @@ public class CircularLinkedList<E>
          */
         @Override
         public int previousIndex() {
-            return hasPrevious() ? ((this.index==0)? this.current.getParent().size()-1 : this.index - 1) : index;
+            return hasPrevious() ? ((this.index == 0) ? this.current.getParent().size() - 1 : this.index - 1) : index;
         }
 
         /**
@@ -703,7 +749,6 @@ public class CircularLinkedList<E>
          * {@code next} or {@code previous} usage.
          * <p>
          * Use replace if combined usage necessary.
-         *
          */
         @Override
         public void remove() {
@@ -748,31 +793,6 @@ public class CircularLinkedList<E>
             newNode.setNext(this.current);
             this.current.getParent().size++;
 
-        }
-    }
-
-    public static void main(String[] args) throws InterruptedException {
-
-        CircularLinkedList<Integer> test = new CircularLinkedList<>();
-        LinkedList<Integer> test2 = new LinkedList<>();
-
-        for (int i = 5; i > 0; i--) {
-            test.addFirst(i);
-            test2.addFirst(i);
-        }
-        for (int i = 6; i < 10; i++) {
-            test.addLast(i);
-            test2.addLast(i);
-        }
-        System.out.println(test);
-        System.out.println(test.size());
-        System.out.println(test2);
-        System.out.println(test2.size());
-
-        Integer dataLoad = test.peekFirst();
-        for (Node<Integer> node = test.head; node != null; node = node.getNext()) {
-            System.out.println(node.getData());
-            Thread.sleep(300);
         }
     }
 }

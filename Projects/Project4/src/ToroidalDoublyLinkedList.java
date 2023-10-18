@@ -1,17 +1,5 @@
 public class ToroidalDoublyLinkedList<E> {
 
-    public int getRowNum() {
-        return rowNum;
-    }
-
-    public int getColumnNum() {
-        return columnNum;
-    }
-
-    public int getSize() {
-        return size;
-    }
-
     private int rowNum;
     private int columnNum;
     private int size;
@@ -26,6 +14,7 @@ public class ToroidalDoublyLinkedList<E> {
         this.rowList = new CircularLinkedList<>();
         for (int i = 0; i < rows; i++) {
             CircularLinkedList<E> row = new CircularLinkedList<>();
+            row.setIdentifier(String.valueOf(i));
             rowList.addLast(row);
             for (int j = 0; j < columns; j++) {
                 row.addLast(null);
@@ -35,6 +24,7 @@ public class ToroidalDoublyLinkedList<E> {
         this.columnList = new CircularLinkedList<>();
         for (int i = 0; i < columns; i++) {
             CircularLinkedList<E> column = new CircularLinkedList<>();
+            column.setIdentifier(String.valueOf(i));
             columnList.addLast(column);
             for (int j = 0; j < rows; j++) {
                 column.addLast(null);
@@ -42,21 +32,95 @@ public class ToroidalDoublyLinkedList<E> {
         }
     }
 
+    public static void main(String[] args) {
+        ToroidalDoublyLinkedList<Integer> list = new ToroidalDoublyLinkedList(5, 5);
+        CircularLinkedList<Integer> list2 = new CircularLinkedList<>();
+        for (int i = 5; i < 10; i++) {
+            list2.addLast(i);
+        }
+        System.out.println(list2);
+        System.out.println(list);
+        list.setData(0, 0, 1);
+        list.setData(2, 0, 1);
+        list.setRow(1, list2);
+        list.setColumn(4, list2);
+        System.out.println("setColumn");
+        System.out.println(list);
+        list.removeRow(2);
+        System.out.println("removeRow");
+        System.out.println(list);
+        list.addRow(2, list2);
+        System.out.println("addRow");
+        System.out.println(list);
+        list.removeColumn(3);
+        System.out.println("removeColumn");
+        System.out.println(list);
+        list.addColumn(3, list2);
+        System.out.println("addColumn");
+        System.out.println(list);
+        System.out.println(list2);
+
+        ToroidalDoublyLinkedList<Integer> list_1 = new ToroidalDoublyLinkedList(4, 6);
+        CircularLinkedList<Integer> list_2 = new CircularLinkedList<>();
+        CircularLinkedList<Integer> list_3 = new CircularLinkedList<>();
+        for (int i = 6; i < 10; i++) {
+            list_2.addLast(i);
+        }
+        for (int i = 5; i < 11; i++) {
+            list_3.addLast(i);
+        }
+        System.out.println(list_2);
+        System.out.println(list_3);
+        System.out.println(list_1);
+        list_1.setData(0, 0, 1);
+        list_1.setData(2, 0, 1);
+        System.out.println("pointSets");
+        System.out.println(list_1);
+        list_1.setRow(1, list_3);
+        list_1.setColumn(4, list_2);
+        System.out.println("setColumn");
+        System.out.println(list_1);
+        list_1.removeRow(2);
+        System.out.println("removeRow");
+        System.out.println(list_1);
+        list_1.addRow(2, list_3);
+        System.out.println("addRow");
+        System.out.println(list_1);
+        list_1.removeColumn(3);
+        System.out.println("removeColumn");
+        System.out.println(list_1);
+        list_1.addColumn(3, list_2);
+        System.out.println("addColumn");
+        System.out.println(list_1);
+        System.out.println(list_2);
+        System.out.println(list_3);
+
+    }
+
+    public int getRowNum() {
+        return rowNum;
+    }
+
+    public int getColumnNum() {
+        return columnNum;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
     private void setDataRowList(int row, int column, E value) {
         rowList.get(row).set(column, value);
     }
-
 
     private void setDataColList(int row, int column, E value) {
         columnList.get(column).set(row, value);
     }
 
-
     public void setData(int row, int column, E value) {
         setDataRowList(row, column, value);
         setDataColList(row, column, value);
     }
-
 
     public void setRow(int rowIndex, CircularLinkedList<E> rowSource) {
         if (this.columnList.size() != rowSource.size()) {
@@ -75,7 +139,6 @@ public class ToroidalDoublyLinkedList<E> {
         }
     }
 
-
     public void setColumn(int columnIndex, CircularLinkedList<E> columnSource) {
         if (this.rowList.size() != columnSource.size()) {
             throw new IllegalArgumentException("Column size must be equal to original.");
@@ -93,7 +156,6 @@ public class ToroidalDoublyLinkedList<E> {
         }
     }
 
-
     public CircularLinkedList<E> removeRow(int rowIndex) {
 
         CircularLinkedList<E> dataLoad = this.rowList.remove(rowIndex);
@@ -106,7 +168,6 @@ public class ToroidalDoublyLinkedList<E> {
         return dataLoad;
     }
 
-
     public CircularLinkedList<E> removeColumn(int columnIndex) {
 
         CircularLinkedList<E> dataLoad = this.columnList.remove(columnIndex);
@@ -118,7 +179,6 @@ public class ToroidalDoublyLinkedList<E> {
         size = rowNum * columnNum;
         return dataLoad;
     }
-
 
     public void addRow(int rowIndex, CircularLinkedList<E> rowSource) {
 
@@ -139,7 +199,6 @@ public class ToroidalDoublyLinkedList<E> {
         size = rowNum * columnNum;
     }
 
-
     public void addColumn(int columnIndex, CircularLinkedList<E> columnSource) {
 
         if (this.rowList.size() != columnSource.size()) {
@@ -159,16 +218,21 @@ public class ToroidalDoublyLinkedList<E> {
         size = rowNum * columnNum;
     }
 
-
     public CircularLinkedList<E> getRow(int rowIndex) {
         return this.rowList.get(rowIndex);
     }
-
 
     public CircularLinkedList<E> getColumn(int columnIndex) {
         return this.columnList.get(columnIndex);
     }
 
+    public int rowFrequency(int rowIndex, E value) {
+        return getRow(rowIndex).getFrequency(value);
+    }
+
+    public int columnFrequency(int columnIndex, E value) {
+        return getColumn(columnIndex).getFrequency(value);
+    }
 
     public String arrayString() {
         StringBuilder outString = new StringBuilder();
@@ -184,70 +248,5 @@ public class ToroidalDoublyLinkedList<E> {
                 this.rowList.toString() +
                 "\nColumnList: \n" +
                 this.columnList.toString();
-    }
-
-    public static void main(String[] args) {
-        ToroidalDoublyLinkedList<Integer> list = new ToroidalDoublyLinkedList(5,5);
-        CircularLinkedList<Integer> list2 = new CircularLinkedList<>();
-        for (int i = 5; i < 10; i++) {
-            list2.addLast(i);
-        }
-        System.out.println(list2);
-        System.out.println(list);
-        list.setData(0, 0, 1);
-        list.setData(2, 0, 1);
-        list.setRow(1,list2);
-        list.setColumn(4,list2);
-        System.out.println("setColumn");
-        System.out.println(list);
-        list.removeRow(2);
-        System.out.println("removeRow");
-        System.out.println(list);
-        list.addRow(2,list2);
-        System.out.println("addRow");
-        System.out.println(list);
-        list.removeColumn(3);
-        System.out.println("removeColumn");
-        System.out.println(list);
-        list.addColumn(3,list2);
-        System.out.println("addColumn");
-        System.out.println(list);
-        System.out.println(list2);
-
-        ToroidalDoublyLinkedList<Integer> list_1 = new ToroidalDoublyLinkedList(4,6);
-        CircularLinkedList<Integer> list_2 = new CircularLinkedList<>();
-        CircularLinkedList<Integer> list_3 = new CircularLinkedList<>();
-        for (int i = 6; i < 10; i++) {
-            list_2.addLast(i);
-        }
-        for (int i = 5; i < 11; i++) {
-            list_3.addLast(i);
-        }
-        System.out.println(list_2);
-        System.out.println(list_3);
-        System.out.println(list_1);
-        list_1.setData(0, 0, 1);
-        list_1.setData(2, 0, 1);
-        System.out.println("pointSets");
-        System.out.println(list_1);
-        list_1.setRow(1,list_3);
-        list_1.setColumn(4,list_2);
-        System.out.println("setColumn");
-        System.out.println(list_1);
-        list_1.removeRow(2);
-        System.out.println("removeRow");
-        System.out.println(list_1);
-        list_1.addRow(2,list_3);
-        System.out.println("addRow");
-        System.out.println(list_1);
-        list_1.removeColumn(3);
-        System.out.println("removeColumn");
-        System.out.println(list_1);
-        list_1.addColumn(3,list_2);
-        System.out.println("addColumn");
-        System.out.println(list_1);
-        System.out.println(list_2);
-        System.out.println(list_3);
-
     }
 }

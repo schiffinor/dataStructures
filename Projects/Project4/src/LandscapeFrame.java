@@ -56,7 +56,7 @@ public class LandscapeFrame {
 
     //test function that creates a new LandscapeDisplay and populates it with 200 agents.
     public static void main(String[] args) throws InterruptedException {
-        Board scape = new Board(70);
+        Board scape = new Board(40);
         Random gen = new Random();
 
         LandscapeFrame display = new LandscapeFrame(scape,30);

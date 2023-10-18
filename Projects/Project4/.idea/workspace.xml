@@ -4,10 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a951b0dc-03ac-46fd-ac71-ff79c54c0530" name="Changes" comment="Created Toroidal Doubly Linked List Class and began to implement Dancing Links&#10;Created 1/2 of incidence matrix generator">
-      <change afterPath="$PROJECT_DIR$/incidenceMatrix.txt" afterDir="false" />
+    <list default="true" id="a951b0dc-03ac-46fd-ac71-ff79c54c0530" name="Changes" comment="incidenceMatrix done">
+      <change beforePath="$PROJECT_DIR$/../Project1/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Project1/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Board.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/CircularLinkedList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/CircularLinkedList.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/LandscapeFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/LandscapeFrame.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Sudoku.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Sudoku.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ToroidalDoublyLinkedList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ToroidalDoublyLinkedList.java" afterDir="false" />
     </list>
@@ -87,7 +88,7 @@
       <workItem from="1697354874533" duration="7771000" />
       <workItem from="1697410323687" duration="14172000" />
       <workItem from="1697424526105" duration="50777000" />
-      <workItem from="1697529039824" duration="26666000" />
+      <workItem from="1697529039824" duration="48977000" />
     </task>
     <task id="LOCAL-00001" summary="Started and implemented most aspects of Project4">
       <option name="closed" value="true" />
@@ -105,7 +106,15 @@
       <option name="project" value="LOCAL" />
       <updated>1697552666301</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="incidenceMatrix done">
+      <option name="closed" value="true" />
+      <created>1697575712489</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1697575712489</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -114,7 +123,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Started and implemented most aspects of Project4" />
     <MESSAGE value="Created Toroidal Doubly Linked List Class and began to implement Dancing Links&#10;Created 1/2 of incidence matrix generator" />
-    <option name="LAST_COMMIT_MESSAGE" value="Created Toroidal Doubly Linked List Class and began to implement Dancing Links&#10;Created 1/2 of incidence matrix generator" />
+    <MESSAGE value="incidenceMatrix done" />
+    <option name="LAST_COMMIT_MESSAGE" value="incidenceMatrix done" />
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>
