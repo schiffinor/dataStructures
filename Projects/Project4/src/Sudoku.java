@@ -157,15 +157,14 @@ public class Sudoku {
         System.out.println(val3);
         CircularLinkedList.Node<Integer> node = solver.operableMatrix.getColumn(val).nodeFetch(val2);
         System.out.println(node);
-        solver.cover(node);
+        int coverCount = solver.cover(node);
         System.out.println("Gap");
         sudoku.writeFileOutput(solver.solutionSet, "ss.txt");
         sudoku.writeFileOutput(solver.nullColumns, "nc.txt");
-        sudoku.writeFileOutput(solver.nullRows, "nr.txt");
         sudoku.writeFileOutput(solver.deadRows, "dr.txt");
         sudoku.writeFileOutput(solver.operableMatrix, "operableMatrix2.txt");
 
-        solver.uncover();
+        solver.uncover(coverCount);
         sudoku.writeFileOutput(solver.operableMatrix, "operableMatrix3.txt");
     }
 
@@ -173,7 +172,7 @@ public class Sudoku {
 
         private final CircularLinkedList<Integer> valueList;
         private final CircularLinkedList<CircularLinkedList<Integer>> solutionSet;
-        private final CircularLinkedList<CircularLinkedList<Integer>> nullRows;
+        private final CircularLinkedList<CircularLinkedList.Node<CircularLinkedList<Integer>>> nullRows;
         private final CircularLinkedList<CircularLinkedList<Integer>> nullColumns;
         private final CircularLinkedList<CircularLinkedList<Integer>> deadRows;
         private final ToroidalDoublyLinkedList<Integer> incidenceMatrix;
@@ -187,14 +186,15 @@ public class Sudoku {
             this.nullRows = new CircularLinkedList<>();
             this.nullColumns = new CircularLinkedList<>();
             this.deadRows = new CircularLinkedList<>();
-            for (int i = 0; i < this.incidenceMatrix.getColumnNum(); i++) {
-                Integer frequency = this.incidenceMatrix.columnFrequency(i, 1);
+            for (int i = 0; i < this.operableMatrix.getColumnNum(); i++) {
+                Integer frequency = this.operableMatrix.columnFrequency(i, 1);
                 valueList.addLast(frequency);
             }
         }
 
 
         public int getNextColumnToCover() {
+
             AtomicInteger index = new AtomicInteger();
             int i = 1;
             AtomicBoolean continueCheck = new AtomicBoolean(true);
@@ -226,28 +226,69 @@ public class Sudoku {
 
 
         @SuppressWarnings("unchecked")
-        public void cover(CircularLinkedList.Node<Integer> node) {
+        public int cover(CircularLinkedList.Node<Integer> node) {
             int rowIndex = node.getParent().indexFetch(node);
             int columnIndex = ((CircularLinkedList<CircularLinkedList<Integer>>) node.getParent().getParent()).indexFetch(node.getParent());
-            solutionSet.addFirst(operableMatrix.removeRow(rowIndex));
-            CircularLinkedList<Integer> columnToCover = operableMatrix.getColumn(columnIndex).clone();
-            nullColumns.addFirst(operableMatrix.removeColumn(columnIndex));
+            CircularLinkedList<Integer> removedRow = operableMatrix.removeRow(rowIndex);
+            solutionSet.addFirst(removedRow);
+            CircularLinkedList.LLIterator iterator = (CircularLinkedList.LLIterator) removedRow.listIterator();
+
+            int coveredRows = 0;
+            if (iterator.getCurrent().getData().equals(1)) {
+                coveredRows += constraintCover(0);
+            }
+            while (iterator.hasNext() && iterator.getCurrent().getNext() != iterator.getInitial())
+                if (iterator.next().equals(1)) {
+                    coveredRows += constraintCover(iterator.previousIndex());
+                }
+            return coveredRows;
+        }
+
+
+        public int constraintCover(int index) {
+            CircularLinkedList<Integer> columnToCover = operableMatrix.getColumn(index).clone();
+            nullColumns.addFirst(operableMatrix.removeColumn(index));
+
+            int coverCount = 0;
             do {
                 int rowToRemoveIndexValue = columnToCover.indexOf(1);;
                 System.out.println("reached");
                 columnToCover.removeFirstOccurrence(1);
-                nullRows.addFirst(operableMatrix.removeRow(rowToRemoveIndexValue));
+                nullRows.addFirst(operableMatrix.removeRow(rowToRemoveIndexValue).getContainer());
                 System.out.println(nullRows.peek());
+                coverCount++;
             } while (columnToCover.contains(1));
+            return coverCount;
         }
 
-        public void uncover() {
+
+        @SuppressWarnings("rawtypes")
+        public void uncover(int rowsToUncover) {
             CircularLinkedList<Integer> removedSolutionRow = solutionSet.remove(0);
             assert removedSolutionRow != null : "Solution set is null.";
             deadRows.addFirst(removedSolutionRow);
-            CircularLinkedList<Integer> nextRow = nullRows.remove();
-            int rowIndex = incidenceMatrix.getRowList().indexFetch(nextRow);
-            operableMatrix.addRow(rowIndex,nextRow);
+            for (int i = 0; i < rowsToUncover; i++) {
+                CircularLinkedList.Node<CircularLinkedList<Integer>> nextRow = nullRows.remove();
+                System.out.println(nextRow);
+                System.out.println(nextRow.getNext());
+                int rowIndex = operableMatrix.getRowList().indexFetch(nextRow.getNext());
+                operableMatrix.unremoveRow(nextRow);
+            }
+        }
+
+
+        public void algorithmicSolver() {
+            while (operableMatrix.getColumnNum() > 0) {
+                /*int val = getNextColumnToCover();
+                if ()
+                int val2 = nextRow(operableMatrix.getColumn(val));
+
+                Integer val3 = solver.operableMatrix.getColumn(val).get(val2);
+                System.out.println(val3);
+                CircularLinkedList.Node<Integer> node = solver.operableMatrix.getColumn(val).nodeFetch(val2);
+                System.out.println(node);
+                solver.cover(node);*/
+            }
         }
     }
 

@@ -225,6 +225,23 @@ public class ToroidalDoublyLinkedList<E> implements Cloneable{
         return dataLoad;
     }
 
+    public void unremoveRow(CircularLinkedList.Node<CircularLinkedList<E>> node) {
+        assert node.getParent() == this.rowList : ("Not a Row.");
+        CircularLinkedList.Node<CircularLinkedList<E>> nextRef = node.getNext();
+        CircularLinkedList.Node<CircularLinkedList<E>> prevRef = node.getPrev();
+        nextRef.setPrev(node);
+        prevRef.setNext(node);
+        int rowIndex = rowList.indexFetch(node);
+
+        int i = 0;
+        for (CircularLinkedList<E> c : this.columnList) {
+            c.add(rowIndex, node.data.get(i));
+            i++;
+        }
+        rowNum++;
+        size = rowNum * columnNum;
+    }
+
     public void addRow(int rowIndex, CircularLinkedList<E> rowSource) {
 
         if (this.columnList.size() != rowSource.size()) {

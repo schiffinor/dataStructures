@@ -5,12 +5,30 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="80c0bf2d-e1ab-48a3-8684-0e7bf6bab628" name="Changes" comment="finishing and cleaning methods up&#10;also bug fixes">
+      <change afterPath="$PROJECT_DIR$/../Project4/.idea/shelf/Changes.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Project4/.idea/shelf/Changes/AdjustableSimulation.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Project4/.idea/shelf/Changes/Agent.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Project4/.idea/shelf/Changes/AgentSimulation.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Project4/.idea/shelf/Changes/AntiSocialAgent.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Project4/.idea/shelf/Changes/Landscape.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Project4/.idea/shelf/Changes/LandscapeFrame.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Project4/.idea/shelf/Changes/LinkedList$LLIterator.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Project4/.idea/shelf/Changes/LinkedList$Node.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Project4/.idea/shelf/Changes/LinkedList.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Project4/.idea/shelf/Changes/PopUpClass$SpinBox.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Project4/.idea/shelf/Changes/PopUpClass.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Project4/.idea/shelf/Changes/SocialAgent.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Project4/.idea/shelf/Changes/shelved.patch" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Project4/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Project4/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Project4/nc.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../Project4/nc.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Project4/nr.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../Project4/nr.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Project4/operableMatrix2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../Project4/operableMatrix2.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Project4/operableMatrix3.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../Project4/operableMatrix3.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Project4/src/CircularLinkedList.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Project4/src/CircularLinkedList.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Project4/src/LandscapeFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Project4/src/LandscapeFrame.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Project4/src/Sudoku.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Project4/src/Sudoku.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Project4/src/ToroidalDoublyLinkedList.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Project4/src/ToroidalDoublyLinkedList.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Project4/ss.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../Project4/ss.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -30,6 +30,7 @@ public class CircularLinkedList<E>
     private Node<E> tail;
     private String name;
     private Integer identifier;
+    private Node<CircularLinkedList<E>> container;
 
     public Object getParent() {
         return parent;
@@ -201,7 +202,10 @@ public class CircularLinkedList<E>
      */
     public int indexFetch(CircularLinkedList.Node<E> node) {
         int curIndex = 0;
-        for (CircularLinkedList.Node<E> node_i = head; node_i != node; node_i = node_i.getNext()) {
+        for (CircularLinkedList.Node<E> node_i = head; !node_i.equals(node); node_i = node_i.getNext()) {
+            if (node_i == head && curIndex != 0) {
+                throw new IllegalArgumentException("Node not in list.");
+            }
             curIndex++;
         }
         return curIndex;
@@ -445,14 +449,12 @@ public class CircularLinkedList<E>
         CircularLinkedList.Node<E> prev = node.getPrev();
         CircularLinkedList.Node<E> next = node.getNext();
 
-        if (node != head) {
-            prev.setNext(next);
-        } else {
+        prev.setNext(next);
+        next.setPrev(prev);
+        if (node == head) {
             this.head = next;
         }
-        if (node != tail) {
-            next.setPrev(prev);
-        } else {
+        if (node == tail) {
             this.tail = prev;
         }
         size--;
@@ -590,6 +592,14 @@ public class CircularLinkedList<E>
         return true;
     }
 
+    public Node<CircularLinkedList<E>> getContainer() {
+        return container;
+    }
+
+    public void setContainer(Node<CircularLinkedList<E>> container) {
+        this.container = container;
+    }
+
     /**
      * A node within the `LinkedList`.
      * Each node contains an element of type `F` and maintains references to the next and previous nodes in the list.
@@ -602,6 +612,16 @@ public class CircularLinkedList<E>
         CircularLinkedList.Node<F> next;
         CircularLinkedList.Node<F> prev;
         private CircularLinkedList<F> parent;
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Node<?> node = (Node<?>) o;
+            return Objects.equals(data, node.data);
+        }
+
+
 
         /**
          * Creates a new node with the specified data and no next or previous nodes.
@@ -621,6 +641,9 @@ public class CircularLinkedList<E>
          */
         public Node(F item, CircularLinkedList.Node<F> nextNode, CircularLinkedList.Node<F> prevNode) {
             data = item;
+            if (data instanceof CircularLinkedList && ((CircularLinkedList<?>) data).getContainer() == null) {
+                ((CircularLinkedList<F>) data).setContainer((Node<CircularLinkedList<F>>) this);
+            }
             next = nextNode;
             prev = prevNode;
         }
