@@ -5,11 +5,12 @@ import java.util.ArrayList;
 public abstract class AbstractGroup {
     public HashSet<Integer> cellSet;
     public LinkedList<Cell> noValueCells;
-    public ArrayList<Integer> validValueList;
+    public static Integer[] intList = new Integer[]{1,2,3,4,5,6,7,8,9};
+
+    public static ArrayList<Integer> validValueList = new ArrayList<>(Arrays.asList(intList));
 
     public AbstractGroup() {
-        Integer[] intList = new Integer[]{1,2,3,4,5,6,7,8,9};
-        validValueList = new ArrayList<>(Arrays.asList(intList));
+        ;
         cellSet = new HashSet<Integer>();
         noValueCells = new LinkedList<Cell>();
     }
@@ -49,7 +50,7 @@ public abstract class AbstractGroup {
 
 
     public LinkedList<Integer> getPossibleValues() {
-        LinkedList<Integer> possibleValues = new LinkedList<Integer>(validValueList);
+        LinkedList<Integer> possibleValues = new LinkedList<>(validValueList);
         possibleValues.removeAll(cellSet);
         return possibleValues;
     }

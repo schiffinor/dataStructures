@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Random;
@@ -155,10 +156,28 @@ public class Cell {
 
 
     public LinkedList<Integer> getPossibleValues() {
-        LinkedList<Integer> possibleValues = getRow().getPossibleValues();
-        possibleValues.removeIf(value -> !getColumn().getPossibleValues().contains(value));
-        possibleValues.removeIf(value -> !getSubGrid().getPossibleValues().contains(value));
-        return possibleValues;
+        LinkedList<Integer> output = new LinkedList<>();
+        ArrayList<HashSet<Integer>> cellSets =
+                new ArrayList<>(Arrays.asList(getRow().getCellSet(),
+                        getColumn().getCellSet(), getSubGrid().getCellSet()));
+
+        // Convert the list of numbers into a HashSet for fast lookups
+        HashSet<Integer> numberSet = new HashSet<>(AbstractGroup.validValueList);
+
+        for (int number : numberSet) {
+            boolean inSets = false;
+            for (HashSet<Integer> set : cellSets) {
+                if (set.contains(number)) {
+                    inSets = true;
+                    break;
+                }
+            }
+            if (!inSets) {
+                output.add(number);
+            }
+        }
+
+        return output;
     }
 
 
@@ -196,8 +215,9 @@ public class Cell {
             this.row.getCellSet().add(this.value);
             this.column.getCellSet().add(this.value);
             this.subGrid.getCellSet().add(this.value);
+            return true;
         }
-        return true;
+        else return false;
     }
 
 

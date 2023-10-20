@@ -5,7 +5,7 @@ public class ToroidalDoublyLinkedList<E> implements Cloneable{
     private int rowNum;
     private int columnNum;
     private int size;
-    private CircularLinkedList<CircularLinkedList<E>> rowList;
+    public CircularLinkedList<CircularLinkedList<E>> rowList;
     private CircularLinkedList<CircularLinkedList<E>> columnList;
     private LinkedList<CircularLinkedList<E>> rowIdentifierCache;
     private LinkedList<CircularLinkedList<E>> columnIdentifierCache;
@@ -231,6 +231,12 @@ public class ToroidalDoublyLinkedList<E> implements Cloneable{
         CircularLinkedList.Node<CircularLinkedList<E>> prevRef = node.getPrev();
         nextRef.setPrev(node);
         prevRef.setNext(node);
+        if (nextRef.getData().getIdentifier()>node.getData().getIdentifier() && nextRef == this.rowList.head) {
+            this.rowList.head = node;
+        }
+        if (prevRef.getData().getIdentifier()<node.getData().getIdentifier() && prevRef == this.rowList.tail) {
+            this.rowList.tail = node;
+        }
         int rowIndex = rowList.indexFetch(node);
 
         int i = 0;
@@ -239,6 +245,7 @@ public class ToroidalDoublyLinkedList<E> implements Cloneable{
             i++;
         }
         rowNum++;
+        rowList.setSize(rowNum);
         size = rowNum * columnNum;
     }
 
@@ -325,9 +332,9 @@ public class ToroidalDoublyLinkedList<E> implements Cloneable{
         clone.columnNum = getColumnNum();
         clone.size = getSize();
 
-        clone.rowList = this.rowList.clone();
+        clone.rowList = this.rowList;
 
-        clone.columnList = this.columnList.clone();
+        clone.columnList = this.columnList;
 
         return clone;
     }

@@ -5,30 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a951b0dc-03ac-46fd-ac71-ff79c54c0530" name="Changes" comment="incidenceMatrix done">
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Changes.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Changes/AdjustableSimulation.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Changes/Agent.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Changes/AgentSimulation.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Changes/AntiSocialAgent.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Changes/Landscape.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Changes/LandscapeFrame.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Changes/LinkedList$LLIterator.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Changes/LinkedList$Node.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Changes/LinkedList.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Changes/PopUpClass$SpinBox.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Changes/PopUpClass.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Changes/SocialAgent.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Changes/shelved.patch" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Project1/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Project1/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/SudokuAlt.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Changes.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Changes.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/incidenceMatrix.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/nc.txt" beforeDir="false" afterPath="$PROJECT_DIR$/nc.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nr.txt" beforeDir="false" afterPath="$PROJECT_DIR$/nr.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/operableMatrix2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/operableMatrix2.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/operableMatrix3.txt" beforeDir="false" afterPath="$PROJECT_DIR$/operableMatrix3.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/operableMatrix2.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/operableMatrix3.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AbstractGroup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AbstractGroup.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Cell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Cell.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/CircularLinkedList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/CircularLinkedList.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Sudoku.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Sudoku.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ToroidalDoublyLinkedList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ToroidalDoublyLinkedList.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ss.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ss.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -149,26 +138,41 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Sudoku.java</url>
-          <line>270</line>
-          <option name="timeStamp" value="28" />
+          <url>file://$PROJECT_DIR$/src/ToroidalDoublyLinkedList.java</url>
+          <line>228</line>
+          <option name="timeStamp" value="39" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/SudokuAlt.java</url>
+          <line>313</line>
+          <option name="timeStamp" value="40" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/SudokuAlt.java</url>
+          <line>168</line>
+          <option name="timeStamp" value="41" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/SudokuAlt.java</url>
+          <line>165</line>
+          <option name="timeStamp" value="42" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/SudokuAlt.java</url>
+          <line>279</line>
+          <option name="timeStamp" value="46" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
+        <PinnedItemInfo parentTag="CircularLinkedList" memberName="parent" />
         <PinnedItemInfo parentTag="java.lang.Integer" />
         <PinnedItemInfo parentTag="CircularLinkedList" memberName="identifier" />
         <PinnedItemInfo parentTag="CircularLinkedList" memberName="head" />
         <PinnedItemInfo parentTag="java.lang.Integer" memberName="value" />
       </pinned-members>
     </pin-to-top-manager>
-    <watches-manager>
-      <configuration name="Application">
-        <watch expression="list2.get(4)" />
-        <watch expression="((Solver)this).nullRows" custom="Sudoku.Solver" />
-      </configuration>
-    </watches-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

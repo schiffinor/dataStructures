@@ -26,11 +26,11 @@ public class CircularLinkedList<E>
         implements List<E>, Iterable<E>, Cloneable {
 
     private int size;
-    private Node<E> head;
-    private Node<E> tail;
+    protected Node<E> head;
+    Node<E> tail;
     private String name;
     private Integer identifier;
-    private Node<CircularLinkedList<E>> container;
+    private Node<?> container;
 
     public Object getParent() {
         return parent;
@@ -119,9 +119,17 @@ public class CircularLinkedList<E>
         clone.parent = this.parent;
 
         for (CircularLinkedList.Node<E> node = this.head; node != this.tail; node = node.getNext()) {
-            clone.addLast(node.getData());
+            if ((node.getData() instanceof CircularLinkedList<?>)) {
+                clone.addLast((E) ((CircularLinkedList<?>) node.getData()).clone());
+            } else {
+                clone.addLast(node.getData());
+            }
         }
-        clone.addLast(this.tail.getData());
+        if ((tail.getData() instanceof CircularLinkedList<?>)) {
+            clone.addLast((E) ((CircularLinkedList<?>) tail.getData()).clone());
+        } else {
+            clone.addLast(tail.getData());
+        }
         return clone;
     }
 
@@ -446,16 +454,21 @@ public class CircularLinkedList<E>
      */
     public E remove(CircularLinkedList.Node<E> node) {
         E dataLoad = node.getData();
-        CircularLinkedList.Node<E> prev = node.getPrev();
-        CircularLinkedList.Node<E> next = node.getNext();
+        if (this.size > 1) {
+            CircularLinkedList.Node<E> prev = node.getPrev();
+            CircularLinkedList.Node<E> next = node.getNext();
 
-        prev.setNext(next);
-        next.setPrev(prev);
-        if (node == head) {
-            this.head = next;
-        }
-        if (node == tail) {
-            this.tail = prev;
+            prev.setNext(next);
+            next.setPrev(prev);
+            if (node == head) {
+                this.head = next;
+            }
+            if (node == tail) {
+                this.tail = prev;
+            }
+        } else {
+            this.head = null;
+            this.tail = null;
         }
         size--;
         return dataLoad;
@@ -467,18 +480,7 @@ public class CircularLinkedList<E>
      * @return The first element that was removed.
      */
     public E remove() {
-        E dataLoad = head.getData();
-
-        head = head.getNext();
-        if (size > 1) {
-            head.setPrev(tail);
-            tail.setNext(head);
-        } else {
-            head = null;
-            tail = null;
-        }
-        size--;
-        return dataLoad;
+        return remove(this.head);
     }
 
     /**
@@ -487,19 +489,7 @@ public class CircularLinkedList<E>
      * @return The last element in the list or null if the list is empty.
      */
     public E removeLast() {
-        E dataLoad = tail.getData();
-
-        tail = tail.getPrev();
-        if (size > 1) {
-            tail.setNext(head);
-            head.setPrev(tail);
-        } else {
-            head = null;
-            tail = null;
-        }
-
-        size--;
-        return dataLoad;
+        return remove(this.tail);
     }
 
     /**
@@ -588,16 +578,19 @@ public class CircularLinkedList<E>
             if (!node.getData().equals(curNode.getData())) return false;
             curNode = curNode.getNext();
         }
-
-        return true;
+        return tail.getData().equals(list.tail.getData());
     }
 
-    public Node<CircularLinkedList<E>> getContainer() {
+    public Node<?> getContainer() {
         return container;
     }
 
-    public void setContainer(Node<CircularLinkedList<E>> container) {
-        this.container = container;
+    public void setContainer(Node<?> container) {
+        this.container =  container;
+    }
+
+    public void setSize(int rowNum) {
+        size = rowNum;
     }
 
     /**
@@ -639,10 +632,10 @@ public class CircularLinkedList<E>
          * @param nextNode The node that follows this node.
          * @param prevNode The node that precedes this node.
          */
-        public Node(F item, CircularLinkedList.Node<F> nextNode, CircularLinkedList.Node<F> prevNode) {
+        public Node(F item, Node<F> nextNode, Node<F> prevNode) {
             data = item;
-            if (data instanceof CircularLinkedList && ((CircularLinkedList<?>) data).getContainer() == null) {
-                ((CircularLinkedList<F>) data).setContainer((Node<CircularLinkedList<F>>) this);
+            if (data instanceof CircularLinkedList<?> && ((CircularLinkedList<?>) data).getContainer() == null) {
+                ((CircularLinkedList<?>) data).setContainer((Node<F>) this);
             }
             next = nextNode;
             prev = prevNode;
