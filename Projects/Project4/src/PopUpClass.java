@@ -3,11 +3,11 @@ This class is used to create a pop-up window that allows the user to set the gam
 some default Java Swing Demo from Oracle to teach myself how all the components work, but this is my own creation.
 I hate coding GUIs, but here it is.
 */
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.util.Arrays;
 import java.io.File;
 
 /**
@@ -53,7 +53,7 @@ public class PopUpClass extends JPanel {
         label = new JLabel("Click Reset once you've input your desired settings.", JLabel.CENTER);
 
         //Places them in the panel.
-        Border padding = BorderFactory.createEmptyBorder(20,20,5,20);
+        Border padding = BorderFactory.createEmptyBorder(20, 20, 5, 20);
         settingsPanel.setBorder(padding);
         settingsPanel2.setBorder(padding);
 
@@ -65,13 +65,14 @@ public class PopUpClass extends JPanel {
         //Adds tabbed panes and labels to window.
         add(tabbedPane, BorderLayout.CENTER);
         add(label, BorderLayout.PAGE_END);
-        label.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+        label.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
     }
 
     /**
      * Creates an image icon object from a provided image path.
      * <p>
      * If the file does not exist, will return null.
+     *
      * @param path image file path.
      * @return ImageIcon object to use as icon for the window.
      */
@@ -117,15 +118,15 @@ public class PopUpClass extends JPanel {
         resetButton = new JButton("Reset?");
         resetButton.addActionListener(e -> {
             String actionCommand = buttonGroup.getSelection().getActionCommand();
-            Integer actionNum = Integer.parseInt(actionCommand);
+            int actionNum = Integer.parseInt(actionCommand);
             if (actionNum == 1 && landData.getInitialLock() == 0) {
                 landData.setInitialLock(25);
             } else if (actionNum == 2 && landData.getFileSource() == null) {
                 landData.setFileSource("board1.txt");
             }
             landData.setConstructorUsed(actionNum);
-            SwingUtilities.invokeLater(landData::reset);
-            SwingUtilities.invokeLater(parentFrame::repaint);
+            landData.reset();
+            parentFrame.repaint();
         });
 
         return panelConstructor(toggleButtons, resetButton);
@@ -155,16 +156,16 @@ public class PopUpClass extends JPanel {
 
         //Creates the spinners.
 
-        SpinBox sleep = new SpinBox("Sleep: ",100,0,1000000,1);
+        SpinBox sleep = new SpinBox("Sleep: ", 10, 0, 1000000, 1);
 
-        SpinBox initialLock = new SpinBox("Locked Cells: ",25,0,40,1);
+        SpinBox initialLock = new SpinBox("Locked Cells: ", 25, 0, 40, 1);
 
         ButtonBox filePick = new ButtonBox("Load File: ", "File Chooser", fileRun);
 
         //Creates the boxes.
         Box[] container = new Box[3];
-        container[0] =sleep.getBox();
-        container[1] =initialLock.getBox();
+        container[0] = sleep.getBox();
+        container[1] = initialLock.getBox();
         container[2] = filePick.getBox();
 
         //Creates the submit button and ties action.
@@ -172,8 +173,8 @@ public class PopUpClass extends JPanel {
         resetButton.addActionListener(e -> {
             landData.setSleepTime((int) sleep.getSpinner().getValue());
             landData.setInitialLock((int) initialLock.getSpinner().getValue());
-            SwingUtilities.invokeLater(landData::reset);
-            SwingUtilities.invokeLater(parentFrame::repaint);
+            landData.reset();
+            parentFrame.repaint();
         });
 
         return panelConstructor(container, resetButton);
@@ -183,13 +184,13 @@ public class PopUpClass extends JPanel {
     /**
      * Utility class for going through a list of Components and creating a combined JPanel with a submit button.
      *
-     * @param items Components to be added.
+     * @param items  Components to be added.
      * @param button submit button to be added.
      * @return constructed JPanel to be displayed.
      */
     private JPanel panelConstructor(Component[] items, JButton button) {
         JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS ));
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.setBorder(new EmptyBorder(new Insets(50, 75, 50, 75)));
         panel.add(Box.createVerticalGlue());
         panel.add(items[0]);
@@ -205,8 +206,8 @@ public class PopUpClass extends JPanel {
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
         panel.add(button);
         for (Component item : items) {
-            item.setMaximumSize(new Dimension(1920, item.getHeight()+40));
-            item.setPreferredSize(new Dimension((int) item.getPreferredSize().getWidth(), item.getHeight()+40));
+            item.setMaximumSize(new Dimension(1920, item.getHeight() + 40));
+            item.setPreferredSize(new Dimension((int) item.getPreferredSize().getWidth(), item.getHeight() + 40));
         }
         return panel;
     }
@@ -223,10 +224,11 @@ public class PopUpClass extends JPanel {
 
         /**
          * Constructor for the class does all the important set-up.
+         *
          * @param text text to put in Label.
          */
         public SpinBox(String text, int defaultValue, int min, int max, int step) {
-            SpinnerNumberModel spin = new SpinnerNumberModel(defaultValue,min, max, step);
+            SpinnerNumberModel spin = new SpinnerNumberModel(defaultValue, min, max, step);
             this.panel = Box.createHorizontalBox();
             this.spinner = new JSpinner(spin);
             this.panel.add(new JLabel(text));
@@ -259,6 +261,7 @@ public class PopUpClass extends JPanel {
 
         /**
          * Constructor for the class does all the important set-up.
+         *
          * @param text text to put in Label.
          */
         public ButtonBox(String text, String buttonText, Runnable runnable) {

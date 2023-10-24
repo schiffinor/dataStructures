@@ -16,38 +16,43 @@ import java.util.Random;
 
 /**
  * The LandscapeFrame class represents a graphical user interface, GUI,
- * window for visualizing and interacting with a landscape simulation.
- * It provides features to display the landscape, control the simulation, and save images of the display.
+ * window for visualizing and interacting with the sudoku game.
+ * It provides pretty minimal interaction as I really overshot this project
+ * and ran out of time. It is slightly reworked though, the solver couldn't be
+* adapted for the buttons because of lambda uses of thread causing problems with
+ * draw functions, it could be fixed via some thread management, but that would
+ * take too long,so no implementation.
  *
- * @author      Roman Schiffino <rjschi24@colby.edu>
- * @version     1.1
- * @since       1.1
+ * @author Roman Schiffino <rjschi24@colby.edu>
+ * @version 1.1
+ * @since 1.1
  */
 public class LandscapeFrame {
 
     public final JScrollPane holder;
     public final DisplayPanel landscapePanel;
-    protected final Board gameInit;
     final JFrame win;
     public int scale; //width (and height) of each square in the grid
+    protected Board gameInit;
 
     public LandscapeFrame(Board landscapeObj, int scale) {
         super();
         //set up the window
-        this.win = new JFrame("Social Simulation");
+        this.win = new JFrame("Sudoku Simulation");
         this.win.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         this.gameInit = landscapeObj;
+        getGameInit().setFrame(this);
         this.scale = scale;
 
         //create a panel in which to display the Landscape
         //put a buffer of two rows around the display grid
         this.landscapePanel = new DisplayPanel(gameInit, (this.gameInit.getCols() + 2) * this.scale,
-                (this.gameInit.getRows() + 2) * this.scale, scale);
+                (this.gameInit.getRows() + 3) * this.scale, scale);
 
         //add the panel to the window, layout, and display
         createMenuBar();
-        this.holder = new JScrollPane(landscapePanel,ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
+        this.holder = new JScrollPane(landscapePanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
         this.win.add(holder, BorderLayout.CENTER);
         this.win.pack();
@@ -55,13 +60,22 @@ public class LandscapeFrame {
     }
 
     //test function that creates a new LandscapeDisplay and populates it with 200 agents.
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
         Board scape = new Board(40);
         Random gen = new Random();
 
-        LandscapeFrame display = new LandscapeFrame(scape,30);
+        LandscapeFrame display = new LandscapeFrame(scape, 30);
 
 
+    }
+
+    public Board getGameInit() {
+        return gameInit;
+    }
+
+    public void setGameInit(Board gameInit) {
+        this.gameInit = gameInit;
+        this.landscapePanel.setGame(gameInit);
     }
 
     /**
@@ -93,26 +107,6 @@ public class LandscapeFrame {
         //Add the "Save Image" menu item to the File menu
         fileMenu.add(saveMenuItem);
 
-        //Create a "Play" button item
-        JButton playButton = new JButton("Play");
-        playButton.addActionListener(e -> {
-            //Start the simulation if it is paused
-            if (gameInit.getPaused()) {
-                //Create a thread to run the simulation in the background
-                gameInit.paused = false;
-                gameInit.play(this);
-                //Create and start the thread
-            }
-        });
-
-        //Create a "Pause" button item
-        JButton pauseButton = new JButton("Pause");
-        pauseButton.addActionListener(e -> {
-            if (!gameInit.getPaused()) {
-                SwingUtilities.invokeLater(gameInit::pause);
-            }
-        });
-
         //Create a "Proceeding State" button item
         JButton nextButton = new JButton(">>");
         nextButton.addActionListener(e -> {
@@ -123,7 +117,7 @@ public class LandscapeFrame {
         //Create a "ZoomIn" Button item
         JButton zoomInButton = new JButton("+");
         zoomInButton.addActionListener(e -> {
-            if (this.scale<55) {
+            if (this.scale < 55) {
                 this.scale += 1;
                 repaint();
             }
@@ -132,10 +126,10 @@ public class LandscapeFrame {
         //Create a "ZoomOut" Button item
         JButton zoomOutButton = new JButton("-");
         zoomOutButton.addActionListener(e -> {
-                if (this.scale>20) {
-                    this.scale -= 1;
-                    repaint();
-                }
+            if (this.scale > 20) {
+                this.scale -= 1;
+                repaint();
+            }
         });
 
         //Create a "Settings" menu item
@@ -144,7 +138,7 @@ public class LandscapeFrame {
             JDialog settingsDialog = new JDialog(this.win);
             settingsDialog.setTitle("Settings Menu");
 
-            PopUpClass settingsPopup = new PopUpClass(settingsDialog,gameInit,this);
+            PopUpClass settingsPopup = new PopUpClass(settingsDialog, gameInit, this);
             settingsDialog.setContentPane(settingsPopup);
 
             settingsDialog.setVisible(true);
@@ -156,8 +150,6 @@ public class LandscapeFrame {
 
         //Add the File and Simulation menus to the menu bar
         menuBar.add(fileMenu);
-        menuBar.add(pauseButton);
-        menuBar.add(playButton);
         menuBar.add(nextButton);
         menuBar.add(zoomOutButton);
         menuBar.add(zoomInButton);
@@ -209,13 +201,13 @@ public class LandscapeFrame {
      * functions, and a scroll pane.
      */
     public void repaint() {
-        SwingUtilities.invokeLater(this.win::repaint);
+        this.win.repaint();
         int calcWidth = (this.gameInit.getRows() + 2) * this.scale;
-        int calcHeight = (this.gameInit.getCols() + 2) * this.scale;
+        int calcHeight = (this.gameInit.getCols() + 3) * this.scale;
         this.landscapePanel.updateDimensions(calcWidth, calcHeight, this.scale);
         this.holder.revalidate();
         this.holder.getViewport().revalidate();
-        if (calcWidth<1920||calcHeight<1080) {
+        if (calcWidth < 1920 || calcHeight < 1080) {
             this.win.pack();
         }
 

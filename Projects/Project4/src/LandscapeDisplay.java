@@ -27,20 +27,18 @@ import javax.swing.JPanel;
  * Displays a Board graphically using Swing. In this version, we use a Board
  * class rather than a Landscape) and we do not make the assumption that
  * we are displaying a grid.
- * 
+ *
  * @author bseastwo
  */
 public class LandscapeDisplay {
-    JFrame win;
-    protected Board scape;
-    private LandscapePanel canvas;
-    private int gridScale; // width (and height) of each square in the grid
+    protected final Board scape;
+    final JFrame win;
+    private final int gridScale; // width (and height) of each square in the grid
 
     /**
      * Initializes a display window for a Landscape.
-     * 
+     *
      * @param scape the Landscape to display
-     * @param scale controls the relative size of the display
      */
     public LandscapeDisplay(Board scape) {
         // setup the window
@@ -51,10 +49,10 @@ public class LandscapeDisplay {
         this.gridScale = 30;
 
         // create a panel in which to display the Landscape
-        this.canvas = new LandscapePanel(9 * this.gridScale, 11 * this.gridScale);
+        LandscapePanel canvas = new LandscapePanel(9 * this.gridScale, 11 * this.gridScale);
 
         // add the panel to the window, layout, and display
-        this.win.add(this.canvas, BorderLayout.CENTER);
+        this.win.add(canvas, BorderLayout.CENTER);
         this.win.pack();
         this.win.setVisible(true);
     }
@@ -68,7 +66,7 @@ public class LandscapeDisplay {
      */
     public void saveImage(String filename) {
         // get the file extension from the filename
-        String ext = filename.substring(filename.lastIndexOf('.') + 1, filename.length());
+        String ext = filename.substring(filename.lastIndexOf('.') + 1);
 
         // create an image buffer to save this component
         Component tosave = this.win.getRootPane();
@@ -88,6 +86,10 @@ public class LandscapeDisplay {
         }
     }
 
+    public void repaint() {
+        this.win.repaint();
+    }
+
     /**
      * This inner class provides the panel on which Landscape elements
      * are drawn.
@@ -95,7 +97,7 @@ public class LandscapeDisplay {
     private class LandscapePanel extends JPanel {
         /**
          * Creates the panel.
-         * 
+         *
          * @param width  the width of the panel in pixels
          * @param height the height of the panel in pixels
          */
@@ -109,7 +111,7 @@ public class LandscapeDisplay {
          * Method overridden from JComponent that is responsible for
          * drawing components on the screen. The supplied Graphics
          * object is used to draw.
-         * 
+         *
          * @param g the Graphics object used for drawing
          */
         public void paintComponent(Graphics g) {
@@ -118,8 +120,4 @@ public class LandscapeDisplay {
         } // end paintComponent
 
     } // end LandscapePanel
-
-    public void repaint() {
-        this.win.repaint();
-    }
 }

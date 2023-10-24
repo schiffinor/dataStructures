@@ -3,7 +3,7 @@ import java.awt.*;
 
 public class DisplayPanel extends JPanel {
 
-    public final Board game;
+    public Board game;
     public int width;
     public int height;
     public int scale;
@@ -24,6 +24,13 @@ public class DisplayPanel extends JPanel {
         this.setFont(new Font("Serif", Font.PLAIN, scale));
     }
 
+    public Board getGame() {
+        return game;
+    }
+
+    public void setGame(Board game) {
+        this.game = game;
+    }
 
     public void updateDimensions(int width, int height, int scale) {
         this.width = width;
