@@ -15,20 +15,23 @@ import java.util.*;
  * This class allows you to create and manipulate a list of elements of type `E`.
  * The list supports adding, removing, and retrieving elements,
  * and it provides methods for iterating through the list.
+ * <p>
+ * Nothing too new since last time, I just reworked a couple methods to make them
+ * function better and more efficiently.
  *
  * @param <E> The type of elements stored in the list.
- *
  * @author Roman Schiffino <rjschi24@colby.edu>
- * @version     1.1
- * @since       1.1
+ * @version 1.2
+ * @since 1.1
  */
-public class LinkedList<E> 
+public class LinkedList<E>
         extends AbstractList<E>
         implements List<E>, Iterable<E>, Cloneable {
 
     private int size;
     private Node<E> head;
     private Node<E> tail;
+
     public LinkedList() {
         size = 0;
         head = null;
@@ -61,7 +64,7 @@ public class LinkedList<E>
         clone.head = null;
         clone.tail = null;
         clone.size = 0;
-        for (Node<E> node = head; node!= null; node = node.getNext()) {
+        for (Node<E> node = head; node != null; node = node.getNext()) {
             clone.add(node.getData());
         }
         return clone;
@@ -72,19 +75,53 @@ public class LinkedList<E>
      *
      * @return The size of the `LinkedList`.
      */
-    public int size(){
+    public int size() {
         return size;
     }
+
+    @Override
+    public int indexOf(Object item) {
+        int index = 0;
+        if (item == null) {
+            for (Node<E> node = head; node != null; node = node.next) {
+                if (node.data == null)
+                    return index;
+                index++;
+            }
+        } else {
+            for (Node<E> node = head; node != null; node = node.next) {
+                if (item.equals(node.data))
+                    return index;
+                index++;
+            }
+        }
+        return -1;
+    }
+
+
+    public int indexOfStrict(E item) {
+        LLIterator it = (LLIterator) listIterator();
+        if (item == null) {
+            while (it.hasNext())
+                if (it.next() == null)
+                    return it.previousIndex();
+        } else {
+            while (it.hasNext())
+                if (item == it.next())
+                    return it.previousIndex();
+        }
+        return -1;
+    }
+
 
     /**
      * Returns the index of the first occurrence of the specified object in the `LinkedList`,
      * or -1 if the object is not found.
      *
-     * @param obj The object to search for.
      * @return The index of the first occurrence of the object, or -1 if not found.
      */
-    public int indexFetch(Object obj){
-        return indexOf(obj);
+    public int indexFetch(E item) {
+        return indexOfStrict(item);
     }
 
     /**
@@ -96,7 +133,7 @@ public class LinkedList<E>
      */
     public int indexFetch(Node<E> node) {
         int curIndex = 0;
-        for(Node<E> node_i = head; node_i != node; node_i = node_i.getNext()) {
+        for (Node<E> node_i = head; node_i != node; node_i = node_i.getNext()) {
             curIndex++;
         }
         return curIndex;
@@ -110,10 +147,10 @@ public class LinkedList<E>
      * @return The node at the specified index.
      * @throws IndexOutOfBoundsException If the index is out of the valid range.
      */
-    public Node<E> nodeFetch(int index){
+    public Node<E> nodeFetch(int index) {
         Node<E> fetchNode = this.head;
 
-        for(int i = 0; i < index; i++){
+        for (int i = 0; i < index; i++) {
             fetchNode = fetchNode.getNext();
         }
 
@@ -127,7 +164,7 @@ public class LinkedList<E>
      * @param item The item to add to the list.
      * @return Always returns true to indicate success.
      */
-    public boolean add(E item){
+    public boolean add(E item) {
         addFirst(item);
         return true;
     }
@@ -138,10 +175,11 @@ public class LinkedList<E>
      *
      * @param item The item to add to the list.
      */
-    public void addFirst(E item){
+    @Override
+    public void addFirst(E item) {
         Node<E> newNode = new Node<>(item, head, null);
         newNode.setParent(this);
-        if (size == 0){
+        if (size == 0) {
             tail = newNode;
         } else {
             head.setPrev(newNode);
@@ -156,10 +194,10 @@ public class LinkedList<E>
      *
      * @param item The item to add to the list.
      */
-    public void addLast(E item){
+    public void addLast(E item) {
         Node<E> newNode = new Node<>(item, null, tail);
         newNode.setParent(this);
-        if (size == 0){
+        if (size == 0) {
             head = newNode;
         } else {
             tail.setNext(newNode);
@@ -175,11 +213,12 @@ public class LinkedList<E>
      * @param index The index at which to insert the item.
      * @param item  The item to insert into the list.
      */
-    public void add(int index, E item){
+    public void add(int index, E item) {
         if (index == 0) {
             addFirst(item);
             return;
-        } if (index == size) {
+        }
+        if (index == size) {
             addLast(item);
             return;
         }
@@ -261,8 +300,6 @@ public class LinkedList<E>
      * <p>
      * This method removes and returns from the front of the list.
      * Equivalent to calling `pollFirst()`, or `poll`.
-     *
-     * @return
      */
     public E pop() {
         return pollFirst();
@@ -273,12 +310,10 @@ public class LinkedList<E>
      * <p>
      * This method adds the specified item to the front of the list.
      * Equivalent to calling `addFirst(item)`, or `add(item.toString())`.
-     *
-     * @param input
-     * @return
      */
     public boolean push(E input) {
-        return add(input);
+        addFirst(input);
+        return true;
     }
 
     /**
@@ -288,7 +323,7 @@ public class LinkedList<E>
      * @return The element at the specified index.
      * @throws IndexOutOfBoundsException If the index is out of the valid range.
      */
-    public E get(int index){
+    public E get(int index) {
         return nodeFetch(index).getData();
     }
 
@@ -299,7 +334,7 @@ public class LinkedList<E>
      * @return The element that was removed.
      * @throws IndexOutOfBoundsException If the index is out of the valid range.
      */
-    public E remove(int index){
+    public E remove(int index) {
         Node<E> node = nodeFetch(index);
         E dataLoad = node.getData();
         remove(node);
@@ -316,7 +351,7 @@ public class LinkedList<E>
      */
     @Override
     public ListIterator<E> listIterator(int index) {
-        return new LLIterator<>(index, this.head);
+        return new LLIterator(index);
     }
 
     /**
@@ -324,7 +359,7 @@ public class LinkedList<E>
      *
      * @return The first element that was removed.
      */
-    public E remove(){
+    public E remove() {
         E dataLoad = head.getData();
 
         head = head.getNext();
@@ -344,21 +379,19 @@ public class LinkedList<E>
      * @param node The node containing the element to be removed.
      * @return The element that was removed.
      */
-    public E remove(Node<E> node){
+    public E remove(Node<E> node) {
         E dataLoad = node.getData();
         Node<E> prev = node.getPrev();
         Node<E> next = node.getNext();
 
-        if (prev!= null) {
+        if (prev != null) {
             prev.setNext(next);
-        }
-        else {
+        } else {
             this.head = next;
         }
-        if (next!= null) {
+        if (next != null) {
             next.setPrev(prev);
-        }
-        else {
+        } else {
             this.tail = prev;
         }
         size--;
@@ -370,7 +403,7 @@ public class LinkedList<E>
      *
      * @return The last element that was removed.
      */
-    public E removeLast(){
+    public E removeLast() {
         E dataLoad = tail.getData();
 
         tail = tail.getPrev();
@@ -444,11 +477,11 @@ public class LinkedList<E>
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
-        if (obj == null || getClass()!= obj.getClass()) return false;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
         LinkedList<E> list = (LinkedList<E>) obj;
 
-        if (size!= list.size()) return false;
+        if (size != list.size()) return false;
         Node<E> curNode = list.head;
         for (Node<E> node = head; node != null; node = node.getNext()) {
             if (!node.getData().equals(curNode.getData())) return false;
@@ -483,11 +516,11 @@ public class LinkedList<E>
         /**
          * Creates a new node with the specified data, next, and previous nodes.
          *
-         * @param item      The data to be stored in the node.
-         * @param nextNode  The node that follows this node.
-         * @param prevNode  The node that precedes this node.
+         * @param item     The data to be stored in the node.
+         * @param nextNode The node that follows this node.
+         * @param prevNode The node that precedes this node.
          */
-        public Node(F item, Node<F> nextNode, Node<F> prevNode){
+        public Node(F item, Node<F> nextNode, Node<F> prevNode) {
             data = item;
             next = nextNode;
             prev = prevNode;
@@ -570,25 +603,25 @@ public class LinkedList<E>
     /**
      * An iterator for the `LinkedList` that allows you to traverse the list in both forward and backward directions.
      * This iterator is returned by the `listIterator` method.
-     *
-     * @param <E> The type of elements stored in the `LinkedList`.
      */
-    public static class LLIterator<E>
+    public class LLIterator
             implements ListIterator<E> {
 
-        private Node<E> current;  //Node class is assumed to be previously defined.
+        private final LinkedList.Node<E> initial;
+        private LinkedList.Node<E> current;  //Node class is assumed to be previously defined.
         private int index;
 
         /**
          * Creates a new `LLIterator` with the specified starting index and the head node of the `LinkedList`.
          *
          * @param index The starting index for the iterator.
-         * @param head The head node of the `LinkedList`.
          */
-        public LLIterator(int index, Node<E> head) {
-            this.current = head;
+        public LLIterator(int index) {
+            this.current = nodeFetch(index);
+            this.initial = this.current;
             this.index = index;
         }
+
         /**
          * Returns {@code true} if {@link #next} returns an element not null.
          *
@@ -609,10 +642,13 @@ public class LinkedList<E>
          */
         @Override
         public E next() {
-            Node<E> next = this.current.getNext();
-            this.index = hasNext() ? (this.index + 1) : this.index;
-            E dataLoad = hasNext() ? next.getData() : null;
-            this.current = hasNext() ? next : this.current;
+            boolean nextExists = hasNext();
+            if (!nextExists) return null;
+            LinkedList.Node<E> next = this.current.getNext();
+
+            this.index = (this.index == this.current.getParent().size() - 1) ? this.index : this.index + 1;
+            E dataLoad = next.getData();
+            this.current = next;
             return dataLoad;
         }
 
@@ -636,10 +672,14 @@ public class LinkedList<E>
          */
         @Override
         public E previous() {
-            Node<E> prev = this.current.getPrev();
-            this.index = hasPrevious() ? (this.index - 1) : this.index;
-            E dataLoad = hasPrevious() ? prev.getData() : null;
-            this.current = hasPrevious() ? prev : this.current;
+            boolean prevExists = hasPrevious();
+            if (!prevExists) return null;
+
+            LinkedList.Node<E> prev = this.current.getPrev();
+
+            this.index = (this.index == 0) ? 0 : this.index - 1;
+            E dataLoad = prev.getData();
+            this.current = prev;
             return dataLoad;
         }
 
@@ -650,7 +690,7 @@ public class LinkedList<E>
          */
         @Override
         public int nextIndex() {
-            return hasNext() ? (index + 1) : index;
+            return hasNext() ? this.index + 1 : index;
         }
 
         /**
@@ -660,7 +700,7 @@ public class LinkedList<E>
          */
         @Override
         public int previousIndex() {
-            return hasPrevious() ? -1 : (index - 1);
+            return hasPrevious() ? this.index - 1 : index;
         }
 
         /**
@@ -670,12 +710,11 @@ public class LinkedList<E>
          * {@code next} or {@code previous} usage.
          * <p>
          * Use replace if combined usage necessary.
-         *
          */
         @Override
         public void remove() {
-            Node<E> next = this.current.getNext();
-            Node<E> prev = this.current.getPrev();
+            LinkedList.Node<E> next = this.current.getNext();
+            LinkedList.Node<E> prev = this.current.getPrev();
             if (next != null) {
                 next.setPrev(prev);
             }
@@ -707,14 +746,23 @@ public class LinkedList<E>
          */
         @Override
         public void add(E e) {
-            Node<E> newNode = new Node<>(e);
+            LinkedList.Node<E> newNode = new LinkedList.Node<>(e);
             if (this.current.getPrev() != null) {
                 this.current.getPrev().setNext(newNode);
             }
             this.current.setPrev(newNode);
             newNode.setNext(this.current);
             this.current.getParent().size++;
+        }
 
+
+        public LinkedList.Node<E> getCurrent() {
+            return current;
+        }
+
+
+        public LinkedList.Node<E> getInitial() {
+            return initial;
         }
     }
 }

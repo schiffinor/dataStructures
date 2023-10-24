@@ -1,9 +1,5 @@
 /*
-One thing I should make clear is that I wrote the project before I wrote this class.
-Thus, I recreated a bunch of features from the java.util implementation of the `LinkedList` class.
-This is to ensure maximum compatibility with my code.
-
-On a side note, I learned how to use ternary operators to make this work so that's cool.
+Not really gonna comment this as its not part of the final product, pretty cool though.
  */
 
 import java.util.*;
@@ -25,21 +21,12 @@ public class CircularLinkedList<E>
         extends AbstractList<E>
         implements List<E>, Iterable<E>, Cloneable {
 
-    private int size;
     protected Node<E> head;
     Node<E> tail;
+    private int size;
     private String name;
     private Integer identifier;
     private Node<?> container;
-
-    public Object getParent() {
-        return parent;
-    }
-
-    public void setParent(Object parent) {
-        this.parent = parent;
-    }
-
     private Object parent;
 
     public CircularLinkedList() {
@@ -78,10 +65,25 @@ public class CircularLinkedList<E>
         System.out.println(test2.size());
 
         Integer dataLoad = test.peekFirst();
-        for (Node<Integer> node = test.head; node != null; node = node.getNext()) {
+        /*for (Node<Integer> node = test.head; node != null; node = node.getNext()) {
             System.out.println(node.getData());
             Thread.sleep(300);
-        }
+        }*/
+        System.out.println(dataLoad);
+        System.out.println("test"+test);
+        System.out.println("test_5"+test.indexOf(5));
+        System.out.println("test_6"+test.indexOf(6));
+        System.out.println("test2"+test2);
+        System.out.println("test2_5"+test2.indexOf(5));
+        System.out.println("test2_6"+test2.indexOf(6));
+    }
+
+    public Object getParent() {
+        return parent;
+    }
+
+    public void setParent(Object parent) {
+        this.parent = parent;
     }
 
     public Integer getIdentifier() {
@@ -146,18 +148,18 @@ public class CircularLinkedList<E>
     @Override
     public int indexOf(Object item) {
         LLIterator it = (LLIterator) listIterator();
-        if (item==null) {
+        if (item == null) {
             if (it.getCurrent().getData() == null)
                 return 0;
             while (it.hasNext() && it.getCurrent().getNext() != it.getInitial())
-                if (it.next()==null)
-                    return it.previousIndex();
+                if (it.next() == null)
+                    return it.index;
         } else {
             if (item == it.getCurrent().getData())
                 return 0;
             while (it.hasNext() && it.getCurrent().getNext() != it.getInitial())
                 if (item.equals(it.next()))
-                    return it.previousIndex();
+                return it.index;
         }
         return -1;
     }
@@ -165,18 +167,18 @@ public class CircularLinkedList<E>
 
     public int indexOfStrict(E item) {
         LLIterator it = (LLIterator) listIterator();
-        if (item==null) {
+        if (item == null) {
             if (it.getCurrent().getData() == null)
                 return 0;
             while (it.hasNext() && it.getCurrent().getNext() != it.getInitial())
-                if (it.next()==null)
-                    return it.previousIndex();
+                if (it.next() == null)
+                    return it.index;
         } else {
             if (item == it.getCurrent().getData())
                 return 0;
             while (it.hasNext() && it.getCurrent().getNext() != it.getInitial())
-                if (item==it.next())
-                    return it.previousIndex();
+                if (item == it.next())
+                    return it.index;
         }
         return -1;
     }
@@ -373,8 +375,6 @@ public class CircularLinkedList<E>
      * <p>
      * This method removes and returns from the front of the list.
      * Equivalent to calling `pollFirst()`, or `poll`.
-     *
-     * @return
      */
     public E pop() {
         return pollFirst();
@@ -394,9 +394,6 @@ public class CircularLinkedList<E>
      * <p>
      * This method adds the specified item to the front of the list.
      * Equivalent to calling `addFirst(item)`, or `add(item.toString())`.
-     *
-     * @param input
-     * @return
      */
     public boolean push(E input) {
         return add(input);
@@ -439,12 +436,6 @@ public class CircularLinkedList<E>
     public ListIterator<E> listIterator(int index) {
         return new LLIterator(index);
     }
-
-    /**
-     * Retrieves and removes the first element in the `LinkedList`.
-     *
-     * @return The first element in the list or null if the list is empty.
-     */
 
     /**
      * Removes and returns the element stored in the specified node in the `LinkedList`.
@@ -506,10 +497,6 @@ public class CircularLinkedList<E>
                     return true;
                 }
             }
-            if (tail.getData() == null) {
-                remove(tail);
-                return true;
-            }
         } else {
             for (CircularLinkedList.Node<E> node = head; node != tail; node = node.getNext()) {
                 if (obj.equals(node.getData())) {
@@ -517,10 +504,10 @@ public class CircularLinkedList<E>
                     return true;
                 }
             }
-            if (tail.getData() == null) {
-                remove(tail);
-                return true;
-            }
+        }
+        if (tail.getData() == null) {
+            remove(tail);
+            return true;
         }
         return false;
     }
@@ -539,10 +526,6 @@ public class CircularLinkedList<E>
                     return true;
                 }
             }
-            if (head.getData() == null) {
-                remove(head);
-                return true;
-            }
         } else {
             for (CircularLinkedList.Node<E> node = tail; node != head; node = node.getPrev()) {
                 if (obj.equals(node.getData())) {
@@ -550,10 +533,10 @@ public class CircularLinkedList<E>
                     return true;
                 }
             }
-            if (head.getData() == null) {
-                remove(head);
-                return true;
-            }
+        }
+        if (head.getData() == null) {
+            remove(head);
+            return true;
         }
         return false;
     }
@@ -586,7 +569,7 @@ public class CircularLinkedList<E>
     }
 
     public void setContainer(Node<?> container) {
-        this.container =  container;
+        this.container = container;
     }
 
     public void setSize(int rowNum) {
@@ -606,16 +589,6 @@ public class CircularLinkedList<E>
         CircularLinkedList.Node<F> prev;
         private CircularLinkedList<F> parent;
 
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            Node<?> node = (Node<?>) o;
-            return Objects.equals(data, node.data);
-        }
-
-
-
         /**
          * Creates a new node with the specified data and no next or previous nodes.
          *
@@ -624,6 +597,7 @@ public class CircularLinkedList<E>
         public Node(F data) {
             this(data, null, null);
         }
+
 
         /**
          * Creates a new node with the specified data, next, and previous nodes.
@@ -635,10 +609,18 @@ public class CircularLinkedList<E>
         public Node(F item, Node<F> nextNode, Node<F> prevNode) {
             data = item;
             if (data instanceof CircularLinkedList<?> && ((CircularLinkedList<?>) data).getContainer() == null) {
-                ((CircularLinkedList<?>) data).setContainer((Node<F>) this);
+                ((CircularLinkedList<?>) data).setContainer(this);
             }
             next = nextNode;
             prev = prevNode;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Node<?> node = (Node<?>) o;
+            return Objects.equals(data, node.data);
         }
 
         /**
@@ -718,14 +700,13 @@ public class CircularLinkedList<E>
     /**
      * An iterator for the `LinkedList` that allows you to traverse the list in both forward and backward directions.
      * This iterator is returned by the `listIterator` method.
-     *
      */
     public class LLIterator
             implements ListIterator<E> {
 
+        private final Node<E> initial;
         private Node<E> current;  //Node class is assumed to be previously defined.
-        private Node<E> initial;
-        private int index;
+        protected int index;
 
         /**
          * Creates a new `LLIterator` with the specified starting index and the head node of the `LinkedList`.
