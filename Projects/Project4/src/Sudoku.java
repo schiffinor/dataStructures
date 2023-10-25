@@ -49,7 +49,7 @@ public class Sudoku {
      * @throws InterruptedException If an error occurs during thread sleep.
      */
     public static void main(String[] args) throws InterruptedException {
-        final Sudoku sudoku = new Sudoku(5);
+        final Sudoku sudoku = new Sudoku(20);
         System.out.println("Wait 3 Seconds");
         Thread.sleep(3000);
         sudoku.board.setSleepTime(0);
@@ -144,6 +144,7 @@ public class Sudoku {
      * @throws InterruptedException If an error occurs during thread sleep.
      */
     public boolean solve(int delay) throws InterruptedException {
+        count=0;
         System.out.println("Solving");
         generateConstraintCheck();
         LinkedList<Cell> stack = new LinkedList<>();
@@ -163,6 +164,8 @@ public class Sudoku {
                 operator.setValue(findNextValue(operator));
                 generateConstraintCheck();
                 if (operator.getValue() != 0) next = operator;
+                count++;
+                System.out.println(count);
             }
             if (next == null) {
                 board.finished = true;
@@ -175,6 +178,7 @@ public class Sudoku {
         } while (stack.size() < (81 - this.board.getInitialLock()));
         landscapeFrame.repaint();
         board.finished = true;
+        System.out.println("iterCount: "+count);
         return true;
     }
 
