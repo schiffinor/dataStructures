@@ -49,7 +49,7 @@ public class Sudoku {
      * @throws InterruptedException If an error occurs during thread sleep.
      */
     public static void main(String[] args) throws InterruptedException {
-        final Sudoku sudoku = new Sudoku(20);
+        final Sudoku sudoku = new Sudoku(40);
         System.out.println("Wait 3 Seconds");
         Thread.sleep(3000);
         sudoku.board.setSleepTime(0);

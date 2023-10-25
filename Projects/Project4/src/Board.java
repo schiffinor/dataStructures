@@ -264,7 +264,9 @@ public class Board {
             } catch (RuntimeException e) {
                 System.out.println("Error during board generation. \n If issue persists try less locked Cells.");
                 System.out.println(e);
+                resetRunCount--;
                 clearBoard();
+
             }
         } while (continueGenerating);
     }
