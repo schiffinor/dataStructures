@@ -8,38 +8,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a951b0dc-03ac-46fd-ac71-ff79c54c0530" name="Changes" comment="almost done with dancing links type algorithm">
-      <change afterPath="$PROJECT_DIR$/../Project5/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Project5/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Project5/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Project5/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Project5/Project5.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Project5/src/CircularLinkedList.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Project5/src/Job.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Project5/src/LinkedList.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Project5/src/LinkedListTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Project5/src/Queue.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Project5/src/ToroidalDoublyLinkedList.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Changes.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Changes/AdjustableSimulation.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Changes/Agent.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Changes/AgentSimulation.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Changes/AntiSocialAgent.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Changes/Landscape.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Changes/LandscapeFrame.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Changes/LinkedList$LLIterator.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Changes/LinkedList$Node.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Changes/LinkedList.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Changes/PopUpClass$SpinBox.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Changes/PopUpClass.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Changes/SocialAgent.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Changes/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Changes1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Changes1/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Changes2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Changes2/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_20_2023_10_00_AM_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_20_2023_10_00_AM__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Project5/src/Job.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Project5/src/Job.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Project5/src/LinkedList.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Project5/src/LinkedList.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -156,7 +127,7 @@
       <workItem from="1697410323687" duration="14172000" />
       <workItem from="1697424526105" duration="50777000" />
       <workItem from="1697529039824" duration="48977000" />
-      <workItem from="1699020959164" duration="860000" />
+      <workItem from="1699020959164" duration="3175000" />
     </task>
     <task id="LOCAL-00001" summary="Started and implemented most aspects of Project4">
       <option name="closed" value="true" />
