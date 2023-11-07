@@ -7,10 +7,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a951b0dc-03ac-46fd-ac71-ff79c54c0530" name="Changes" comment="almost done with dancing links type algorithm">
+    <list default="true" id="a951b0dc-03ac-46fd-ac71-ff79c54c0530" name="Changes" comment="-Project done, minor bug fixing necessary to make DLX work.">
+      <change afterPath="$PROJECT_DIR$/../Project5/src/JobDispatcher.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Project5/src/Server.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Project5/src/TimeCheck.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Project1/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Project1/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Sudoku.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Sudoku.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Project5/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Project5/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Project5/src/Job.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Project5/src/Job.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Project5/src/LinkedList.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Project5/src/LinkedList.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,7 +52,7 @@
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/schif/Documents/Coding/dataStructures/Projects/Project4/src&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/schif/Documents/Coding/dataStructures/Projects/Project5&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -128,6 +133,9 @@
       <workItem from="1697424526105" duration="50777000" />
       <workItem from="1697529039824" duration="48977000" />
       <workItem from="1699020959164" duration="3175000" />
+      <workItem from="1699047557329" duration="2522000" />
+      <workItem from="1699218450767" duration="222000" />
+      <workItem from="1699218892294" duration="12000" />
     </task>
     <task id="LOCAL-00001" summary="Started and implemented most aspects of Project4">
       <option name="closed" value="true" />
@@ -191,6 +199,8 @@
         <PinnedItemInfo parentTag="CircularLinkedList" memberName="identifier" />
         <PinnedItemInfo parentTag="CircularLinkedList" memberName="head" />
         <PinnedItemInfo parentTag="java.lang.Integer" memberName="value" />
+        <PinnedItemInfo parentTag="Cell" memberName="row" />
+        <PinnedItemInfo parentTag="java.util.HashSet" memberName="map" />
       </pinned-members>
     </pin-to-top-manager>
   </component>

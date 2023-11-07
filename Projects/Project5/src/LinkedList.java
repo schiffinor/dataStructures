@@ -24,7 +24,7 @@ import java.util.ListIterator;
  *
  * @param <E> The type of elements stored in the list.
  * @author Roman Schiffino <rjschi24@colby.edu>
- * @version 1.2
+ * @version 1.3
  * @since 1.1
  */
 public class LinkedList<E>
@@ -188,12 +188,13 @@ public class LinkedList<E>
      */
     @Override
     public void addFirst(E item) {
-        Node<E> newNode = new Node<>(item, head, null);
+        Node<E> newNode = new Node<>(item);
         newNode.setParent(this);
         if (size == 0) {
             tail = newNode;
         } else {
             head.setPrev(newNode);
+            newNode.setNext(head);
         }
         size++;
         head = newNode;
@@ -206,12 +207,13 @@ public class LinkedList<E>
      * @param item The item to add to the list.
      */
     public void addLast(E item) {
-        Node<E> newNode = new Node<>(item, null, tail);
+        Node<E> newNode = new Node<>(item);
         newNode.setParent(this);
         if (size == 0) {
             head = newNode;
         } else {
             tail.setNext(newNode);
+            newNode.setPrev(tail);
         }
         size++;
         tail = newNode;
@@ -371,17 +373,7 @@ public class LinkedList<E>
      * @return The first element that was removed.
      */
     public E remove() {
-        E dataLoad = head.getData();
-
-        head = head.getNext();
-        if (size > 1) {
-            head.setPrev(null);
-        } else {
-            head = null;
-        }
-
-        size--;
-        return dataLoad;
+        return remove(head);
     }
 
     /**
@@ -392,18 +384,19 @@ public class LinkedList<E>
      */
     public E remove(Node<E> node) {
         E dataLoad = node.getData();
-        Node<E> prev = node.getPrev();
-        Node<E> next = node.getNext();
+        if (this.size > 1) {
+            Node<E> prev = node.getPrev();
+            Node<E> next = node.getNext();
 
-        if (prev != null) {
-            prev.setNext(next);
+            if (node == head) {
+                this.head = next;
+            } else prev.next = next;
+            if (node == tail) {
+                this.tail = prev;
+            } else next.prev = prev;
         } else {
-            this.head = next;
-        }
-        if (next != null) {
-            next.setPrev(prev);
-        } else {
-            this.tail = prev;
+            this.head = null;
+            this.tail = null;
         }
         size--;
         return dataLoad;

@@ -49,12 +49,17 @@ public class Sudoku {
      * @throws InterruptedException If an error occurs during thread sleep.
      */
     public static void main(String[] args) throws InterruptedException {
-        final Sudoku sudoku = new Sudoku(40);
+        final Sudoku sudoku = new Sudoku(5);
         System.out.println("Wait 3 Seconds");
         Thread.sleep(3000);
-        sudoku.board.setSleepTime(0);
+        sudoku.board.setSleepTime(1);
         sudoku.solve(sudoku.board.getSleepTime());
         if (sudoku.board.validSolution()) System.out.println("Victory");
+        sudoku.landscapeFrame.repaint();
+        while (sudoku.board.finished && sudoku.count<20000000) {
+            sudoku.board.reset();
+            sudoku.solve(0);
+        };
     }
 
     /**
@@ -152,11 +157,10 @@ public class Sudoku {
             if (delay > 0) {
                 System.out.println(board);
                 TimeUnit.MILLISECONDS.sleep(delay);
+                if (landscapeFrame != null) {
+                    landscapeFrame.repaint();
+                }
             }
-            if (landscapeFrame != null) {
-                landscapeFrame.repaint();
-            }
-
             Cell next = findNextCell();
             while (next == null && !stack.isEmpty()) {
                 Cell operator = stack.pop();
@@ -176,6 +180,7 @@ public class Sudoku {
                 generateConstraintCheck();
             }
         } while (stack.size() < (81 - this.board.getInitialLock()));
+        assert landscapeFrame != null;
         landscapeFrame.repaint();
         board.finished = true;
         System.out.println("iterCount: "+count);
