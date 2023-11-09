@@ -26,7 +26,7 @@ public abstract class JobDispatcher {
     protected int jobsHandled;
     protected Job lastJob;
     protected double lastJobTime;
-    protected Thread visualThread;
+    protected final Thread visualThread;
     protected boolean visualThreadEnabled;
     protected LinkedList<Job> jobList;
 
