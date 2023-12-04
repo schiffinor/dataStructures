@@ -5,11 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4ed48254-50dc-431b-803f-7204de112a29" name="Changes" comment="Built the whole program for lab 1.">
-      <change afterPath="$PROJECT_DIR$/../Project1/.idea/shelf/Uncommitted_changes_before_Update_at_9_18_2023_4_25_PM_[Changes]/shelved.patch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Project1/.idea/shelf/Uncommitted_changes_before_Update_at_9_18_2023_4_25_PM__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Project1/.idea/shelf/Uncommitted_changes_before_Update_at_9_18_2023_10_04_AM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Project1/.idea/shelf/Uncommitted_changes_before_Update_at_9_18_2023_10_04_AM__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Project1/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Project1/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Project6/src/BSTMap.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Project6/src/HashMap.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,6 +74,7 @@
       <workItem from="1694678211288" duration="594000" />
       <workItem from="1694804204984" duration="1258000" />
       <workItem from="1695102788455" duration="16000" />
+      <workItem from="1701640356311" duration="20000" />
     </task>
     <task id="LOCAL-00001" summary="Built the whole program for lab 1.">
       <option name="closed" value="true" />

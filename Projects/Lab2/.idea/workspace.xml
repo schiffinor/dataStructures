@@ -5,7 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e2d80e6e-1791-41bb-b47c-ce1097476c4f" name="Changes" comment="created grid Class">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Project6/src/BSTMap.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Project6/src/HashMap.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Lab1/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Lab1/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,6 +60,7 @@
       <workItem from="1695709402420" duration="1834000" />
       <workItem from="1695812423397" duration="608000" />
       <workItem from="1696100079216" duration="61000" />
+      <workItem from="1701640377767" duration="57000" />
     </task>
     <task id="LOCAL-00001" summary="created grid Class">
       <option name="closed" value="true" />
