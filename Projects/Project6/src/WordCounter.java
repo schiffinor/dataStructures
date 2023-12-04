@@ -8,17 +8,12 @@ How to run:     java WordCounter
 
 import java.util.ArrayList;
 import java.io.* ;
-import java.io.FileReader ;
-import java.io.FileWriter ;
-import java.io.BufferedReader ;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.Arrays;
 
 
 public class WordCounter {
 
-	private CustomMap<String, Integer> wordCounts ;
+	private final CustomMap<String, Integer> wordCounts ;
 	private int wordCount ;
 
 	//constructor, where data_structure is either "bst" or "hashmap"
@@ -48,9 +43,7 @@ public class WordCounter {
 		  while(line != null){
 		      // assign to line the result of calling the readLine method of your BufferedReader object.
 		  		String [] lineWords = line.split("[ ]+") ;
-		  		for ( String word : lineWords ) {
-		  			words.add( word );
-		  		}
+			  words.addAll(Arrays.asList(lineWords));
 		  		line = br.readLine();
 		  }
 		  // call the close method of the BufferedReader
@@ -118,17 +111,17 @@ public class WordCounter {
 		this.wordCount = 0 ;
 	}
 
-	//write a word count file given the current set of words in the data structure.
+	//write a word count file g iven the current set of words in the data structure.
 	public boolean writeWordCount( String filename ) {
 
 		try {
 		 	// assign to a variable of type FileReader a new FileReader object, passing filename to the constructor
 		 	FileWriter fw = new FileWriter(filename);
-			fw.write( Integer.toString( this.totalWordCount() ) + "\n" ) ;
+			fw.write(this.totalWordCount() + "\n" ) ;
 			ArrayList<String> keys = new ArrayList<>(this.wordCounts.keySet());
 			ArrayList<Integer> values = this.wordCounts.values() ;
 			for ( int i = 0 ; i < keys.size() ; i ++  ) {
-				fw.write( keys.get( i ) + " - " + Integer.toString( values.get( i ) ) + "\n" );
+				fw.write( keys.get( i ) + " - " + values.get(i) + "\n" );
 			}
 			fw.close() ;
 			return true ;
@@ -147,7 +140,7 @@ public class WordCounter {
 		String filename = "Reddit_Comments_Files-20220403/reddit_comments_2008.txt" ;
 
 		//Use the BST
-		WordCounter wc = new WordCounter( "BST" ) ;
+		WordCounter wc = new WordCounter( "HashMap" ) ;
 
 		//Get the words out of the file
 		ArrayList <String> words = wc.readWords( filename ) ;

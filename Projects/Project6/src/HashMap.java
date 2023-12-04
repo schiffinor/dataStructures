@@ -1,20 +1,83 @@
 import java.util.*;
 
-public class HashMap<K, V> implements CustomMap<K,V>, Iterable<HashMap.Node<K, V>> {
+/**
+ * Represents a custom implementation of a HashMap.
+ * <p>
+ * This HashMap allows for the storage and retrieval of key-value pairs. It uses a custom
+ * structure combining doubly-linked chaining and a TreeSet structure for more efficient
+ * data storage and retrieval operations.
+ * <p>
+ * The implementation provides various functionalities such as adding, removing, and retrieving
+ * entries, as well as iterators for traversing the keys, values, and entries in ascending or
+ * descending order. It also includes methods to calculate the size, check for emptiness, and
+ * perform operations on the underlying data structure. The implementation also has a lot of
+ * extra functionality and features to bring it more in line with Java's implementations.
+ * <p>
+ * The implementation is not thread-safe, and care should be taken when used in a concurrent
+ * environment. It supports generics for flexible key and value types.
+ *
+ * @param <K> the type of keys maintained by this map
+ * @param <V> the type of mapped values
+ * @author Roman Schiffino <rjschi24@colby.edu>
+ * @version 1.0
+ * @since 1.0
+ */
+public class HashMap<K, V> implements CustomMap<K, V>, Iterable<HashMap.Node<K, V>> {
 
+    private final int initialCapacity;
     private int size;
     private BaseArray<K, V> nodes;
     private double maxLoadFactor;
-    private final int initialCapacity;
     private KeySet<K> keySet;
 
 
+    /**
+     * Constructs an empty HashMap with an initial capacity of 16 and a default load factor of 0.75.
+     * <p>
+     * This constructor initializes a new HashMap with a default capacity of 16 and a load factor of 0.75.
+     * The load factor determines when the underlying array is resized to maintain efficiency.
+     * </p>
+     *
+     * @since 1.0
+     */
     public HashMap() {
         this(16);
     }
 
+    /**
+     * Constructs an empty HashMap with the specified initial capacity and a default load factor of 0.75.
+     * <p>
+     * This constructor allows the user to specify the initial capacity of the HashMap while using the default
+     * load factor of 0.75. The initial capacity should be a positive power of 2; otherwise, an
+     * IllegalArgumentException is thrown.
+     * </p>
+     *
+     * @param capacity the initial capacity of the HashMap, must be a power of 2
+     * @throws IllegalArgumentException if the specified capacity is not a power of 2
+     * @since 1.0
+     */
     public HashMap(int capacity) {
         this(capacity, .75);
+    }
+
+    /**
+     * Constructs an empty HashMap with the specified initial capacity and load factor.
+     * <p>
+     * This constructor allows the user to specify both the initial capacity and the load factor of the HashMap.
+     * The initial capacity should be a positive power of 2; otherwise, an IllegalArgumentException is thrown.
+     * </p>
+     *
+     * @param capacity   the initial capacity of the HashMap, must be a power of 2
+     * @param loadFactor the load factor, determining when the underlying array is resized
+     * @throws IllegalArgumentException if the specified capacity is not a power of 2
+     * @since 1.0
+     */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public HashMap(int capacity, double loadFactor) {
+        if (capacity % 2 != 0) throw new IllegalArgumentException("Capacity must be power of 2, BANNED!");
+        this.initialCapacity = capacity;
+        this.maxLoadFactor = loadFactor;
+        this.nodes = (BaseArray<K, V>) new BaseArray();
     }
 
     public static void main(String[] args) {
@@ -74,34 +137,49 @@ public class HashMap<K, V> implements CustomMap<K,V>, Iterable<HashMap.Node<K, V
         System.out.println(words.maxDepth());
         System.out.println(words.containsKey("ter"));
     }
-    @SuppressWarnings({"unchecked", "rawtypes"})
-    public HashMap(int capacity, double loadFactor) {
-        if (capacity % 2 != 0) throw new IllegalArgumentException("Capacity must be power of 2, BANNED!");
-        this.initialCapacity = capacity;
-        this.maxLoadFactor = loadFactor;
-        this.nodes = (BaseArray<K, V>) new BaseArray();
-    }
 
-
+    /**
+     * Returns the number of key-value mappings in this HashMap.
+     *
+     * @return the number of key-value mappings in this HashMap
+     * @since 1.0
+     */
     public int size() {
         return size;
     }
 
+    /**
+     * Checks if this HashMap contains no key-value mappings.
+     *
+     * @return {@code true} if this HashMap is empty, {@code false} otherwise
+     * @since 1.0
+     */
     public boolean isEmpty() {
         return size() == 0;
     }
 
+    /**
+     * Returns a string representation of this HashMap.
+     *
+     * @return a string representation of this HashMap
+     * @since 1.0
+     */
     public String toString() {
         return entrySet().toString();
     }
 
+    /**
+     * Removes all key-value mappings from this HashMap.
+     *
+     * @since 1.0
+     */
     @SuppressWarnings({"unchecked", "rawtypes"})
     public void clear() {
         this.nodes = (BaseArray<K, V>) new BaseArray();
     }
 
     /**
-     * Fetches the node associated with the specified key in the BSTMap.
+     * Fetches the node associated with the specified key in the HashMap.
      *
      * @param key the key whose associated node is to be fetched
      * @return the node associated with the specified key, or null if the key is not present
@@ -122,9 +200,9 @@ public class HashMap<K, V> implements CustomMap<K,V>, Iterable<HashMap.Node<K, V
     }
 
     /**
-     * Returns a Set view of the keys contained in this BSTMap.
+     * Returns a Set view of the keys contained in this HashMap.
      *
-     * @return a Set view of the keys contained in this BSTMap
+     * @return a Set view of the keys contained in this HashMap
      * @since 1.0
      */
     public Set<K> keySet() {
@@ -133,9 +211,9 @@ public class HashMap<K, V> implements CustomMap<K,V>, Iterable<HashMap.Node<K, V
     }
 
     /**
-     * Returns a list of all values in the BSTMap.
+     * Returns a list of all values in the HashMap.
      *
-     * @return an ArrayList containing all values in the BSTMap
+     * @return an ArrayList containing all values in the HashMap
      * @since 1.0
      */
     public ArrayList<V> values() {
@@ -145,9 +223,9 @@ public class HashMap<K, V> implements CustomMap<K,V>, Iterable<HashMap.Node<K, V
     }
 
     /**
-     * Returns a list of all entries (nodes) in the BSTMap.
+     * Returns a list of all entries (nodes) in the HashMap.
      *
-     * @return an ArrayList containing all entries (nodes) in the BSTMap
+     * @return an ArrayList containing all entries (nodes) in the HashMap
      * @since 1.0
      */
     public ArrayList<Node<K, V>> entrySet() {
@@ -169,46 +247,110 @@ public class HashMap<K, V> implements CustomMap<K,V>, Iterable<HashMap.Node<K, V
         return refSet;
     }
 
+
+    /**
+     * Retrieves the value associated with the specified key in this HashMap.
+     * <p>
+     * Returns the value to which the specified key is mapped, or {@code null} if this
+     * HashMap contains no mapping for the key. The key comparison is performed using
+     * the {@code equals} method.
+     * </p>
+     *
+     * @param key the key whose associated value is to be retrieved
+     * @return the value to which the specified key is mapped, or {@code null} if no mapping exists
+     * @since 1.0
+     */
     @SuppressWarnings("unchecked")
     public V get(Object key) {
         Node<K, V> node = nodeFetch((K) key);
         return (node == null) ? null : node.getValue();
     }
 
+    /**
+     * Checks if this HashMap contains a mapping for the specified key.
+     * <p>
+     * Returns {@code true} if this HashMap contains a mapping for the specified key,
+     * otherwise {@code false}. The key comparison is performed using the {@code equals}
+     * method.
+     * </p>
+     *
+     * @param key the key whose presence in this map is to be tested
+     * @return {@code true} if this map contains a mapping for the specified key, {@code false} otherwise
+     * @since 1.0
+     */
     @SuppressWarnings("unchecked")
     public boolean containsKey(Object key) {
         return nodeFetch((K) key) != null;
     }
 
     /**
+     * Checks if this HashMap contains the specified value.
+     * <p>
+     * Returns {@code false} since the implementation does not currently support value
+     * comparison for presence in the map.
+     * </p>
+     *
      * @param value value whose presence in this map is to be tested
-     * @return
+     * @return always returns {@code false}
+     * @since 1.0
      */
     @Override
     public boolean containsValue(Object value) {
         return false;
     }
 
+    /**
+     * Removes the mapping for the specified key from this HashMap, if present.
+     * <p>
+     * Returns the value to which the specified key was mapped, or {@code null} if this
+     * HashMap contains no mapping for the key. The key comparison is performed using
+     * the {@code equals} method.
+     * </p>
+     * <p>
+     * If the size of the HashMap falls below a certain threshold, the capacity may be reduced
+     * to optimize space usage.
+     * </p>
+     *
+     * @param key the key whose mapping is to be removed from the map
+     * @return the value to which the specified key was mapped, or {@code null} if no mapping exists
+     * @since 1.0
+     */
     @SuppressWarnings("unchecked")
     public V remove(Object key) {
-        BaseArray<K,V> refNodes = getNodes();
-        V returnValue = refNodes.remove(nodeFetch((K) key));;
+        BaseArray<K, V> refNodes = getNodes();
+        V returnValue = refNodes.remove(nodeFetch((K) key));
         setSize(refNodes.getSize());
         if (size() >= getInitialCapacity()) {
-            if (size() < (getMaxLoadFactor()*capacity()/4)) {
+            if (size() < (getMaxLoadFactor() * capacity() / 4)) {
                 getNodes().halveCapacity();
             }
         }
         return returnValue;
     }
 
+    /**
+     * Associates the specified value with the specified key in this HashMap.
+     * <p>
+     * If the map previously contained a mapping for the key, the old value is replaced
+     * by the specified value. The key comparison is performed using the {@code equals} method.
+     * </p>
+     * <p>
+     * If the size of the HashMap exceeds a certain threshold, the capacity may be increased
+     * to optimize time complexity.
+     * </p>
+     *
+     * @param key   the key with which the specified value is to be associated
+     * @param value the value to be associated with the specified key
+     * @return the previous value associated with the key, or {@code null} if there was no mapping
+     * @since 1.0
+     */
     public V put(K key, V value) {
-        Node<K,V> newNode = new Node<>(key, value);
-        BaseArray<K,V> refNodes = getNodes();
+        Node<K, V> newNode = new Node<>(key, value);
+        BaseArray<K, V> refNodes = getNodes();
         V returnValue = refNodes.add(newNode);
         setSize(refNodes.getSize());
         if (size() >= getInitialCapacity()) {
-            if (size() > getMaxLoadFactor()*capacity()) {
+            if (size() > getMaxLoadFactor() * capacity()) {
                 getNodes().doubleCapacity();
             }
         }
@@ -224,13 +366,14 @@ public class HashMap<K, V> implements CustomMap<K,V>, Iterable<HashMap.Node<K, V
     }
 
     /**
-     * Calculates and returns the maximum depth of the BSTMap by performing a level order traversal.
+     * Calculates and returns the maximum depth of the HashMap by checking the max depth for each node
+     * in the base BaseArray node array.
      *
-     * @return the maximum depth of the BSTMap
+     * @return the maximum depth of the HashMap
      * @since 1.0
      */
     public int maxDepth() {
-        BaseArray<K,V> refNodes = getNodes();
+        BaseArray<K, V> refNodes = getNodes();
         TreeSet<Integer> refSet = refNodes.getFilledIndices();
         int maxDepth = 0;
         for (Integer currIndex : refSet) {
@@ -241,11 +384,10 @@ public class HashMap<K, V> implements CustomMap<K,V>, Iterable<HashMap.Node<K, V
     }
 
     /**
-     * Calculates and returns the maximum depth of the BSTMap, starting from the given node,
-     * by performing a level order traversal.
+     * Calculates and returns the depth of a specific node in the hashmap, starting from the given node.
      *
-     * @param node the starting node for calculating the maximum depth
-     * @return the maximum depth from the given node
+     * @param node the starting node for calculating the depth
+     * @return the depth from the given node
      * @since 1.0
      */
     public int nodeDepth(Node<K, V> node) {
@@ -261,54 +403,125 @@ public class HashMap<K, V> implements CustomMap<K,V>, Iterable<HashMap.Node<K, V
         return depth;
     }
 
+    /**
+     * Returns the current capacity of the underlying node array in this HashMap.
+     *
+     * @return the current capacity of the node array
+     * @since 1.0
+     */
     public int capacity() {
         return getNodes().getCapacity();
     }
 
 
+    /**
+     * Computes the hash code of the specified key using the underlying node array's hash function.
+     *
+     * @param key the key whose hash code is to be computed
+     * @return the hash code of the specified key
+     * @since 1.0
+     */
     private int hash(K key) {
         return getNodes().hash(key);
     }
 
+    /**
+     * Returns the first node in the HashMap, i.e., the node with the smallest index.
+     *
+     * @return the first node in the HashMap
+     * @since 1.0
+     */
     private Node<K, V> getFirst() {
         return getNodes().getFirst();
     }
 
+    /**
+     * Returns the last node in the HashMap, i.e., the node with the largest index.
+     *
+     * @return the last node in the HashMap
+     * @since 1.0
+     */
     private Node<K, V> getLast() {
         return getNodes().getLast();
     }
 
+    /**
+     * Returns the previous node of the specified node in the HashMap.
+     *
+     * @param tempNode the node whose previous node is to be retrieved
+     * @return the previous node of the specified node
+     * @since 1.0
+     */
     private Node<K, V> getPrev(Node<K, V> tempNode) {
         return getNodes().getPrev(tempNode);
     }
 
+    /**
+     * Returns the next node of the specified node in the HashMap.
+     *
+     * @param tempNode the node whose next node is to be retrieved
+     * @return the next node of the specified node
+     * @since 1.0
+     */
     private Node<K, V> getNext(Node<K, V> tempNode) {
         return getNodes().getNext(tempNode);
     }
 
+    /**
+     * Returns the underlying node array (BaseArray) of this HashMap.
+     *
+     * @return the underlying node array
+     * @since 1.0
+     */
     public BaseArray<K, V> getNodes() {
         return nodes;
     }
 
+    /**
+     * Sets the underlying node array of this HashMap to the specified node array.
+     *
+     * @param nodes the new node array to be set
+     * @since 1.0
+     */
     public void setNodes(BaseArray<K, V> nodes) {
         this.nodes = nodes;
     }
 
-
+    /**
+     * Sets the size of this HashMap to the specified size.
+     *
+     * @param size the new size of the HashMap
+     * @since 1.0
+     */
     public void setSize(int size) {
         this.size = size;
     }
 
+    /**
+     * Returns the maximum load factor allowed for this HashMap.
+     *
+     * @return the maximum load factor
+     * @since 1.0
+     */
     public double getMaxLoadFactor() {
         return maxLoadFactor;
     }
 
+    /**
+     * Sets the maximum load factor allowed for this HashMap to the specified value.
+     *
+     * @param maxLoadFactor the new maximum load factor
+     * @since 1.0
+     */
     public void setMaxLoadFactor(double maxLoadFactor) {
         this.maxLoadFactor = maxLoadFactor;
     }
 
     /**
-     * @return
+     * Returns an iterator over the entries (nodes) of this HashMap.
+     *
+     * @return an iterator over the entries of the HashMap
+     * @since 1.0
      */
     @Override
     public Iterator<Node<K, V>> iterator() {
@@ -335,12 +548,18 @@ public class HashMap<K, V> implements CustomMap<K,V>, Iterable<HashMap.Node<K, V
         return new DescendingKeyIterator(getLast());
     }
 
+    /**
+     * Returns the initial capacity of the HashMap.
+     *
+     * @return initial capacity of the HashMap
+     * @since 1.0
+     */
     public int getInitialCapacity() {
         return initialCapacity;
     }
 
     /**
-     * Represents a node in the binary search tree used by the BSTMap.
+     * Represents a node in the binary search tree used by the HashMap.
      *
      * @param <K> the type of keys maintained by this map
      * @param <V> the type of mapped values
@@ -450,7 +669,14 @@ public class HashMap<K, V> implements CustomMap<K,V>, Iterable<HashMap.Node<K, V
         }
     }
 
-
+    /**
+     * A resizable array-based storage structure to hold nodes in the HashMap.
+     * This class manages the capacity, indices, and operations on the nodes.
+     *
+     * @param <K> the type of keys maintained by this array
+     * @param <V> the type of values mapped by this array
+     * @since 1.0
+     */
     @SuppressWarnings("unchecked")
     public static class BaseArray<K, V> {
 
@@ -460,10 +686,21 @@ public class HashMap<K, V> implements CustomMap<K,V>, Iterable<HashMap.Node<K, V
         private int size;
 
 
+        /**
+         * Constructs a BaseArray with the default initial capacity of 16.
+         *
+         * @since 1.0
+         */
         BaseArray() {
             this(16);
         }
 
+        /**
+         * Constructs a BaseArray with the specified initial capacity.
+         *
+         * @param capacity the initial capacity of the BaseArray
+         * @since 1.0
+         */
         BaseArray(int capacity) {
             this.capacity = capacity;
             this.size = 0;
@@ -471,22 +708,55 @@ public class HashMap<K, V> implements CustomMap<K,V>, Iterable<HashMap.Node<K, V
             filledIndices = new TreeSet<>();
         }
 
+        /**
+         * Returns the current capacity of the BaseArray.
+         *
+         * @return the current capacity of the BaseArray
+         * @since 1.0
+         */
         public int getCapacity() {
             return capacity;
         }
 
+        /**
+         * Sets the capacity of the BaseArray to the specified value.
+         *
+         * @param capacity the new capacity of the BaseArray
+         * @since 1.0
+         */
         private void setCapacity(int capacity) {
             this.capacity = capacity;
         }
 
+        /**
+         * Computes the hash code of the specified key using the current capacity of the BaseArray.
+         *
+         * @param key the key whose hash code is to be computed
+         * @return the hash code of the specified key
+         * @since 1.0
+         */
         private int hash(K key) {
             return Math.abs(key.hashCode() % getCapacity());
         }
 
+        /**
+         * Computes the hash code of the specified key using the specified modulus.
+         *
+         * @param key     the key whose hash code is to be computed
+         * @param modulus the modulus to be used in hash computation
+         * @return the hash code of the specified key
+         * @since 1.0
+         */
         private int hash(K key, int modulus) {
             return Math.abs(key.hashCode() % modulus);
         }
 
+        /**
+         * Returns the first node in the BaseArray, i.e., the node with the smallest index.
+         *
+         * @return the first node in the BaseArray
+         * @since 1.0
+         */
         private Node<K, V> getFirst() {
             TreeSet<Integer> filledIndices = getFilledIndices();
             if (filledIndices == null) return null;
@@ -495,6 +765,12 @@ public class HashMap<K, V> implements CustomMap<K,V>, Iterable<HashMap.Node<K, V
             return getNodes()[minIndex];
         }
 
+        /**
+         * Returns the last node in the BaseArray, i.e., the node with the largest index and last in its chain.
+         *
+         * @return the last node in the BaseArray
+         * @since 1.0
+         */
         private Node<K, V> getLast() {
             TreeSet<Integer> filledIndices = getFilledIndices();
             if (filledIndices == null) return null;
@@ -509,6 +785,13 @@ public class HashMap<K, V> implements CustomMap<K,V>, Iterable<HashMap.Node<K, V
             return returnNode;
         }
 
+        /**
+         * Returns the previous node of the specified node in the BaseArray.
+         *
+         * @param tempNode the node whose previous node is to be retrieved
+         * @return the previous node of the specified node
+         * @since 1.0
+         */
         private Node<K, V> getPrev(Node<K, V> tempNode) {
             if (tempNode == null) return null;
             Node<K, V> prevNode = tempNode.getPrev();
@@ -526,6 +809,13 @@ public class HashMap<K, V> implements CustomMap<K,V>, Iterable<HashMap.Node<K, V
             return returnNode;
         }
 
+        /**
+         * Returns the next node of the specified node in the BaseArray.
+         *
+         * @param tempNode the node whose next node is to be retrieved
+         * @return the next node of the specified node
+         * @since 1.0
+         */
         private Node<K, V> getNext(Node<K, V> tempNode) {
             if (tempNode == null) return null;
             Node<K, V> nextNode = tempNode.getNext();
@@ -537,55 +827,116 @@ public class HashMap<K, V> implements CustomMap<K,V>, Iterable<HashMap.Node<K, V
             return getNodes()[nextIndex];
         }
 
+        /**
+         * Doubles the current capacity of the BaseArray.
+         *
+         * @since 1.0
+         */
         public void doubleCapacity() {
             int newCapacity = getCapacity() * 2;
             changeCapacity(newCapacity);
         }
 
+        /**
+         * Halves the current capacity of the BaseArray.
+         *
+         * @since 1.0
+         */
         public void halveCapacity() {
             int newCapacity = getCapacity() / 2;
             changeCapacity(newCapacity);
         }
 
+        /**
+         * Changes the capacity of the BaseArray to the specified new capacity and rehashes everything.
+         * <p>
+         * This method performs a resize operation on the underlying array, adjusting its capacity
+         * and redistributing existing nodes based on the new hash calculations.
+         *
+         * @param newCapacity the new capacity of the BaseArray
+         * @since 1.0
+         */
         private void changeCapacity(int newCapacity) {
+            // Create a temporary array and set to hold new nodes and indices
             Node<K, V>[] tempArray = new Node[newCapacity];
             TreeSet<Integer> tempSet = new TreeSet<>();
             size = 0;
-            Node<K,V> refNode = getFirst();
-            Node<K,V> prevNode = null;
+
+            // Traverse the existing nodes and rehash them into the new array
+            Node<K, V> refNode = getFirst();
+            Node<K, V> prevNode = null;
             while (refNode != null) {
-                Node<K,V> tempNode = new Node<>(refNode.getKey(), refNode.getValue());
-                add(tempNode,tempArray,tempSet, newCapacity);
+                Node<K, V> tempNode = new Node<>(refNode.getKey(), refNode.getValue());
+                add(tempNode, tempArray, tempSet, newCapacity);
                 prevNode = refNode;
                 refNode = getNext(refNode);
             }
+
+            // Update the BaseArray properties with the newly resized array and indices
             filledIndices = tempSet;
             nodes = tempArray;
             setCapacity(newCapacity);
         }
 
+        /**
+         * Adds a node to the BaseArray, updating the nodes, indices, and size.
+         * <p>
+         * If a node with the same key already exists, its value is updated.
+         *
+         * @param node the node to be added
+         * @return the previous value associated with the specified key, or null if there was no mapping for the key
+         * @since 1.0
+         */
         public V add(Node<K, V> node) {
             return add(node, getNodes(), getFilledIndices());
         }
 
+        /**
+         * Adds a node to the node list while updating the specified filled index set,
+         * with a hash function based on current capacity.
+         *
+         * @param node        the node to be added
+         * @param nodeList    the array of nodes to which the new node is added
+         * @param nodeIndices the set of indices representing filled positions in the nodeList
+         * @return the previous value associated with the specified key, or null if there was no mapping for the key
+         * @since 1.0
+         */
         public V add(Node<K, V> node, Node<K, V>[] nodeList, TreeSet<Integer> nodeIndices) {
             return add(node, nodeList, nodeIndices, getCapacity());
         }
+
+        /**
+         * Adds a node to the BaseArray with the specified nodes, indices, and hash modulus.
+         * If a node with the same key already exists, its value is updated.
+         *
+         * @param node        the node to be added
+         * @param nodeList    the array of nodes to which the new node is added
+         * @param nodeIndices the set of indices representing filled positions in the nodeList
+         * @param hashModulus the modulus used in hash computation
+         * @return the previous value associated with the specified key, or null if there was no mapping for the key
+         * @since 1.0
+         */
         public V add(Node<K, V> node, Node<K, V>[] nodeList, TreeSet<Integer> nodeIndices, int hashModulus) {
             if (node == null) return null;
             if (node.getKey() == null) return null;
+
+            // Calculate the index for the new node based on hashModulus
             K key = node.getKey();
             int nodeIndex = hash(key, hashModulus);
             Node<K, V> currNode = nodeList[nodeIndex];
+
+            // If the index is empty, add the node directly
             if (currNode == null) {
                 nodeList[nodeIndex] = node;
                 nodeIndices.add(nodeIndex);
                 size++;
                 return null;
             }
+
+            // If a node with the same key exists, update its value
             Node<K, V> prevNode = null;
             while (currNode != null) {
-                if (currNode.getKey() == key) {
+                if (currNode.getKey().equals(key)) {
                     V prevValue = currNode.getValue();
                     currNode.setValue(node.getValue());
                     return prevValue;
@@ -593,45 +944,88 @@ public class HashMap<K, V> implements CustomMap<K,V>, Iterable<HashMap.Node<K, V
                 prevNode = currNode;
                 currNode = currNode.getNext();
             }
+
+            // If no node with the same key is found, add the node to the end of the linked list
             prevNode.setNext(node);
             node.setPrev(prevNode);
             size++;
             return null;
         }
 
+        /**
+         * Removes the specified node from the BaseArray, updating nodes, indices, and size.
+         *
+         * @param node the node to be removed
+         * @return the value associated with the specified key, or null if there was no mapping for the key
+         * @since 1.0
+         */
         public V remove(Node<K, V> node) {
             if (node == null) return null;
             int nodeIndex = hash(node.getKey());
             Node<K, V> prevNode = node.getPrev();
             Node<K, V> nextNode = node.getNext();
+
+            // Update the links in the linked list
             if (nextNode != null) {
                 nextNode.setPrev(prevNode);
             }
             if (prevNode != null) {
                 prevNode.setNext(nextNode);
             } else {
+                // If the removed node was the first in the linked list, update the array
                 getNodes()[nodeIndex] = nextNode;
             }
+
+            // If the index becomes empty, remove it from the set of filled indices
             if (getNodes()[nodeIndex] == null) {
                 getFilledIndices().remove(nodeIndex);
             }
+
             size--;
             return node.getValue();
         }
 
+        /**
+         * Computes the maximum depth of the nodes at the specified index in the BaseArray.
+         *
+         * @param index the index for which to compute the maximum depth
+         * @return the maximum depth of the nodes at the specified index
+         * @since 1.0
+         */
         public int getMaxDepth(int index) {
             Node<K, V> refNode = getNodes()[index];
             if (refNode == null) return 0;
             return nodeDepth(refNode);
         }
+
+        /**
+         * Returns the set of indices representing filled positions in the BaseArray.
+         *
+         * @return the set of filled indices in the BaseArray
+         * @since 1.0
+         */
         public TreeSet<Integer> getFilledIndices() {
             return filledIndices;
         }
 
+        /**
+         * Returns the array of nodes in the BaseArray.
+         *
+         * @return the array of nodes in the BaseArray
+         * @since 1.0
+         */
         public Node<K, V>[] getNodes() {
             return nodes;
         }
 
+        /**
+         * Computes the depth of the specified node in the BaseArray.
+         *
+         * @param refNode the node for which to compute the depth
+         * @return the depth of the specified node
+         * @throws NullPointerException if refNode is null
+         * @since 1.0
+         */
         public int nodeDepth(Node<K, V> refNode) {
             Objects.requireNonNull(refNode, "refNode is null");
             Node<K, V> currNode = refNode;
@@ -645,13 +1039,19 @@ public class HashMap<K, V> implements CustomMap<K,V>, Iterable<HashMap.Node<K, V
             return depth;
         }
 
+        /**
+         * Returns the current size of the BaseArray, i.e., the number of nodes.
+         *
+         * @return the current size of the BaseArray
+         * @since 1.0
+         */
         public int getSize() {
             return size;
         }
     }
 
     /**
-     * Represents a set view of the keys contained in a BSTMap.
+     * Represents a set view of the keys contained in a HashMap.
      *
      * @param <T> the type of keys in the set
      * @since 1.0
@@ -661,16 +1061,16 @@ public class HashMap<K, V> implements CustomMap<K,V>, Iterable<HashMap.Node<K, V
         private final HashMap<T, ?> refMap;
 
         /**
-         * Constructs a new KeySet with a reference to the specified BSTMap.
+         * Constructs a new KeySet with a reference to the specified HashMap.
          *
-         * @param map the BSTMap to be associated with this KeySet
+         * @param map the HashMap to be associated with this KeySet
          */
         KeySet(HashMap<T, ?> map) {
             refMap = map;
         }
 
         /**
-         * Returns an iterator over the keys in the BSTMap.
+         * Returns an iterator over the keys in the HashMap.
          *
          * @return an iterator over the keys
          */
@@ -679,7 +1079,7 @@ public class HashMap<K, V> implements CustomMap<K,V>, Iterable<HashMap.Node<K, V
         }
 
         /**
-         * Returns a descending iterator over the keys in the BSTMap.
+         * Returns a descending iterator over the keys in the HashMap.
          *
          * @return a descending iterator over the keys
          */
@@ -688,7 +1088,7 @@ public class HashMap<K, V> implements CustomMap<K,V>, Iterable<HashMap.Node<K, V
         }
 
         /**
-         * Returns the number of keys in the BSTMap.
+         * Returns the number of keys in the HashMap.
          *
          * @return the number of keys
          */
@@ -716,7 +1116,7 @@ public class HashMap<K, V> implements CustomMap<K,V>, Iterable<HashMap.Node<K, V
         }
 
         /**
-         * Removes all keys from the BSTMap associated with this KeySet.
+         * Removes all keys from the HashMap associated with this KeySet.
          */
         public void clear() {
             refMap.clear();
@@ -777,7 +1177,7 @@ public class HashMap<K, V> implements CustomMap<K,V>, Iterable<HashMap.Node<K, V
 
 
     /**
-     * Iterator over the entries of a BSTMap.
+     * Iterator over the entries of a HashMap.
      */
     final class EntryIterator extends BaseIterator<Node<K, V>> {
         EntryIterator(Node<K, V> first) {
@@ -790,7 +1190,7 @@ public class HashMap<K, V> implements CustomMap<K,V>, Iterable<HashMap.Node<K, V
     }
 
     /**
-     * Iterator over the values of a BSTMap.
+     * Iterator over the values of a HashMap.
      */
     final class ValueIterator extends BaseIterator<V> {
         ValueIterator(Node<K, V> first) {
@@ -803,7 +1203,7 @@ public class HashMap<K, V> implements CustomMap<K,V>, Iterable<HashMap.Node<K, V
     }
 
     /**
-     * Iterator over the keys of a BSTMap.
+     * Iterator over the keys of a HashMap.
      */
     final class KeyIterator extends BaseIterator<K> {
         KeyIterator(Node<K, V> first) {
@@ -816,7 +1216,7 @@ public class HashMap<K, V> implements CustomMap<K,V>, Iterable<HashMap.Node<K, V
     }
 
     /**
-     * Iterator over the keys of a BSTMap in descending order.
+     * Iterator over the keys of a HashMap in descending order.
      */
     final class DescendingKeyIterator extends BaseIterator<K> {
         DescendingKeyIterator(Node<K, V> first) {

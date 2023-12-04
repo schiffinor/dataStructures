@@ -521,7 +521,7 @@ public interface CustomMap<K, V> {
          * @see Comparable
          * @since 1.8
          */
-        public static <K extends Comparable<? super K>, V> Comparator<CustomMap.Entry<K, V>> comparingByKey() {
+        static <K extends Comparable<? super K>, V> Comparator<CustomMap.Entry<K, V>> comparingByKey() {
             return (Comparator<CustomMap.Entry<K, V>> & Serializable)
                 (c1, c2) -> c1.getKey().compareTo(c2.getKey());
         }
@@ -538,7 +538,7 @@ public interface CustomMap<K, V> {
          * @see Comparable
          * @since 1.8
          */
-        public static <K, V extends Comparable<? super V>> Comparator<CustomMap.Entry<K, V>> comparingByValue() {
+        static <K, V extends Comparable<? super V>> Comparator<CustomMap.Entry<K, V>> comparingByValue() {
             return (Comparator<CustomMap.Entry<K, V>> & Serializable)
                 (c1, c2) -> c1.getValue().compareTo(c2.getValue());
         }
@@ -556,7 +556,7 @@ public interface CustomMap<K, V> {
          * @return a comparator that compares {@link CustomMap.Entry} by the key.
          * @since 1.8
          */
-        public static <K, V> Comparator<CustomMap.Entry<K, V>> comparingByKey(Comparator<? super K> cmp) {
+        static <K, V> Comparator<CustomMap.Entry<K, V>> comparingByKey(Comparator<? super K> cmp) {
             Objects.requireNonNull(cmp);
             return (Comparator<CustomMap.Entry<K, V>> & Serializable)
                 (c1, c2) -> cmp.compare(c1.getKey(), c2.getKey());
@@ -575,7 +575,7 @@ public interface CustomMap<K, V> {
          * @return a comparator that compares {@link CustomMap.Entry} by the value.
          * @since 1.8
          */
-        public static <K, V> Comparator<CustomMap.Entry<K, V>> comparingByValue(Comparator<? super V> cmp) {
+        static <K, V> Comparator<CustomMap.Entry<K, V>> comparingByValue(Comparator<? super V> cmp) {
             Objects.requireNonNull(cmp);
             return (Comparator<CustomMap.Entry<K, V>> & Serializable)
                 (c1, c2) -> cmp.compare(c1.getValue(), c2.getValue());
