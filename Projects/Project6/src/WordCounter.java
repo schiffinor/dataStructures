@@ -15,6 +15,7 @@ public class WordCounter {
 
 	private final CustomMap<String, Integer> wordCounts ;
 	private int wordCount ;
+	private String name;
 
 	//constructor, where data_structure is either "bst" or "hashmap"
 	public WordCounter( String data_structure ) {
@@ -154,4 +155,11 @@ public class WordCounter {
 	}
 
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 }
