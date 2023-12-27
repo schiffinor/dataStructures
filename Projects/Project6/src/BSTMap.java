@@ -48,9 +48,9 @@ import java.util.*;
  * </p>
  * <p>
  * @author Roman Schiffino &lt;rjschi24@colby.edu&gt;
- * <p>
+ * @param <K> the type of keys maintained by this map
+ * @param <V> the type of mapped values
  * @version 1.0
- * <p>
  * @since 1.0
  */
 public class BSTMap<K, V> implements CustomMap<K,V>, Iterable<BSTMap.Node<K,V>> {

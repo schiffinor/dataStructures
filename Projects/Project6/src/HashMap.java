@@ -18,7 +18,7 @@ import java.util.*;
  *
  * @param <K> the type of keys maintained by this map
  * @param <V> the type of mapped values
- * @author Roman Schiffino <rjschi24@colby.edu>
+ * @author Roman Schiffino &lt;rjschi24@colby.edu&gt;
  * @version 1.0
  * @since 1.0
  */
