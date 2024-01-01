@@ -28,6 +28,6 @@ public abstract class AbstractPlayerAlgorithm {
     }
 
     public abstract Vertex chooseStart();
-    public abstract Vertex chooseStart(Vertex other);
-    public abstract Vertex chooseNext(Vertex otherPlayer);
+    public abstract void chooseStart(Vertex other);
+    public abstract void chooseNext(Vertex otherPlayer);
 }

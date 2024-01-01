@@ -126,7 +126,7 @@ public class ToroidalDoublyLinkedList<E> implements Cloneable {
         System.out.println(list);
         System.out.println(list2);
 
-        ToroidalDoublyLinkedList<Integer> list_1 = new ToroidalDoublyLinkedList(4, 6);
+        ToroidalDoublyLinkedList<Integer> list_1 = new ToroidalDoublyLinkedList<>(4, 6);
         CircularLinkedList<Integer> list_2 = new CircularLinkedList<>();
         CircularLinkedList<Integer> list_3 = new CircularLinkedList<>();
         for (int i = 6; i < 10; i++) {
@@ -315,9 +315,8 @@ public class ToroidalDoublyLinkedList<E> implements Cloneable {
      * Removes and returns a row from the matrix at the specified index.
      *
      * @param rowIndex The index of the row to remove.
-     * @return The removed row as a CircularLinkedList.
      */
-    public CircularLinkedList<E> removeRow(int rowIndex) {
+    public void removeRow(int rowIndex) {
 
         CircularLinkedList<E> dataLoad = this.rowList.remove(rowIndex);
 
@@ -326,16 +325,14 @@ public class ToroidalDoublyLinkedList<E> implements Cloneable {
         }
         rowNum--;
         size = rowNum * columnNum;
-        return dataLoad;
     }
 
     /**
      * Removes and returns a column from the matrix at the specified index.
      *
      * @param columnIndex The index of the column to remove.
-     * @return The removed column as a CircularLinkedList.
      */
-    public CircularLinkedList<E> removeColumn(int columnIndex) {
+    public void removeColumn(int columnIndex) {
 
         CircularLinkedList<E> dataLoad = this.columnList.remove(columnIndex);
 
@@ -344,7 +341,6 @@ public class ToroidalDoublyLinkedList<E> implements Cloneable {
         }
         columnNum--;
         size = rowNum * columnNum;
-        return dataLoad;
     }
 
     /**

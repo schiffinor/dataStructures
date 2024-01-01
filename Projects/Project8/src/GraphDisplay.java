@@ -60,14 +60,14 @@ public class GraphDisplay {
         }
     }
 
-    JFrame win;
+    final JFrame win;
     protected Graph graph;
     private final LandscapePanel canvas;
     private final Driver gameInit;
     private int gridScale; // width (and height) of each square in the grid
-    private final JScrollPane holder;
 
-    AbstractPlayerAlgorithm pursuer, evader;
+    final AbstractPlayerAlgorithm pursuer;
+    final AbstractPlayerAlgorithm evader;
     HashMap<Vertex, Coord> coords;
 
     /**
@@ -103,7 +103,7 @@ public class GraphDisplay {
                 this.gridScale * graph.size());
 
         // add the panel to the window, layout, and display
-        this.holder = new JScrollPane(canvas,ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
+        JScrollPane holder = new JScrollPane(canvas, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
         this.win.add(holder, BorderLayout.CENTER);
         this.win.pack();
@@ -227,7 +227,7 @@ public class GraphDisplay {
         win.setJMenuBar(menuBar);
     }
 
-    public void createCoordinateSystem() throws InterruptedException {
+    public void createCoordinateSystem() {
 
         // draw the graph
         // see http://yifanhu.net/PUB/graph_draw_small.pdf for more details
@@ -397,7 +397,6 @@ public class GraphDisplay {
             }
 
         }
-        System.out.println("zoop: " + coords);
     }
 
     /**

@@ -1,18 +1,30 @@
 import javax.swing.*;
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.LinkedList;
 
 public class Driver {
 
     private boolean paused;
-    private GraphDisplay display;
-    private AbstractPlayerAlgorithm pursuer;
-    private AbstractPlayerAlgorithm evader;
+    private final AbstractPlayerAlgorithm pursuer;
+    private final AbstractPlayerAlgorithm evader;
 
 
     public Driver(int n, double p) throws InterruptedException{
         // Create a random graph on which to play
         // Graph graph = new Graph(n,p,GraphType.UNDIRECTED);
-        Graph graph = new Graph("data/in/cg4.txt", "custom");
+        Graph graph = new Graph("data/in/shouldaLost.txt", "custom");
+        System.out.println("Graph Data: ");
+        System.out.println("Graph - Incidence: ");
+        ToroidalDoublyLinkedList<Integer> iM1 = graph.incidenceMatrix();
+        System.out.println(iM1);
+        System.out.println("Graph - Betti: ");
+        System.out.println("Betti_0: " + graph.betti_0());
+        System.out.println("Betti_1: " + graph.betti_1());
+        LinkedList<HashSet<Vertex>> concom1 = graph.connectedComponents();
+        System.out.println("Connected Components: " + concom1);
+        for (HashSet<Vertex> cc : concom1) {
+            System.out.println(cc + " Centroid: " + graph.centroid(cc));
+        }
 
         // Create the pursuer and evader
         pursuer = new MoveTowardsPlayer(graph);
@@ -25,7 +37,7 @@ public class Driver {
         evader.chooseStart(pursuer.getCurrentVertex());
 
         // Make the display
-        display = new GraphDisplay(graph, pursuer, evader, 40, this);
+        GraphDisplay display = new GraphDisplay(graph, pursuer, evader, 40, this);
         display.repaint();
         pause();
     }
@@ -61,7 +73,6 @@ public class Driver {
      */
     public void setPause(boolean bool) {
         paused = bool;
-        System.out.println("paused");
     }
 
     /**
@@ -95,7 +106,7 @@ public class Driver {
 
     public static void main(String[] args) throws InterruptedException{
         int n = 10;
-        double p = .3;
+        double p = .15;
         new Driver(n, p);
     }
 

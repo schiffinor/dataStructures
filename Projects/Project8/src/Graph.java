@@ -1,5 +1,4 @@
 import java.io.*;
-import java.lang.ref.Cleaner;
 import java.util.*;
 import java.util.PriorityQueue;
 
@@ -485,7 +484,7 @@ public class Graph {
         return tempVertex;
     }
 
-    public Edge addEdge(Vertex u, Vertex v, double distance) {
+    public void addEdge(Vertex u, Vertex v, double distance) {
         EdgeType edgeType = EdgeType.UNDIRECTED;
         if (type == GraphType.DIRECTED || type == GraphType.MIXED) {
             edgeType = (r.nextDouble(0, 1) < 0.5) ? EdgeType.DIRECTED_NORMAL : EdgeType.DIRECTED_INVERTED;
@@ -493,7 +492,7 @@ public class Graph {
         if (type == GraphType.MIXED && r.nextDouble(0, 1) <= typeProbability) {
             edgeType = EdgeType.UNDIRECTED;
         }
-        return addEdge(u, v, distance, edgeType);
+        addEdge(u, v, distance, edgeType);
     }
 
     public Edge addEdge(Vertex u, Vertex v, double distance, EdgeType direction) {
@@ -558,23 +557,23 @@ public class Graph {
         return (Vertex) vertices.values().toArray()[r.nextInt(0, vertices.size())];
     }
 
-    public boolean remove(Vertex vertex) {
-        if (!vertices.containsKey(vertex.getName())) return false;
+    public void remove(Vertex vertex) {
+        if (!vertices.containsKey(vertex.getName())) return;
         HashSet<Edge> incidentEdges = new HashSet<>(vertex.getIncidentEdges());
         vertex.disconnect();
         for (Edge edge : incidentEdges) {
             remove(edge);
         }
         vertexCount--;
-        return vertices.remove(vertex.getName(), vertex);
+        vertices.remove(vertex.getName(), vertex);
     }
 
-    public boolean remove(Edge edge) {
-        if (edge == null) return false;
-        if (!edges.containsKey(edge.getName())) return false;
+    public void remove(Edge edge) {
+        if (edge == null) return;
+        if (!edges.containsKey(edge.getName())) return;
         for (Vertex vertex : edge.vertices()) vertex.removeEdge(edge);
         edgeCount--;
-        return edges.remove(edge.getName(), edge);
+        edges.remove(edge.getName(), edge);
     }
 
     public int getCreatedVertices() {

@@ -71,7 +71,7 @@ public class Vertex implements Comparable<Vertex> {
         return adjVert;
     }
 
-    public Edge addEdge(Edge edge) {
+    public void addEdge(Edge edge) {
         Vertex connected = edge.other(this);
         if (connected == null) throw new IllegalArgumentException("This Edge does not contain this vertex.");
         if (!incidentEdges.add(edge)) throw new IllegalArgumentException("This vertex already contains this edge.");
@@ -86,12 +86,11 @@ public class Vertex implements Comparable<Vertex> {
         }
         Edge returnEdge = edgeMap.get(connected).put(edge.getDistance(), edge);
         vertexMap.put(edge, connected);
-        return returnEdge;
     }
 
 
-    public boolean removeEdge(Edge edge) {
-        if (!incidentEdges.contains(edge)) return false;
+    public void removeEdge(Edge edge) {
+        if (!incidentEdges.contains(edge)) return;
         incidentEdges.remove(edge);
         vertexMap.remove(edge);
         Vertex otherVertex = edge.other(this);
@@ -103,7 +102,6 @@ public class Vertex implements Comparable<Vertex> {
             attachedVertexCount--;
         }
         else sharedEdges.remove(edge.getDistance(),edge);
-        return true;
     }
 
     public void disconnect() {

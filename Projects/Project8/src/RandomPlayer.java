@@ -13,12 +13,12 @@ public class RandomPlayer extends AbstractPlayerAlgorithm{
     }
 
     @Override
-    public Vertex chooseStart(Vertex other) {
-        return chooseStart();
+    public void chooseStart(Vertex other) {
+        chooseStart();
     }
 
     @Override
-    public Vertex chooseNext(Vertex otherPlayer) {
+    public void chooseNext(Vertex otherPlayer) {
         ArrayList<Vertex> choices = new ArrayList<>();
         Vertex currentVertex = getCurrentVertex();
         choices.add(currentVertex);
@@ -27,6 +27,5 @@ public class RandomPlayer extends AbstractPlayerAlgorithm{
             choices.add(vertex);
         }
         setCurrentVertex(choices.get(graph.getR().nextInt(0, choices.size())));
-        return getCurrentVertex();
     }
 }

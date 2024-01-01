@@ -40,7 +40,7 @@ public class MoveAwayPlayer extends AbstractPlayerAlgorithm{
     }
 
     @Override
-    public Vertex chooseStart(Vertex other) {
+    public void chooseStart(Vertex other) {
         LinkedList<HashSet<Vertex>> connectedComponents = this.getGraph().connectedComponents();
         HashSet<Vertex> set = null;
         int maxSize = 0;
@@ -52,32 +52,33 @@ public class MoveAwayPlayer extends AbstractPlayerAlgorithm{
             if (cc.size() == 1) {
                 setStartVertex((Vertex) cc.toArray()[0]);
                 setCurrentVertex(getStartVertex());
-                return getStartVertex();
+                return;
             }
         }
         Vertex start = null;
         int maxConn = 0;
         for (Vertex v : Objects.requireNonNull(set)) {
-            if (v.getOutwardEdges().size() > maxSize && !v.equals(other)) {
+            if (v.getOutwardEdges().size() > maxSize && !v.equals(other) && !v.adjacentVertices().contains(other)) {
                 maxConn = v.getOutwardEdges().size();
                 start = v;
             }
             if (v.getInwardEdges().isEmpty()) {
                 setStartVertex(v);
                 setCurrentVertex(getStartVertex());
-                return getStartVertex();
+                return;
             }
         }
         if (start == null) {
-            start = graph.getVertex();
+            do {
+                start = graph.getVertex();
+            } while (other.adjacentVertices().contains(start) || start.equals(other));
         }
         setStartVertex(start);
         setCurrentVertex(getStartVertex());
-        return getStartVertex();
     }
 
     @Override
-    public Vertex chooseNext(Vertex otherPlayer) {
+    public void chooseNext(Vertex otherPlayer) {
         HashMap<Vertex,Double> distances = getGraph().distanceFrom(otherPlayer);
         Vertex next = null;
         Double maxDist = 0.0;
@@ -93,6 +94,5 @@ public class MoveAwayPlayer extends AbstractPlayerAlgorithm{
             next = getCurrentVertex();
         }
         setCurrentVertex(next);
-        return getCurrentVertex();
     }
 }

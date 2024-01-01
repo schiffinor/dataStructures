@@ -1,0 +1,13 @@
+GraphType: UNDIRECTED
+Vertices:
+A
+B
+C
+D
+Edges:
+start_vertex,end_vertex,distance,type
+A,B,4
+B,C,4
+C,D,4
+D,A,4
+A,C,20

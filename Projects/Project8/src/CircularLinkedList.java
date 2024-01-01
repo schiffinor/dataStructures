@@ -46,7 +46,7 @@ public class CircularLinkedList<E>
         addAll(list);
     }
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
 
         CircularLinkedList<Integer> test = new CircularLinkedList<>();
         LinkedList<Integer> test2 = new LinkedList<>();
@@ -159,7 +159,7 @@ public class CircularLinkedList<E>
                 return 0;
             while (it.hasNext() && it.getCurrent().getNext() != it.getInitial())
                 if (item.equals(it.next()))
-                return it.index;
+                    return it.index;
         }
         return -1;
     }
@@ -467,11 +467,9 @@ public class CircularLinkedList<E>
 
     /**
      * Removes and returns the first element in the `LinkedList`.
-     *
-     * @return The first element that was removed.
      */
-    public E remove() {
-        return remove(this.head);
+    public void remove() {
+        remove(this.head);
     }
 
     /**

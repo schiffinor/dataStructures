@@ -22,16 +22,14 @@ public class MoveTowardsPlayer extends AbstractPlayerAlgorithm{
     }
 
     @Override
-    public Vertex chooseStart(Vertex other) {
+    public void chooseStart(Vertex other) {
         setStartVertex(other);
         setCurrentVertex(getStartVertex());
-        return getStartVertex();
     }
 
     @Override
-    public Vertex chooseNext(Vertex otherPlayer) {
+    public void chooseNext(Vertex otherPlayer) {
         HashMap<Vertex,Double> distances = getGraph().distanceFrom(otherPlayer);
         setCurrentVertex(getCurrentVertex().getPreviousVertex());
-        return getCurrentVertex();
     }
 }
