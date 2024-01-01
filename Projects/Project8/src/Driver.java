@@ -9,10 +9,21 @@ public class Driver {
     private final AbstractPlayerAlgorithm evader;
 
 
+    /**
+     * Constructor I'm sorry I really couldn't make a better implementation of this.
+     * I would have wanted to use terminal arguments, but honestly,
+     * that's a major time sink and not feasible for me.
+     * I spent way too long on the other cooler features.
+     * Tweak the graph parameters here and the other things in main-loop.
+     *
+     * @param n
+     * @param p
+     * @throws InterruptedException
+     */
     public Driver(int n, double p) throws InterruptedException{
         // Create a random graph on which to play
-        // Graph graph = new Graph(n,p,GraphType.UNDIRECTED);
-        Graph graph = new Graph("data/in/shouldaLost.txt", "custom");
+        Graph graph = new Graph(n,p,GraphType.UNDIRECTED);
+        // Graph graph = new Graph("data/in/shouldaLost.txt", "custom");
         System.out.println("Graph Data: ");
         System.out.println("Graph - Incidence: ");
         ToroidalDoublyLinkedList<Integer> iM1 = graph.incidenceMatrix();
@@ -43,14 +54,15 @@ public class Driver {
     }
 
     /**
-     * Advances the simulation by updating agent states.
-     * After updating agent states, it checks if any agent has moved.
-     * If no agent has moved, the simulation is paused.
+     * Advances the simulation by updating pursuer location.
      */
     public void advancePursuer() {
         pursuer.chooseNext(evader.getCurrentVertex());
     }
 
+    /**
+     * Advances the simulation by updating evader location.
+     */
     public void advanceEvader() {
         if (pursuer.getCurrentVertex() != evader.getCurrentVertex()){
             evader.chooseNext(pursuer.getCurrentVertex());
@@ -58,7 +70,7 @@ public class Driver {
     }
 
     /**
-     * Pauses the Game of Life simulation.
+     * Pauses the pursuit simulation.
      * Sets the 'paused' flag tco true and displays a message.
      */
     public void pause() {
@@ -76,7 +88,7 @@ public class Driver {
     }
 
     /**
-     * Resumes the Agent simulation.
+     * Resumes the pursuit simulation.
      * Sets the 'paused' flag to false, advances the simulation, and updates the window.
      *
      * @param window the JFrame used for displaying the simulation
@@ -90,6 +102,7 @@ public class Driver {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+        window.repaint();
         advanceEvader();
         window.repaint();
         if (pursuer.getCurrentVertex() != evader.getCurrentVertex()) {
@@ -105,7 +118,7 @@ public class Driver {
     }
 
     public static void main(String[] args) throws InterruptedException{
-        int n = 10;
+        int n = 20;
         double p = .15;
         new Driver(n, p);
     }

@@ -14,11 +14,46 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Random;
 
+
 /**
- * Displays a Landscape graphically using Swing. The Landscape
- * contains a grid which can be displayed at any scale factor.
- * 
+ * Original:
+ * <p>
+ *     Displays a Landscape graphically using Swing.
+ *     The Landscape contains a grid that can be displayed at any scale factor
+ *     Author: bseastwo
+ * </p>
+ *
+ * So I kindo of rewrote a lot of this to add a couple features.
+ * The class provides methods to interact with and visualize a graph in a Swing window.
+ * Namely:
+ * <ol>
+ *     <li>
+ *         Image Saving
+ *     </li>
+ *     <li>
+ *         Play and Pause buttons
+ *     </li>
+ *     <li>
+ *         Step-by-step advance button
+ *     </li>
+ *     <li>
+ *         Zoom Function
+ *     </li>
+ *     <li>
+ *         Scrollable canvas
+ *     </li>
+ *     <li>
+ *         Improved representation for disconnected graphs (kinda)
+ *     </li>
+ *     <li>
+ *         Euclidean distance for coords
+ *     </li>
+ *     <li>
+ *         Representation for directed edges via arrows
+ *     </li>
+ * </ol>
  * @author bseastwo
+ * @author Roman Schiffino &lt;rjschi24@colby.edu&gt;
  */
 public class GraphDisplay {
 
@@ -146,6 +181,13 @@ public class GraphDisplay {
         }
     }
 
+    /**
+     * Creates and configures a menu bar for the graphical user interface.
+     * This method sets up a menu bar with a File menu and populates it
+     * with various menu items such as "Save Image," "Play," "Pause," "<<," and ">>."
+     * Action listeners are attached to the menu items to handle user interactions.
+     * The menu bar is then added to the JFrame for display.
+     */
     public void createMenuBar() {
         JMenuBar menuBar = new JMenuBar();
 
@@ -215,7 +257,7 @@ public class GraphDisplay {
 
 
 
-        //Add the File and Simulation menus to the menu bar
+        //Add the File menu to the menu bar
         menuBar.add(fileMenu);
         menuBar.add(pauseButton);
         menuBar.add(playButton);
@@ -227,16 +269,27 @@ public class GraphDisplay {
         win.setJMenuBar(menuBar);
     }
 
+    /**
+     * Creates a coordinate system for the graph vertices and computes their positions.
+     * If the graph has multiple connected components, it arranges them in a grid layout.
+     * Uses a force-directed algorithm to position vertices within connected components.
+     *
+     * @implNote The algorithm is based on the paper by Yifan Hu: <a href="http://yifanhu.net/PUB/graph_draw_small.pdf">...</a>
+     */
     public void createCoordinateSystem() {
-
         // draw the graph
         // see http://yifanhu.net/PUB/graph_draw_small.pdf for more details
         Random rand = new Random();
         HashMap<Vertex, HashMap<Vertex, Double>> distances = new HashMap<>();
+
+        // Compute distances between vertices
         for (Vertex v : graph.getVertices())
             distances.put(v, graph.distanceFrom(v));
+
         coords = new HashMap<>();
         LinkedList<HashSet<Vertex>> connectedComps = graph.connectedComponents();
+
+        // If the graph has only one connected component, use force-directed algorithm
         if (connectedComps.size() < 2) {
             for (Vertex v : graph.getVertices())
                 coords.put(v, new Coord(rand.nextInt(canvas.getWidth() / 2) - Math.floorDiv(canvas.getWidth(),2),
@@ -249,17 +302,7 @@ public class GraphDisplay {
                     Coord f = new Coord(0, 0);
                     boolean pickRandom = false;
                     for (Vertex u : graph.getVertices()) {
-                        if (u == v)
-                            continue;
-                        Coord xv = coords.get(v);
-                        Coord xu = coords.get(u);
-                        if ((Math.abs(xv.x - xu.x) > .1 / i) && (Math.abs(xv.y - xu.y) > .1 / i))
-                            f.addBy(xu.diff(xv).scale((xu.diff(xv).norm()
-                                    - (distances.get(u).get(v) == Double.POSITIVE_INFINITY ? 1000
-                                    : distances.get(u).get(v) * 100))
-                                    / (xu.diff(xv).norm())));
-                        else
-                            pickRandom = true;
+                        pickRandom = isPickRandom(distances, i, v, f, pickRandom, u);
                     }
                     if (!pickRandom)
                         newCoords.put(v,
@@ -306,21 +349,23 @@ public class GraphDisplay {
                             -Math.floorDiv(canvas.getHeight(),2) + gridScale));
 
         } else {
+            // If the graph has multiple connected components, arrange them in a grid layout
+            int singletonCount = 0;
             int row = 0;
             int column= 0;
             int subGraphCount = connectedComps.size();
             int newRow = (subGraphCount > 2) ? ((int) Math.round(Math.sqrt(subGraphCount))) : 2;
             double baseX = ((double) canvas.getWidth() / (2 * newRow));
-            double baseY = ((double) canvas.getHeight() / (2 * newRow));
-            for (Vertex v : graph.getVertices()) {
-                System.out.println("disto: " + graph.distanceFrom(v));
-            }
+            double baseY = ((double) canvas.getHeight() / (8 * newRow));
+
             for (HashSet<Vertex> subSet : connectedComps) {
                 if (column % newRow == 0) {
                     column = 0;
                     row++;
                 }
                 Vertex centroid  = graph.centroid(subSet);
+
+                // Initialize random coordinates for vertices within the connected component
                 for (Vertex v : subSet)
                     coords.put(v, new Coord(rand.nextInt(canvas.getWidth() / (2 *newRow)) - Math.floorDiv(canvas.getWidth(),(2 *newRow)),
                             rand.nextInt(canvas.getHeight() / (2 *newRow)) - Math.floorDiv(canvas.getHeight(),(2 *newRow))));
@@ -331,17 +376,7 @@ public class GraphDisplay {
                         Coord f = new Coord(0, 0);
                         boolean pickRandom = false;
                         for (Vertex u : subSet) {
-                            if (u == v)
-                                continue;
-                            Coord xv = coords.get(v);
-                            Coord xu = coords.get(u);
-                            if ((Math.abs(xv.x - xu.x) > .1 / i) && (Math.abs(xv.y - xu.y) > .1 / i))
-                                f.addBy(xu.diff(xv).scale((xu.diff(xv).norm()
-                                        - (distances.get(u).get(v) == Double.POSITIVE_INFINITY ? 1000
-                                        : distances.get(u).get(v) * 100))
-                                        / (xu.diff(xv).norm())));
-                            else
-                                pickRandom = true;
+                            pickRandom = isPickRandom(distances, i, v, f, pickRandom, u);
                         }
                         if (!pickRandom)
                             newCoords.put(v,
@@ -367,6 +402,8 @@ public class GraphDisplay {
                     // repaint();
                     // Thread.sleep(50);
                 }
+
+                // Normalize and scale coordinates to fit within the canvas
                 Coord average = new Coord(0, 0);
                 for (Vertex v : subSet)
                     average.addBy(coords.get(v));
@@ -378,25 +415,47 @@ public class GraphDisplay {
                     maxNorm = Math.max(maxNorm, newCoord.norm());
                 }
 
-                int singletonCount = 0;
-                for (Vertex v : graph.getVertices())
-                    if (!v.adjacentVertices().iterator().hasNext())
-                        coords.put(v, new Coord(-Math.floorDiv(canvas.getWidth(),2) + gridScale * ++singletonCount,
-                                -Math.floorDiv(canvas.getHeight(),2) + gridScale));
-
                 Coord gridCoord = new Coord(-baseX + (2 * column * baseX), -baseY + (2 * row * baseY));
                 System.out.println("gridCoord: " + gridCoord);
                 Coord centroidOffset = coords.get(centroid);
                 System.out.println("centroidOffset: " + centroidOffset);
+
+                // Apply offsets to coordinates based on grid and centroid positions
                 for (Vertex v : subSet) {
                     Coord newCoord = (new Coord(coords.get(v).x - centroidOffset.x + gridCoord.x,
                             coords.get(v).y - centroidOffset.y + gridCoord.y));
                     coords.put(v, newCoord);
                 }
                 column++;
+
+                // Adjust coordinates for singleton vertices
+                for (Vertex v : subSet)
+                    if (!v.adjacentVertices().iterator().hasNext()) {
+                        coords.put(v, new Coord(-Math.floorDiv(canvas.getWidth(),2) + gridScale * ++singletonCount,
+                                -Math.floorDiv(canvas.getHeight(),2) + gridScale));
+                        column--;
+                    }
+
+
+
             }
 
         }
+    }
+
+    private boolean isPickRandom(HashMap<Vertex, HashMap<Vertex, Double>> distances, int i, Vertex v, Coord f, boolean pickRandom, Vertex u) {
+        if (u == v)
+            return pickRandom;
+        Coord xv = coords.get(v);
+        Coord xu = coords.get(u);
+        if ((Math.abs(xv.x - xu.x) > .1 / i) && (Math.abs(xv.y - xu.y) > .1 / i))
+            f.addBy(xu.diff(xv).scale((xu.diff(xv).norm()
+                    - (distances.get(u).get(v) == Double.POSITIVE_INFINITY ? 1000
+                    : distances.get(u).get(v) * 100))
+                    / (xu.diff(xv).norm())));
+        else
+            pickRandom = true;
+        return pickRandom;
     }
 
     /**
@@ -424,6 +483,9 @@ public class GraphDisplay {
          * Method overridden from JComponent that is responsible for
          * drawing components on the screen. The supplied Graphics
          * object is used to draw.
+         * <p>
+         *     Reworked to allow me to draw arrows for directed edges.
+         * </p>
          * 
          * @param g the Graphics object used for drawing
          */
@@ -435,35 +497,61 @@ public class GraphDisplay {
             g.translate(canvas.getWidth() / 2, canvas.getHeight() / 2);
             for (Edge e : graph.getEdges()) {
                 g.setColor(Color.BLACK);
+                // Beginning of changes
+                // Get vertices as scaled coords
                 Coord vert0 = coords.get(e.vertices()[0]).scale(((double) gridScale /40));
                 Coord vert1 = coords.get(e.vertices()[1]).scale(((double) gridScale /40));
+
+                // Coordinates for drawing with adjustments for alignment
                 double x1 = vert0.x + (double) gridScale / 4;
                 double x2 = vert1.x + (double) gridScale / 4;
                 double y1 = vert0.y + (double) gridScale / 4;
                 double y2 = vert1.y + (double) gridScale / 4;
+
+                // Round instead of cast
                 int x1Scaled = (int) Math.round(x1);
                 int x2Scaled = (int) Math.round(x2);
                 int y1Scaled = (int) Math.round(y1);
                 int y2Scaled = (int) Math.round(y2);
+
+                // Draw line
                 g.drawLine(x1Scaled, y1Scaled, x2Scaled, y2Scaled);
+
+
+                // Arrowheads in case of directed graph.
                 if (e.getDirection() != EdgeType.UNDIRECTED) {
+                    // Calculate differences in x and y coordinates
                     double dx = x2-x1;
                     double dy = y2-y1;
+
+                    // Compute distance between vertices
                     double distance = vert1.dist(vert0);
+
+                    // Calculate normalized distance vector
                     Coord normalizedDistance = new Coord(dx, dy).scale(1/distance);
+
+                    // Compute offset for arrowhead
                     Coord offset = normalizedDistance.scale(10 * ((double) gridScale /40));
+
+                    // Calculate angle of the edge
                     double angle = Math.atan2(dy, dx);
+
+                    // Calculate coordinates for arrowhead points
                     Coord point0 = new Coord(x2 - offset.x, y2 - offset.y);
                     Coord point1 = new Coord(point0.x - offset.x + (offset.norm() * Math.cos(angle + (Math.PI / 2))),
                             point0.y - offset.y + (offset.norm() * Math.sin(angle + (Math.PI / 2))));
                     Coord point2 = new Coord(point0.x - offset.x + (offset.norm() * Math.cos(angle - (Math.PI / 2))),
                             point0.y - offset.y + (offset.norm() * Math.sin(angle - (Math.PI / 2))));
+
+                    // Create arrays for polygon points
                     int[] xPoints = new int[] {(int) Math.round(point0.x),
                             (int) Math.round(point1.x),
                             (int) Math.round(point2.x)};
                     int[] yPoints = new int[] {(int) Math.round(point0.y),
                             (int) Math.round(point1.y),
                             (int) Math.round(point2.y)};
+
+                    // Fill polygon to represent arrowhead
                     g.fillPolygon(xPoints, yPoints, 3);
                 }
             }
