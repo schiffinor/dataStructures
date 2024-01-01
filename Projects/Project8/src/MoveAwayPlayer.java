@@ -69,9 +69,21 @@ public class MoveAwayPlayer extends AbstractPlayerAlgorithm{
             }
         }
         if (start == null) {
+            HashSet<Vertex> nonVisited = new HashSet<>((Collection<Vertex>) getGraph().getVertices());
             do {
                 start = graph.getVertex();
-            } while (other.adjacentVertices().contains(start) || start.equals(other));
+                nonVisited.remove(start);
+            } while ((other.adjacentVertices().contains(start) || start.equals(other)) && !nonVisited.isEmpty());
+        }
+        if (start == null || other.adjacentVertices().contains(start) || start.equals(other)) {
+            HashSet<Vertex> nonVisited = new HashSet<>((Collection<Vertex>) getGraph().getVertices());
+            do {
+                start = graph.getVertex();
+                nonVisited.remove(start);
+            } while (start.equals(other) && !nonVisited.isEmpty());
+            if (start.equals(other)) {
+                start = graph.getVertex();
+            }
         }
         setStartVertex(start);
         setCurrentVertex(getStartVertex());
